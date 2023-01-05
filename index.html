@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>NSYSU Course Selection Helper</title>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/BrowserFS/2.0.0/browserfs.min.js"></script>
+    <script src="index.js"></script>
+</head>
+<body>
+    <div class="App_container">
+        <input id="data_file" src="./all_classes.txt">
+        <div class="chart_container">
+            <table border="1" style="border-style:solid; border-collapse:collapse">
+                <tbody>
+                    <tr>
+                        <th>節\日</th>
+                        <th>星期一</th>
+                        <th>星期二</th>
+                        <th>星期三</th>
+                        <th>星期四</th>
+                        <th>星期五</th>
+                        <th>星期六</th>
+                        <th>星期日</th>
+                    </tr>
+                    <tr>
+                        <th>A<br>7:00-8:00</th>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                    </tr>
+                    <tr>
+                        <th>1[]</th>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                    </tr>
+                    <tr>
+                        <th>2[]</th>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                    </tr>
+                    <tr>
+                        <th>3[]</th>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                    </tr>
+                    <tr>
+                        <th>4[]</th>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                    </tr>
+                    <tr>
+                        <th>B[]</th>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                    </tr>
+                    <tr>
+                        <th>5[]</th>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                    </tr>
+                    <tr>
+                        <th>6[]</th>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                    </tr>
+                    <tr>
+                        <th>7[]</th>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                    </tr>
+                    <tr>
+                        <th>8[]</th>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                    </tr>
+                    <tr>
+                        <th>9[]</th>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                    </tr>
+                    <tr>
+                        <th>C[]</th>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                    </tr>
+                    <tr>
+                        <th>D[]</th>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                    </tr>
+                    <tr>
+                        <th>E[]</th>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="list_container">
+            <table id="list_content" border="1" style="border-style:solid; border-collapse:collapse;">
+                <tbody>
+                    <tr style="position: sticky;">
+                        <th>年級/班別</th>
+                        <th>上課系所</th>
+                        <th>必選修</th>
+                        <th>學分數</th>
+                        <th>授課教師</th>
+                        <th>時間</th>
+                        <th>所屬學程</th>
+                        <th>備註</th>
+                        <th>教室</th>
+                        <th>選擇</th>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <input type="button" name="test" onclick="functionaddRow();">
+    </div>
+    
+</body>
+
+</html>
