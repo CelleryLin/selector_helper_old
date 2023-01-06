@@ -1,0 +1,28 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: none;
+    font-family: Arial, sans-serif;
+}
+  
+body {
+    font-size: 12px;
+}
+
+
+table {
+    border-collapse:separate; 
+    border-spacing: 0px 5px;
+}
+
+.classes_row_odd {
+    margin: 5px;
+    background-color: #efefef;
+    border-radius: 10px;
+}
+
+.classes_row_even {
+    margin: 5px;
+    background-color: #e2e2e2;
+    border-radius: 10px;
+}

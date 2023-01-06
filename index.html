@@ -6,15 +6,15 @@
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/BrowserFS/2.0.0/browserfs.min.js"></script>
     <script src="index.js"></script>
+    <link rel="stylesheet" href="./index.css">
 </head>
 <body>
     <div class="App_container">
-        <input id="data_file" src="./all_classes.txt">
         <div class="chart_container">
-            <table border="1" style="border-style:solid; border-collapse:collapse">
+            <table border="1" style="width: 100%;height: 100vh; border-style:solid; border-collapse:collapse" id="schedule_content">
                 <tbody>
                     <tr>
-                        <th>節\日</th>
+                        <th style="width: 7%">節\日</th>
                         <th>星期一</th>
                         <th>星期二</th>
                         <th>星期三</th>
@@ -24,7 +24,7 @@
                         <th>星期日</th>
                     </tr>
                     <tr>
-                        <th>A<br>7:00-8:00</th>
+                        <th>A<br>7:00-7:50</th>
                         <td><br></td>
                         <td><br></td>
                         <td><br></td>
@@ -34,7 +34,7 @@
                         <td><br></td>
                     </tr>
                     <tr>
-                        <th>1[]</th>
+                        <th>1<br>8:10-9:00</th>
                         <td><br></td>
                         <td><br></td>
                         <td><br></td>
@@ -44,7 +44,7 @@
                         <td><br></td>
                     </tr>
                     <tr>
-                        <th>2[]</th>
+                        <th>2<br>9:10-10:00</th>
                         <td><br></td>
                         <td><br></td>
                         <td><br></td>
@@ -54,7 +54,7 @@
                         <td><br></td>
                     </tr>
                     <tr>
-                        <th>3[]</th>
+                        <th>3<br>10:10-11:00</th>
                         <td><br></td>
                         <td><br></td>
                         <td><br></td>
@@ -64,7 +64,7 @@
                         <td><br></td>
                     </tr>
                     <tr>
-                        <th>4[]</th>
+                        <th>4<br>11:10-12:00</th>
                         <td><br></td>
                         <td><br></td>
                         <td><br></td>
@@ -74,7 +74,7 @@
                         <td><br></td>
                     </tr>
                     <tr>
-                        <th>B[]</th>
+                        <th>B<br>12:10-13:00</th>
                         <td><br></td>
                         <td><br></td>
                         <td><br></td>
@@ -84,7 +84,7 @@
                         <td><br></td>
                     </tr>
                     <tr>
-                        <th>5[]</th>
+                        <th>5<br>13:10-14:00</th>
                         <td><br></td>
                         <td><br></td>
                         <td><br></td>
@@ -94,7 +94,7 @@
                         <td><br></td>
                     </tr>
                     <tr>
-                        <th>6[]</th>
+                        <th>6<br>14:10-15:00</th>
                         <td><br></td>
                         <td><br></td>
                         <td><br></td>
@@ -104,7 +104,7 @@
                         <td><br></td>
                     </tr>
                     <tr>
-                        <th>7[]</th>
+                        <th>7<br>15:10-16:00</th>
                         <td><br></td>
                         <td><br></td>
                         <td><br></td>
@@ -114,7 +114,7 @@
                         <td><br></td>
                     </tr>
                     <tr>
-                        <th>8[]</th>
+                        <th>8<br>16:10-17:00</th>
                         <td><br></td>
                         <td><br></td>
                         <td><br></td>
@@ -124,7 +124,7 @@
                         <td><br></td>
                     </tr>
                     <tr>
-                        <th>9[]</th>
+                        <th>9<br>17:10-18:00</th>
                         <td><br></td>
                         <td><br></td>
                         <td><br></td>
@@ -134,7 +134,7 @@
                         <td><br></td>
                     </tr>
                     <tr>
-                        <th>C[]</th>
+                        <th>C<br>18:20-19:10</th>
                         <td><br></td>
                         <td><br></td>
                         <td><br></td>
@@ -144,7 +144,7 @@
                         <td><br></td>
                     </tr>
                     <tr>
-                        <th>D[]</th>
+                        <th>D<br>19:15-20:05</th>
                         <td><br></td>
                         <td><br></td>
                         <td><br></td>
@@ -154,7 +154,17 @@
                         <td><br></td>
                     </tr>
                     <tr>
-                        <th>E[]</th>
+                        <th>E<br>20:10-21:00</th>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                        <td><br></td>
+                    </tr>
+                    <tr>
+                        <th>F<br>21:05-21:55</th>
                         <td><br></td>
                         <td><br></td>
                         <td><br></td>
@@ -166,20 +176,21 @@
                 </tbody>
             </table>
         </div>
-        <div class="list_container">
-            <table id="list_content" border="1" style="border-style:solid; border-collapse:collapse;">
+        <div class="list_container" style="max-height: 800px; overflow: auto">
+            <table id="list_content">
                 <tbody>
-                    <tr style="position: sticky;">
-                        <th>年級/班別</th>
-                        <th>上課系所</th>
-                        <th>必選修</th>
-                        <th>學分數</th>
-                        <th>授課教師</th>
-                        <th>時間</th>
-                        <th>所屬學程</th>
-                        <th>備註</th>
-                        <th>教室</th>
-                        <th>選擇</th>
+                    <tr style="position: sticky; top: 0; z-index: 1; background-color: white;">
+                        <th style="width:10%">課程名稱</th>
+                        <th style="width:5%">年級/班別</th>
+                        <th style="width:15%">上課系所</th>
+                        <th style="width:5%">必選修</th>
+                        <th style="width:5%">學分數</th>
+                        <th style="width:15%">授課教師</th>
+                        <th style="width:10%">時間</th>
+                        <th style="width:15%">所屬學程</th>
+                        <th style="width:5%">英文授課</th>
+                        <th style="width:10%">教室</th>
+                        <th style="width:5%">選擇</th>
                     </tr>
 
                 </tbody>
