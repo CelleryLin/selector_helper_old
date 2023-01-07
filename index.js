@@ -25,48 +25,75 @@ function addClassRow(all_classes){
             row.className = 'classes_row_odd';
         }
 
-        row.insertCell(0).innerHTML = all_classes[i][class_info[11]];
+        //選擇
+        var list_i=0;
+        row.insertCell(list_i).innerHTML ="<div style=\"text-align: center\"> <input type=\"checkbox\" style=\" align: center\" onchange='handleChange(this, " + i + ");'> </div>";
+        row.cells[list_i].className="cell_time";
+        list_i++
+        //課程名稱
+        row.insertCell(list_i).innerHTML = all_classes[i][class_info[11]];
+        row.cells[list_i].className="cell_name"
+        list_i++
 
-        row.insertCell(1).innerHTML = "<div style=\"text-align: center; \" >" + all_classes[i][class_info[0]] + "</div>"
-        
-        row.insertCell(2).innerHTML = all_classes[i][class_info[1]];
-
-        row.insertCell(3).innerHTML = all_classes[i][class_info[2]];
-
-        row.insertCell(4).innerHTML = all_classes[i][class_info[3]];
-
-        var teachers = all_classes[i][class_info[4]];
-        var teacher_html = "";
-        for(j=0;j<teachers.length;j++){
-            teacher_html += ("<div style=\"display: inline-block; text-align: center; margin: 3px; padding: 5px; background-color: #FCFCE0; border-radius: 3px \" >" + teachers[j] + "</div>");
-        }
-        row.insertCell(5).innerHTML = teacher_html;
-
+        //時間
         var times = all_classes[i][class_info[5]];
         var times_html = "";
         for(j=0;j<times.length;j++){
             times_html += ("<div style=\"text-align: center; margin: 1px; padding: 3px; background-color: #D5CAF9; border-radius: 3px \" >" + times[j] + "</div>");
         }
-        row.insertCell(6).innerHTML = times_html;
+        row.insertCell(list_i).innerHTML = times_html;
+        row.cells[list_i].className="cell_time";
+        list_i++
 
+        //年級班級
+        row.insertCell(list_i).innerHTML = "<div style=\"text-align: center; \" >" + all_classes[i][class_info[0]] + "</div>"
+        row.cells[list_i].className="cell_class"
+        list_i++
+        //上課系所
+        row.insertCell(list_i).innerHTML = all_classes[i][class_info[1]];
+        row.cells[list_i].className="cell_dep"
+        list_i++
+        //必選修
+        row.insertCell(list_i).innerHTML = all_classes[i][class_info[2]];
+        row.cells[list_i].className="cell_com";
+        list_i++
+        //學分
+        row.insertCell(list_i).innerHTML = all_classes[i][class_info[3]];
+        row.cells[list_i].className="cell_credit";
+        list_i++
+        //老師
+        var teachers = all_classes[i][class_info[4]];
+        var teacher_html = "";
+        for(j=0;j<teachers.length;j++){
+            teacher_html += ("<div style=\"display: inline-block; text-align: center; margin: 3px; padding: 5px; background-color: #FCFCE0; border-radius: 3px \" >" + teachers[j] + "</div>");
+        }
+        row.insertCell(list_i).innerHTML = teacher_html;
+        row.cells[list_i].className="cell_teacher";
+        list_i++
+        
+        //學程
         var programs = all_classes[i][class_info[6]];
         if (programs[0]!=''){
             var programs_html = "";
             for(j=0;j<programs.length;j++){
                 programs_html += ("<div style=\"text-align: left; margin: 3px; padding: 3px; background-color: #D5CAF9; border-radius: 3px \" >" + programs[j] + "</div>");
             }
-            row.insertCell(7).innerHTML = programs_html;
+            row.insertCell(list_i).innerHTML = programs_html;
         }
         else{
-            row.insertCell(7).innerHTML = "";
+            row.insertCell(list_i).innerHTML = "";
         }
+        row.cells[list_i].className="cell_prog";
+        list_i++
+        //EMI
+        row.insertCell(list_i).innerHTML ="<div style=\"text-align: center; \" >" + all_classes[i][class_info[8]] + "</div>"
+        row.cells[list_i].className="cell_EMI";
+        list_i++
+        //教室
+        row.insertCell(list_i).innerHTML =all_classes[i][class_info[7]];
+        row.cells[list_i].className="cell_room";
 
-        row.insertCell(8).innerHTML ="<div style=\"text-align: center; \" >" + all_classes[i][class_info[8]] + "</div>"
-
-        row.insertCell(9).innerHTML =all_classes[i][class_info[7]];
-
-        row.insertCell(10).innerHTML ="<div style=\"text-align: center\"> <input type=\"checkbox\" style=\" align: center\" onchange='handleChange(this, " + i + ");'> </div>";
-
+        
         
 
     }
@@ -110,7 +137,7 @@ function main(csv_data){
     //console.log(all_class_raw);
     all_classes=[]
     for(i=1;i<all_class_raw.length-1;i++){
-    //for(i=1;i<10;i++){
+    //for(i=1;i<100;i++){
         //time_sort(all_class_raw[i]);
         var sorted_time=[];
         for(j=18;j<=24;j++){
@@ -131,7 +158,8 @@ function main(csv_data){
             "EMI": all_class_raw[i][27],
             "Comment": all_class_raw[i][25],
             "Select": 0,
-            "Name": all_class_raw[i][7]
+            "Name": all_class_raw[i][7],
+            "ClassID": all_class_raw[i][4]
         };
         all_classes.push(class_info);
         
@@ -149,6 +177,15 @@ Papa.parse("./all_classes.csv", {
 	}
 });
 
+function ClassLayout(cell_index){
+    if (cell_index.children.length != 0){
+        cell_index.childNodes.forEach(function(th_i,th_index){
+            var width = 100/cell_index.children.length;
+            th_i.style.width = `${width}%`;
+        });
+    }
+}
+
 function insertClass(class_info, isSelected){
     const schedule = document.getElementById('schedule_content');
     for(i=0;i<class_info['Time'].length;i++){
@@ -158,24 +195,6 @@ function insertClass(class_info, isSelected){
             
             var day_tmp=-1;
             var time_tmp=-1;
-            //console.log(timedata[j+2])
-            switch(timedata[j+2].toString()){
-                case "A": time_tmp=1; break;
-                case "1": time_tmp=2; break;
-                case "2": time_tmp=3; break;
-                case "3": time_tmp=4; break;
-                case "4": time_tmp=5; break;
-                case "B": time_tmp=6; break;
-                case "5": time_tmp=7; break;
-                case "6": time_tmp=8; break;
-                case "7": time_tmp=9; break;
-                case "8": time_tmp=10; break;
-                case "9": time_tmp=11; break;
-                case "C": time_tmp=12; break;
-                case "D": time_tmp=13; break;
-                case "E": time_tmp=14; break;
-                case "F": time_tmp=15; break;
-            }
             var row = schedule.rows[time_tmp];
             //console.log(row)
             switch(timedata[0]){
@@ -187,16 +206,28 @@ function insertClass(class_info, isSelected){
                 case "六": day_tmp=6; break;
                 case "日": day_tmp=7; break;
             }
-            var cell = row.cells[day_tmp];
+            const cell_index = document.getElementById(day_tmp.toString() + timedata[j+2].toString())
+            //var cell = row.cells[day_tmp];
             //console.log(cell)
             if (isSelected){
-                cell.style.background = "#F9F9D7";
-                cell.innerHTML = "<div style='text-align: center; margin: 3px'>" + class_info["Name"] + "</div>"
-                
+                var addedClass = document.createElement('div');
+                addedClass.id = class_info['ClassID'];
+                addedClass.innerHTML =`<span>${class_info["Name"]}<br>${class_info["ClassID"]}</span>`;
+                addedClass.style.background = "#F9F9D7";
+                addedClass.style.height = "100%";
+                addedClass.style.fontSize = "14px";
+                addedClass.style.textAlign= "center";
+                addedClass.style.position="relative";
+                addedClass.style.margin=0;
+                addedClass.style.verticalAlign="top";
+                addedClass.style.display="inline-block";
+                cell_index.appendChild(addedClass);
+                ClassLayout(cell_index);
             }
             else{
-                cell.style.background = "white";
-                cell.innerHTML = "";
+                var deletClass = document.getElementById(class_info['ClassID']);
+                deletClass.parentNode.removeChild(deletClass);
+                ClassLayout(cell_index);
             }
             
         }
