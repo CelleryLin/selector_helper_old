@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>NSYSU Course Selection Helper</title>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/BrowserFS/2.0.0/browserfs.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    
+    <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+    <div class="App_container" style="max-height: 100%; width: 100wh; overflow: hidden">
+        <table id="resizable_table" border="1" style=" display: table; border-style:solid; width: 100%; height: 60px;">
+            <thead>
+                <th class="resizable">
+                    <div class="chart_container" style="margin-right: 8px;">
+                        <table style="height: 100vh; width: 100%; background-color: white;" id="schedule_content">
+                            <tbody>
+                                <tr class="schedule_tr">
+                                    <th style="width: 7%">節\日</th>
+                                    <th>星期一</th>
+                                    <th>星期二</th>
+                                    <th>星期三</th>
+                                    <th>星期四</th>
+                                    <th>星期五</th>
+                                    <th>星期六</th>
+                                    <th>星期日</th>
+                                </tr>
+                                <tr class="schedule_tr">
+                                    <th>A<br>7:00-7:50</th>
+                                    <td id="1A"></td>
+                                    <td id="2A"></td>
+                                    <td id="3A"></td>
+                                    <td id="4A"></td>
+                                    <td id="5A"></td>
+                                    <td id="6A"></td>
+                                    <td id="7A"></td>
+                                </tr>
+                                <tr class="schedule_tr">
+                                    <th>1<br>8:10-9:00</th>
+                                    <td id="11"></td>
+                                    <td id="21"></td>
+                                    <td id="31"></td>
+                                    <td id="41"></td>
+                                    <td id="51"></td>
+                                    <td id="61"></td>
+                                    <td id="71"></td>
+                                </tr>
+                                <tr class="schedule_tr">
+                                    <th>2<br>9:10-10:00</th>
+                                    <td id="12"></td>
+                                    <td id="22"></td>
+                                    <td id="32"></td>
+                                    <td id="42"></td>
+                                    <td id="52"></td>
+                                    <td id="62"></td>
+                                    <td id="72"></td>
+                                </tr>
+                                <tr class="schedule_tr">
+                                    <th>3<br>10:10-11:00</th>
+                                    <td id="13"></td>
+                                    <td id="23"></td>
+                                    <td id="33"></td>
+                                    <td id="43"></td>
+                                    <td id="53"></td>
+                                    <td id="63"></td>
+                                    <td id="73"></td>
+                                </tr>
+                                <tr class="schedule_tr">
+                                    <th>4<br>11:10-12:00</th>
+                                    <td id="14"></td>
+                                    <td id="24"></td>
+                                    <td id="34"></td>
+                                    <td id="44"></td>
+                                    <td id="54"></td>
+                                    <td id="64"></td>
+                                    <td id="74"></td>
+                                </tr>
+                                <tr class="schedule_tr">
+                                    <th>B<br>12:10-13:00</th>
+                                    <td id="1B"></td>
+                                    <td id="2B"></td>
+                                    <td id="3B"></td>
+                                    <td id="4B"></td>
+                                    <td id="5B"></td>
+                                    <td id="6B"></td>
+                                    <td id="7B"></td>
+                                </tr>
+                                <tr class="schedule_tr">
+                                    <th>5<br>13:10-14:00</th>
+                                    <td id="15"></td>
+                                    <td id="25"></td>
+                                    <td id="35"></td>
+                                    <td id="45"></td>
+                                    <td id="55"></td>
+                                    <td id="65"></td>
+                                    <td id="75"></td>
+                                </tr>
+                                <tr class="schedule_tr">
+                                    <th>6<br>14:10-15:00</th>
+                                    <td id="16"></td>
+                                    <td id="26"></td>
+                                    <td id="36"></td>
+                                    <td id="46"></td>
+                                    <td id="56"></td>
+                                    <td id="66"></td>
+                                    <td id="76"></td>
+                                </tr>
+                                <tr class="schedule_tr">
+                                    <th>7<br>15:10-16:00</th>
+                                    <td id="17"></td>
+                                    <td id="27"></td>
+                                    <td id="37"></td>
+                                    <td id="47"></td>
+                                    <td id="57"></td>
+                                    <td id="67"></td>
+                                    <td id="77"></td>
+                                </tr>
+                                <tr class="schedule_tr">
+                                    <th>8<br>16:10-17:00</th>
+                                    <td id="18"></td>
+                                    <td id="28"></td>
+                                    <td id="38"></td>
+                                    <td id="48"></td>
+                                    <td id="58"></td>
+                                    <td id="68"></td>
+                                    <td id="78"></td>
+                                </tr>
+                                <tr class="schedule_tr">
+                                    <th>9<br>17:10-18:00</th>
+                                    <td id="19"></td>
+                                    <td id="29"></td>
+                                    <td id="39"></td>
+                                    <td id="49"></td>
+                                    <td id="59"></td>
+                                    <td id="69"></td>
+                                    <td id="79"></td>
+                                </tr>
+                                <tr class="schedule_tr">
+                                    <th>C<br>18:20-19:10</th>
+                                    <td id="1C"></td>
+                                    <td id="2C"></td>
+                                    <td id="3C"></td>
+                                    <td id="4C"></td>
+                                    <td id="5C"></td>
+                                    <td id="6C"></td>
+                                    <td id="7C"></td>
+                                </tr>
+                                <tr class="schedule_tr">
+                                    <th>D<br>19:15-20:05</th>
+                                    <td id="1D"></td>
+                                    <td id="2D"></td>
+                                    <td id="3D"></td>
+                                    <td id="4D"></td>
+                                    <td id="5D"></td>
+                                    <td id="6D"></td>
+                                    <td id="7D"></td>
+                                </tr>
+                                <tr class="schedule_tr">
+                                    <th>E<br>20:10-21:00</th>
+                                    <td id="1E"></td>
+                                    <td id="2E"></td>
+                                    <td id="3E"></td>
+                                    <td id="4E"></td>
+                                    <td id="5E"></td>
+                                    <td id="6E"></td>
+                                    <td id="7E"></td>
+                                </tr>
+                                <tr class="schedule_tr">
+                                    <th>F<br>21:05-21:55</th>
+                                    <td id="1F"></td>
+                                    <td id="2F"></td>
+                                    <td id="3F"></td>
+                                    <td id="4F"></td>
+                                    <td id="5F"></td>
+                                    <td id="6F"></td>
+                                    <td id="7F"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="resizer"></div>
+                </th>
+                <th class="resizable">
+                    <div class="list_container">
+                        <table id="list_content" style="width: 100%;">
+                            <thead>
+                                <tr style="position: sticky; top: 0; z-index: 1; background-color: white;">
+                                    <th style="width:3%">選擇</th>
+                                    <th style="width:22%">課程名稱</th>
+                                    <th style="width:6%">時間</th>
+                                    <th style="width:5%">年級/班別</th>
+                                    <th style="width:13%">上課系所</th>
+                                    <th style="width:3%">必選修</th>
+                                    <th style="width:3%">學分數</th>
+                                    <th style="width:15%">授課教師</th>
+                                    <th style="width:15%">所屬學程</th>
+                                    <th style="width:5%">英文授課</th>
+                                    <th style="width:10%">教室</th>
+                                </tr>
+            
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </th>
+                
+            </thead>
+        </table>
+        <script src="./resize_table.js"></script>
+        <script src="index.js"></script>
+        
+        <input type="button" name="test" onclick="functionaddRow();">
+    </div>
+    
+</body>
+
+</html>
