@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="./index.css">
 </head>
 <body>
-    <div class="App_container" style="height: 100vh; width: 100wh">
-        <table id="resizable_table" border="1" style=" display: table; border-style:solid; width: 100%;">
+    <div class="App_container" style="max-height: 100%; width: 100wh; overflow: hidden">
+        <table id="resizable_table" border="1" style=" display: table; border-style:solid; width: 100%; height: 60px;">
             <thead>
                 <th class="resizable">
                     <div class="chart_container" style="margin-right: 8px;">
@@ -183,7 +183,7 @@
                     <div class="resizer"></div>
                 </th>
                 <th class="resizable">
-                    <div class="list_container" style="max-height: 100vh; overflow: auto">
+                    <div class="list_container">
                         <table id="list_content" style="width: 100%;">
                             <thead>
                                 <tr style="position: sticky; top: 0; z-index: 1; background-color: white;">
