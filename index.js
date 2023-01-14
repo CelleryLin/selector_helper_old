@@ -34,6 +34,7 @@ function filter_Init(all_classes){
 
     //年級
     filter_Grade=['(無)','一','二','三','四'];
+    filter_Grade_trans=['','一','二','三','四'];
 
     //班級
     filter_Class=['甲','乙','全英'];
@@ -46,6 +47,7 @@ function filter_Init(all_classes){
 
     //必選
     filter_Compulsory=['必修','選修'];
+    filter_Compulsory_trans=['必','選'];
 
     //學分
     all_classes.map((val) => filter_Credit.push(val.Credits))
@@ -72,7 +74,7 @@ function filter_Init(all_classes){
     filter_Programs=[];   //pass
 
     //EMI
-    filter_EMI=['英文授課','非英文授課'];
+    filter_EMI=['非英文授課','英文授課'];
 
     //篩選器種類
     
@@ -191,14 +193,17 @@ function addanRow(tableRow, class_info, id_selector, i){
 
 }
 
-function addClassRow(all_classes){
+function addClassRow(all_classes, filter){
     var tableRow = document.getElementById("list_content");
 
     for(i=0;i<all_classes.length;i++){
-        if(all_classes[i]["Visibility"]==1){
+        if(all_classes[i]["Visibility"]==1 || filter){
             addanRow(tableRow, all_classes[i],"list", i);
         }
     }
+    all_classes.forEach(val => {
+        val["Visibility"]=1;
+    })
 }
 var all_class_raw=[];
 
@@ -224,7 +229,7 @@ function main(csv_data){
     //console.log(all_class_raw);
     all_classes=[]
     //for(i=1;i<all_class_raw.length-1;i++){
-    for(i=1;i<500;i++){
+    for(i=1;i<1000;i++){
         //time_sort(all_class_raw[i]);
         var sorted_time=[];
         for(j=18;j<=24;j++){
@@ -253,7 +258,7 @@ function main(csv_data){
         
     }
     //console.log("Done!")
-    addClassRow(all_classes)
+    addClassRow(all_classes, 1)
     filter_Init(all_classes)
 }
 
@@ -367,33 +372,263 @@ function list_delet_all_classes(){
     tableRow.appendChild(list_head);
 }
 
-function Filter(class_info){
-    list_delet_all_classes();
-    addClassRow(all_classes);
-    //class_info = {
-    //    "Grade": (grade_index[all_class_raw[i][5]]+all_class_raw[i][6].split('班')[0]),
-    //    "Department": all_class_raw[i][3],
-    //    "Compulsory": all_class_raw[i][11],
-    //    "Credits": all_class_raw[i][9],
-    //    "Teacher": all_class_raw[i][16].split(','),
-    //    "Time": sorted_time,
-    //    "Programs": all_class_raw[i][26].replaceAll('\'','').split(','),
-    //    "Room": all_class_raw[i][17],
-    //    "EMI": all_class_raw[i][27],
-    //    "Comment": all_class_raw[i][25],
-    //    "Select": 0,
-    //    "Name": all_class_raw[i][7],
-    //    "ClassID": all_class_raw[i][4],
-    //    "Visibility": 0
-    //};
-    return 1;
-    if(class_info["EMI"]==1){
-        return 1;
+function Filter_logic_excute(class_info, filter_cat, filter_logic, filter_content, filter_type){
+    var final_res=1;
+    if(filter_type=="str"){
+        switch(filter_logic){
+            case "contains":
+                var tmp_res=0;
+                filter_content.replace(/\s+/g, '').split(',').forEach(val => {
+                    if(class_info[filter_cat].includes(val)){
+                        tmp_res=1;
+                    }
+                    else{
+                        //do nothing
+                    }
+                });
+                final_res=tmp_res;
+                break;
+            
+            case "ncontains":
+                var tmp_res=0;
+                filter_content.replace(/\s+/g, '').split(',').forEach(val => {
+                    if(class_info[filter_cat].includes(val)){
+                        tmp_res=1;
+                    }
+                    else{
+                        //do nothing
+                    }
+                });
+                final_res= !tmp_res;
+                break;
+            
+            case "equ":
+                var tmp_res=0;
+                filter_content.replace(/\s+/g, '').split(',').forEach(val => {
+                    if(class_info[filter_cat]==val){
+                        tmp_res=1;
+                    }
+                    else{
+                        //do nothing
+                    }
+                });
+                final_res=tmp_res;
+                break;
+
+            case "nequ":
+                var tmp_res=0;
+                filter_content.replace(/\s+/g, '').split(',').forEach(val => {
+                    if(class_info[filter_cat]==val){
+                        tmp_res=1;
+                    }
+                    else{
+                        //do nothing
+                    }
+                });
+                final_res= !tmp_res;
+                break;
+
+            defult:
+                p("WRONG!");
+                break;
+        }
     }
-    else{
-        return 0;
+    else if(filter_type=="obj"){
+        p(class_info[filter_cat])
+        switch(filter_logic){
+            case "contains":
+                var tmp_res=0;
+                class_info[filter_cat].forEach(val_cat =>{
+                    filter_content.forEach(val_con => {
+                        if(val_cat.includes(val_con)){
+                            tmp_res=1;
+                        }
+                        else{
+                            //do nothing
+                        }
+                    });
+                })
+                final_res=tmp_res;
+                break;
+            
+            case "ncontains":
+                var tmp_res=0;
+                class_info[filter_cat].forEach(val_cat =>{
+                    filter_content.forEach(val_con => {
+                        if(val_cat.includes(val_con)){
+                            tmp_res=1;
+                        }
+                        else{
+                            //do nothing
+                        }
+                    });
+                })
+                final_res= !tmp_res;
+                break;
+            
+            case "equ":
+                var tmp_res=0;
+                class_info[filter_cat].forEach(val_cat =>{
+                    filter_content.forEach(val_con => {
+                        if(val_cat==val_con){
+                            tmp_res=1;
+                        }
+                        else{
+                            //do nothing
+                        }
+                    });
+                })
+                final_res=tmp_res;
+                break;
+
+            case "nequ":
+                var tmp_res=0;
+                class_info[filter_cat].forEach(val_cat =>{
+                    filter_content.forEach(val_con => {
+                        if(val_cat==val_con){
+                            tmp_res=1;
+                        }
+                        else{
+                            //do nothing
+                        }
+                    });
+                })
+                final_res= !tmp_res;
+                break;
+
+            defult:
+                p("WRONG!");
+                break;
+        }
     }
-    
+    return final_res;
+
+}
+function Filter(filter_cat, filter_logic, filter_content){
+    // class_info = {
+    //     "Grade": (grade_index[all_class_raw[i][5]]+all_class_raw[i][6].split('班')[0]),
+    //     "Department": all_class_raw[i][3],
+    //     "Compulsory": all_class_raw[i][11],
+    //     "Credits": all_class_raw[i][9],
+    //     "Teacher": all_class_raw[i][16].split(','),
+    //     "Time": sorted_time,
+    //     "Programs": all_class_raw[i][26].replaceAll('\'','').replaceAll(' ','').split(','),
+    //     "Room": all_class_raw[i][17],
+    //     "EMI": all_class_raw[i][27],
+    //     "Comment": all_class_raw[i][25],
+    //     "Select": 0,
+    //     "Name": all_class_raw[i][7],
+    //     "ClassID": all_class_raw[i][4],
+    //     "Visibility": 1
+    // };
+    all_classes.forEach(val => {
+        if(val["Visibility"]==1){
+            var final_res=1;
+        switch (filter_cat){
+            case "Filter_Class":
+                final_res*=Filter_logic_excute(val, "Name", filter_logic, filter_content, "str");
+                break;
+            case "Filter_Time":
+                final_res*=Filter_logic_excute(val, "Time", filter_logic, filter_content, "obj");
+                break;
+            case "Filter_Day":
+                var filter_content_Trans=[]
+                filter_content.forEach( val_tmp => {
+                    filter_content_Trans.push(filter_Day[parseInt(val_tmp,10)]);
+                });
+                final_res*=Filter_logic_excute(val, "Time", filter_logic, filter_content_Trans, "obj");
+                break;
+            case "Filter_Grade":
+                var filter_content_Trans=""
+                filter_content.forEach( (val_tmp,index) => {
+                    if (index==0){
+                        filter_content_Trans += filter_Grade_trans[parseInt(val_tmp,10)];
+                    }
+                    else{
+                        filter_content_Trans += (","+filter_Grade_trans[parseInt(val_tmp,10)]);
+                    }
+                    
+                });
+                final_res*=Filter_logic_excute(val, "Grade", filter_logic, filter_content_Trans, "str");
+                break;
+            case "Filter_ClassCat":
+                var filter_content_Trans=""
+                filter_content.forEach( (val_tmp,index) => {
+                    if (index==0){
+                        filter_content_Trans += filter_Class[parseInt(val_tmp,10)];
+                    }
+                    else{
+                        filter_content_Trans += (","+filter_Class[parseInt(val_tmp,10)]);
+                    }
+                    
+                });
+                final_res*=Filter_logic_excute(val, "Grade", filter_logic, filter_content_Trans, "str");
+                break;
+            case "Filter_Dep":
+                var filter_content_Trans=""
+                filter_content.forEach( (val_tmp,index) => {
+                    if (index==0){
+                        filter_content_Trans += val_tmp;
+                    }
+                    else{
+                        filter_content_Trans += (","+val_tmp);
+                    }
+                    
+                });
+                final_res*=Filter_logic_excute(val, "Department", filter_logic, filter_content_Trans, "str");
+                break;
+            case "Filter_Comp":
+                
+                var filter_content_Trans=""
+                filter_content.forEach( (val_tmp,index) => {
+                    if (index==0){
+                        filter_content_Trans += filter_Compulsory_trans[parseInt(val_tmp,10)];
+                    }
+                    else{
+                        filter_content_Trans += (","+filter_Compulsory_trans[parseInt(val_tmp,10)]);
+                    }
+                    
+                });
+                final_res*=Filter_logic_excute(val, "Compulsory", filter_logic, filter_content_Trans, "str");
+                break;
+            case "Filter_Credit":
+                p(filter_content)
+                var filter_content_Trans=""
+                filter_content.forEach( (val_tmp,index) => {
+                    if (index==0){
+                        filter_content_Trans += filter_Credit[parseInt(val_tmp,10)];
+                    }
+                    else{
+                        filter_content_Trans += (","+filter_Credit[parseInt(val_tmp,10)]);
+                    }
+                    
+                });
+                final_res*=Filter_logic_excute(val, "Credits", filter_logic, filter_content_Trans, "str");
+                break;
+            case "Filter_Teacher":
+                final_res*=Filter_logic_excute(val, "Teacher", filter_logic, filter_content.replace(/\s+/g, '').split(','), "obj");
+                break;
+            case "Filter_Prog":
+                final_res*=Filter_logic_excute(val, "Programs", filter_logic, filter_content.replace(/\s+/g, '').split(','), "obj");
+                break;
+            case "Filter_EMI":
+                p(filter_content)
+                var filter_content_Trans=""
+                filter_content.forEach( (val_tmp,index) => {
+                    if (index==0){
+                        filter_content_Trans += val_tmp;
+                    }
+                    else{
+                        filter_content_Trans += (","+val_tmp);
+                    }
+                    
+                });
+                final_res*=Filter_logic_excute(val, "EMI", filter_logic, filter_content_Trans, "str");
+                break;
+        }
+        val["Visibility"]=final_res;
+        }
+    });
 }
 
 document.addEventListener("click",(val) => {
@@ -407,7 +642,30 @@ document.addEventListener("click",(val) => {
 });
 
 document.addEventListener("input",(val) => {
-    Filter(all_classes[6]);
+    if(val.target.id=="filter_switch"){
+        if ($('#filter_switch').is(':checked')){
+            var all_filter=[].slice.call($('#filter_content').children(".Filter_row"))
+            if(all_filter.length!=0){
+                all_filter.forEach(val => {
+                    filter_cat=(val.children[0].id)
+                    filter_logic=(val.children[1].children[0].children[0].value)
+                    tag_finder=val.children[2]
+                    while(tag_finder.tagName != "INPUT" && tag_finder.tagName !="SELECT"){
+                        tag_finder=tag_finder.children[0];
+                    }
+                    filter_content=($(tag_finder).val())
+                    Filter(filter_cat, filter_logic, filter_content)
+                    
+                });
+                list_delet_all_classes();
+                addClassRow(all_classes, 0);
+            } 
+        }
+        else{
+            list_delet_all_classes();
+            addClassRow(all_classes,1);
+        }
+    }
 })
 
 function Filter_window(){
@@ -433,7 +691,7 @@ function appendFilter(append_i){
     switch (filter_category_index[append_i]){
         case "Class":
             append_html=`
-                <div style="display: inline-block; vertical-align: middle;" class="Filter_lable">
+                <div id="Filter_Class" style="display: inline-block; vertical-align: middle;" class="Filter_lable">
                     ${toAppend}
                 </div>
                 <div class="Filter_logic">
@@ -458,7 +716,7 @@ function appendFilter(append_i){
                 options+=`<option value="${val}">${val}</option>`;
             });
             append_html=`
-                <div style="display: inline-block;" class="Filter_lable">
+                <div id="Filter_Time" style="display: inline-block;" class="Filter_lable">
                     ${toAppend}
                 </div>
                 <div class="Filter_logic">
@@ -486,7 +744,7 @@ function appendFilter(append_i){
                 options+=`<option value="${index}">${val}</option>`;
             });
             append_html=`
-                <div style="display: inline-block;" class="Filter_lable">
+                <div id="Filter_Day" style="display: inline-block;" class="Filter_lable">
                     ${toAppend}
                 </div>
                 <div class="Filter_logic">
@@ -514,7 +772,7 @@ function appendFilter(append_i){
                 options+=`<option value="${index}">${val}</option>`;
             });
             append_html=`
-                <div style="display: inline-block;" class="Filter_lable">
+                <div id="Filter_Grade" style="display: inline-block;" class="Filter_lable">
                     ${toAppend}
                 </div>
                 <div class="Filter_logic">
@@ -542,7 +800,7 @@ function appendFilter(append_i){
                 options+=`<option value="${index}">${val}</option>`;
             });
             append_html=`
-                <div style="display: inline-block;" class="Filter_lable">
+                <div id="Filter_ClassCat" style="display: inline-block;" class="Filter_lable">
                     ${toAppend}
                 </div>
                 <div class="Filter_logic">
@@ -569,7 +827,7 @@ function appendFilter(append_i){
                 options+=`<option value="${val}">${val}</option>`;
             });
             append_html=`
-                <div style="display: inline-block;" class="Filter_lable">
+                <div id="Filter_Dep" style="display: inline-block;" class="Filter_lable">
                     ${toAppend}
                 </div>
                 <div class="Filter_logic">
@@ -596,13 +854,13 @@ function appendFilter(append_i){
                 options+=`<option value="${index}">${val}</option>`;
             });
             append_html=`
-                <div style="display: inline-block;" class="Filter_lable">
+                <div id="Filter_Comp" style="display: inline-block;" class="Filter_lable">
                     ${toAppend}
                 </div>
                 <div class="Filter_logic">
                     <select data-style="btn-white" class="selectpicker" data-width="100%" data-container="body">
-                        <option value="contains" selected>等於</option>
-                        <option value="ncontains">不等於</option>
+                        <option value="equ" selected>等於</option>
+                        <option value="nequ">不等於</option>
                         </select>
                 </div>
                 <div style="display: inline-block; padding-right: 15px; width: 250px">
@@ -623,13 +881,13 @@ function appendFilter(append_i){
                 options+=`<option value="${index}">${val}</option>`;
             });
             append_html=`
-                <div style="display: inline-block;" class="Filter_lable">
+                <div id="Filter_Credit" style="display: inline-block;" class="Filter_lable">
                     ${toAppend}
                 </div>
                 <div class="Filter_logic">
                     <select data-style="btn-white" class="selectpicker" data-width="100%" data-container="body">
-                        <option value="contains" selected>等於</option>
-                        <option value="ncontains">不等於</option>
+                        <option value="equ" selected>等於</option>
+                        <option value="nequ">不等於</option>
                         </select>
                 </div>
                 <div style="display: inline-block; padding-right: 15px; width: 250px">
@@ -646,7 +904,7 @@ function appendFilter(append_i){
             break;
         case "Teacher":
             append_html=`
-                <div style="display: inline-block; vertical-align: middle;" class="Filter_lable">
+                <div id="Filter_Teacher" style="display: inline-block; vertical-align: middle;" class="Filter_lable">
                     ${toAppend}
                 </div>
                 <div class="Filter_logic">
@@ -667,7 +925,7 @@ function appendFilter(append_i){
             break;
         case "Prog":
             append_html=`
-                <div style="display: inline-block; vertical-align: middle;" class="Filter_lable">
+                <div id="Filter_Prog" style="display: inline-block; vertical-align: middle;" class="Filter_lable">
                     ${toAppend}
                 </div>
                 <div class="Filter_logic">
@@ -693,13 +951,13 @@ function appendFilter(append_i){
             });
             
             append_html=`
-                <div style="display: inline-block;" class="Filter_lable">
+                <div id="Filter_EMI" style="display: inline-block;" class="Filter_lable">
                     ${toAppend}
                 </div>
                 <div class="Filter_logic">
                     <select data-style="btn-white" class="selectpicker" data-width="100%" data-container="body">
-                        <option value="contains" selected>等於</option>
-                        <option value="ncontains">不等於</option>
+                        <option value="equ" selected>等於</option>
+                        <option value="nequ">不等於</option>
                         </select>
                 </div>
                 <div style="display: inline-block; padding-right: 15px; width: 250px">

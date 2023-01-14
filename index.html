@@ -237,21 +237,24 @@
                                                     </tr>                                                   
                                                 </tbody>
                                             </table>
-                                            <div style="display: block; position: absolute; top: 15%; right: 50px; z-index: 3; height: auto; width: 80%; max-height: 80%; min-height: 100px; text-align: right;">
+                                            <div style="display: block; position: absolute; top: 18%; right: 35px; z-index: 3; height: auto; width: 80%; max-height: 80%; min-height: 100px; text-align: right;">
                                                 <div style="display: block;">
                                                     <button id="filter_collapser" style="background-color: rgba(212, 212, 212, 0.5); text-align: right; border-radius: 10px;">
                                                         <i style="font-size:24px; color: #727272; padding: 3px;" class="fa">&#xf0d7;</i>
                                                     </button>
                                                 </div>
                                                 <div id="filter_content" class="filter_content">
-                                                    <div style="position: absolute; left: 10px; top: 3px; padding: 5px; font-size: 18px; display: block;">使用篩選器：</div>
-                                                    <div style="position: relative; top: 3px; padding: 17px;"></div>
-                                                    <div>
-                                                        <div class="form-check form-switch">
-                                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
-                                                            <label class="form-check-label" for="flexSwitchCheckChecked">啟用</label>
+                                                    <div style="position: absolute; left: 10px; top: 3px; padding: 5px; font-size: 18px; display: block; z-index: 3;">
+                                                        <span>使用篩選器：</span>
+
+                                                        <div class="form-check form-switch" style="display: inline-block;">
+                                                            <input class="form-check-input" type="checkbox" role="switch" id="filter_switch" style="margin-left: 5px;">
+                                                            <label style="padding-left: 7px; margin: 3px;" id="filter_switch_status">啟用</label>
                                                         </div>
+                                                    
                                                     </div>
+                                                    <div style="position: relative; top: 3px; padding: 17px; margin-bottom: 15px;"></div>
+                                                    
                                                     <div style="position: relative; display: block; padding: 5px; z-index: 3;">
                                                         <button class="add_filter_btn" onclick="Filter_window();"><i style="font-size:20px" class="fa-solid">&#x2b;</i></button>
                                                     </div>
