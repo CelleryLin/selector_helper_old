@@ -235,10 +235,9 @@ function main(csv_data){
     const grade_index=['','一', '二','三', '四'];
     all_class_raw=csv_data.data
     if(JSON.parse(localStorage.getItem('NSYSU_Courses_Selector_Helper_Saved')) == null){
-        t();
         all_classes=[]
-        //for(i=1;i<all_class_raw.length-1;i++){
-        for(i=1;i<1000;i++){
+        for(i=1;i<all_class_raw.length-1;i++){
+        //for(i=1;i<1000;i++){
             //time_sort(all_class_raw[i]);
             var sorted_time=[];
             for(j=18;j<=24;j++){
@@ -268,14 +267,13 @@ function main(csv_data){
     }
     else{
         all_classes=JSON.parse(localStorage.getItem('NSYSU_Courses_Selector_Helper_Saved'));
-        all_classes.forEach(val => {
+        all_classes.forEach( (val,index) => {
             if(val['Select']){
                 insertClass(val,1);
                 var tableRow = document.getElementById("list_content_selected");
-                addanRow(tableRow, val, "selected", i);
+                addanRow(tableRow, val, "selected", index);
             }
         })
-        p(all_classes);
     }
 
     addClassRow(all_classes, 1)
@@ -454,7 +452,6 @@ function Filter_logic_excute(class_info, filter_cat, filter_logic, filter_conten
         }
     }
     else if(filter_type=="obj"){
-        p(class_info[filter_cat])
         switch(filter_logic){
             case "contains":
                 var tmp_res=0;
@@ -612,7 +609,6 @@ function Filter(filter_cat, filter_logic, filter_content){
                 final_res*=Filter_logic_excute(val, "Compulsory", filter_logic, filter_content_Trans, "str");
                 break;
             case "Filter_Credit":
-                p(filter_content)
                 var filter_content_Trans=""
                 filter_content.forEach( (val_tmp,index) => {
                     if (index==0){
@@ -632,7 +628,6 @@ function Filter(filter_cat, filter_logic, filter_content){
                 final_res*=Filter_logic_excute(val, "Programs", filter_logic, filter_content.replace(/\s+/g, '').split(','), "obj");
                 break;
             case "Filter_EMI":
-                p(filter_content)
                 var filter_content_Trans=""
                 filter_content.forEach( (val_tmp,index) => {
                     if (index==0){
@@ -1008,6 +1003,6 @@ function delet_Filter(event){
 $('.selectpicker').selectpicker();
 
 function save_course(){
-    p("saved!");
+    //p("saved!");
     localStorage.setItem('NSYSU_Courses_Selector_Helper_Saved', JSON.stringify(all_classes));
 }

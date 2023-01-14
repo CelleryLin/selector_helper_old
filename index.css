@@ -23,6 +23,12 @@ td {
 
 .schedule_tr {
     background-color: #e2e2e2;
+    border: 2px solid white;
+}
+
+.schedule_th{
+    border: 2px solid black;
+    text-align: center;
 }
 
 .resizable {
