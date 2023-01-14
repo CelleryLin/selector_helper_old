@@ -91,12 +91,15 @@ function filter_Init(all_classes){
 
 }
 function updateCheckbox(class_info){
+    
     var classrow = document.getElementById(class_info["ClassID"]+"_selected");
     if(classrow != null){
         classrow.childNodes[0].childNodes[0].childNodes[1].checked=class_info["Select"];
     }
     var classrow = document.getElementById(class_info["ClassID"]);
     classrow.childNodes[0].childNodes[0].childNodes[1].checked=class_info["Select"];
+
+    save_course();
 }
 
 function addanRow(tableRow, class_info, id_selector, i){
@@ -117,7 +120,12 @@ function addanRow(tableRow, class_info, id_selector, i){
 
     //選擇
     var list_i=0;
-    row.insertCell(list_i).innerHTML =`<div style="text-align: center"> <input type="checkbox" style=" align: center" onchange='handleChange(this,${i});'> </div>`;
+    if(class_info["Select"]){
+        row.insertCell(list_i).innerHTML =`<div style="text-align: center"> <input type="checkbox" style=" align: center" onchange='handleChange(this,${i});' checked> </div>`;
+    }
+    else{
+        row.insertCell(list_i).innerHTML =`<div style="text-align: center"> <input type="checkbox" style=" align: center" onchange='handleChange(this,${i});'> </div>`;
+    } 
     row.cells[list_i].className="cell_selected";
     
     list_i++
@@ -194,8 +202,8 @@ function addanRow(tableRow, class_info, id_selector, i){
 }
 
 function addClassRow(all_classes, filter){
+    list_delet_all_classes();
     var tableRow = document.getElementById("list_content");
-
     for(i=0;i<all_classes.length;i++){
         if(all_classes[i]["Visibility"]==1 || filter){
             addanRow(tableRow, all_classes[i],"list", i);
@@ -226,38 +234,50 @@ function main(csv_data){
     const day_index=['一 ', '二 ', '三 ', '四 ', '五 ', '六 ', '日 '];
     const grade_index=['','一', '二','三', '四'];
     all_class_raw=csv_data.data
-    //console.log(all_class_raw);
-    all_classes=[]
-    //for(i=1;i<all_class_raw.length-1;i++){
-    for(i=1;i<1000;i++){
-        //time_sort(all_class_raw[i]);
-        var sorted_time=[];
-        for(j=18;j<=24;j++){
-            
-            if (all_class_raw[i][j]!=""){
-                sorted_time.push(day_index[j-18]+all_class_raw[i][j]);
+    if(JSON.parse(localStorage.getItem('NSYSU_Courses_Selector_Helper_Saved')) == null){
+        t();
+        all_classes=[]
+        //for(i=1;i<all_class_raw.length-1;i++){
+        for(i=1;i<1000;i++){
+            //time_sort(all_class_raw[i]);
+            var sorted_time=[];
+            for(j=18;j<=24;j++){
+                
+                if (all_class_raw[i][j]!=""){
+                    sorted_time.push(day_index[j-18]+all_class_raw[i][j]);
+                }
             }
+            class_info = {
+                "Grade": (grade_index[all_class_raw[i][5]]+all_class_raw[i][6].split('班')[0]),
+                "Department": all_class_raw[i][3],
+                "Compulsory": all_class_raw[i][11],
+                "Credits": all_class_raw[i][9],
+                "Teacher": all_class_raw[i][16].split(','),
+                "Time": sorted_time,
+                "Programs": all_class_raw[i][26].replaceAll('\'','').replaceAll(' ','').split(','),
+                "Room": all_class_raw[i][17],
+                "EMI": all_class_raw[i][27],
+                "Comment": all_class_raw[i][25],
+                "Select": 0,
+                "Name": all_class_raw[i][7],
+                "ClassID": all_class_raw[i][4],
+                "Visibility": 1
+            };
+            all_classes.push(class_info);
         }
-        class_info = {
-            "Grade": (grade_index[all_class_raw[i][5]]+all_class_raw[i][6].split('班')[0]),
-            "Department": all_class_raw[i][3],
-            "Compulsory": all_class_raw[i][11],
-            "Credits": all_class_raw[i][9],
-            "Teacher": all_class_raw[i][16].split(','),
-            "Time": sorted_time,
-            "Programs": all_class_raw[i][26].replaceAll('\'','').replaceAll(' ','').split(','),
-            "Room": all_class_raw[i][17],
-            "EMI": all_class_raw[i][27],
-            "Comment": all_class_raw[i][25],
-            "Select": 0,
-            "Name": all_class_raw[i][7],
-            "ClassID": all_class_raw[i][4],
-            "Visibility": 1
-        };
-        all_classes.push(class_info);
-        
     }
-    //console.log("Done!")
+    else{
+        all_classes=JSON.parse(localStorage.getItem('NSYSU_Courses_Selector_Helper_Saved'));
+        all_classes.forEach(val => {
+            if(val['Select']){
+                insertClass(val,1);
+                var tableRow = document.getElementById("list_content_selected");
+                addanRow(tableRow, val, "selected", i);
+            }
+        })
+        p(all_classes);
+    }
+
     addClassRow(all_classes, 1)
     filter_Init(all_classes)
 }
@@ -657,12 +677,10 @@ document.addEventListener("input",(val) => {
                     Filter(filter_cat, filter_logic, filter_content)
                     
                 });
-                list_delet_all_classes();
                 addClassRow(all_classes, 0);
             } 
         }
         else{
-            list_delet_all_classes();
             addClassRow(all_classes,1);
         }
     }
@@ -989,3 +1007,7 @@ function delet_Filter(event){
 
 $('.selectpicker').selectpicker();
 
+function save_course(){
+    p("saved!");
+    localStorage.setItem('NSYSU_Courses_Selector_Helper_Saved', JSON.stringify(all_classes));
+}
