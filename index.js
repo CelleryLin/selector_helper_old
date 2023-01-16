@@ -244,47 +244,52 @@ function main(csv_data){
     const day_index=['一 ', '二 ', '三 ', '四 ', '五 ', '六 ', '日 '];
     const grade_index=['','一', '二','三', '四'];
     all_class_raw=csv_data.data
-    if(JSON.parse(localStorage.getItem('NSYSU_Courses_Selector_Helper_Saved')) == null){
-        all_classes=[]
-        for(i=1;i<all_class_raw.length-1;i++){
-        //for(i=1;i<1000;i++){
-            //time_sort(all_class_raw[i]);
-            var sorted_time=[];
-            for(j=18;j<=24;j++){
-                
-                if (all_class_raw[i][j]!=""){
-                    sorted_time.push(day_index[j-18]+all_class_raw[i][j]);
-                }
+    all_classes=[]
+    for(i=1;i<all_class_raw.length-1;i++){
+    //for(i=1;i<1000;i++){
+        //time_sort(all_class_raw[i]);
+        var sorted_time=[];
+        for(j=18;j<=24;j++){
+            
+            if (all_class_raw[i][j]!=""){
+                sorted_time.push(day_index[j-18]+all_class_raw[i][j]);
             }
-            class_info = {
-                "Grade": (grade_index[all_class_raw[i][5]]+all_class_raw[i][6].split('班')[0]),
-                "Department": all_class_raw[i][3],
-                "Compulsory": all_class_raw[i][11],
-                "Credits": all_class_raw[i][9],
-                "Teacher": all_class_raw[i][16].split(','),
-                "Time": sorted_time,
-                "Programs": all_class_raw[i][26].replaceAll('\'','').replaceAll(' ','').split(','),
-                "Room": all_class_raw[i][17],
-                "EMI": all_class_raw[i][27],
-                "Comment": all_class_raw[i][25],
-                "Select": 0,
-                "Name": all_class_raw[i][7],
-                "ClassID": all_class_raw[i][4],
-                "Visibility": 1
-            };
-            all_classes.push(class_info);
         }
+        class_info = {
+            "Grade": (grade_index[all_class_raw[i][5]]+all_class_raw[i][6].split('班')[0]),
+            "Department": all_class_raw[i][3],
+            "Compulsory": all_class_raw[i][11],
+            "Credits": all_class_raw[i][9],
+            "Teacher": all_class_raw[i][16].split(','),
+            "Time": sorted_time,
+            "Programs": all_class_raw[i][26].replaceAll('\'','').replaceAll(' ','').split(','),
+            "Room": all_class_raw[i][17],
+            "EMI": all_class_raw[i][27],
+            "Comment": all_class_raw[i][25],
+            "Select": 0,
+            "Name": all_class_raw[i][7],
+            "ClassID": all_class_raw[i][4],
+            "Visibility": 1
+        };
+        all_classes.push(class_info);
     }
-    else{
-        all_classes=JSON.parse(localStorage.getItem('NSYSU_Courses_Selector_Helper_Saved'));
-        all_classes.forEach( (val,index) => {
-            if(val['Select']){
-                insertClass(val,1);
-                var tableRow = document.getElementById("list_content_selected");
-                addanRow(tableRow, val, "selected", index);
+    
+    var all_classes_read = JSON.parse(localStorage.getItem('NSYSU_Courses_Selector_Helper_Saved'));
+    all_classes_read.forEach( (val_old,index) => {
+        all_classes.forEach( (val_new, index) => {
+            if(val_old["ClassID"]==val_new["ClassID"]){
+                val_new["Select"]=val_old["Select"];
             }
         })
-    }
+    })
+
+    all_classes.forEach( (val,index) => {
+        if(val['Select']){
+            insertClass(val,1);
+            var tableRow = document.getElementById("list_content_selected");
+            addanRow(tableRow, val, "selected", index);
+        }
+    });
     filter_Init(all_classes);
     create_comp_fourm();
     addClassRow(all_classes, 1);
@@ -1159,6 +1164,6 @@ $('.selectpicker').on('change', function(){
 
 
 function save_course(){
-    //p("saved!");
+    
     localStorage.setItem('NSYSU_Courses_Selector_Helper_Saved', JSON.stringify(all_classes));
 }

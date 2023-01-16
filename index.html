@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>NSYSU Course Selection Helper</title>
+    <title>中山大學選課小幫手</title>
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/BrowserFS/2.0.0/browserfs.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -192,14 +192,52 @@
                     <div class="function_container" style="height: 100%; overflow:auto;">
                         <div class="accordion">
                             <div class="accordion-item">
-                                <h2 class="accordion-header" id="compulsory_area">
+                                <h2 class="accordion-header" id="bulletin_area">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#panelsStayOpen-compulsory_area" aria-expanded="true"
-                                        aria-controls="panelsStayOpen-compulsory_area">
-                                        本學期必修
+                                        data-bs-target="#panelsStayOpen-bulletin_area" aria-expanded="true"
+                                        aria-controls="panelsStayOpen-bulletin_area">
+                                        🎉 公告
                                     </button>
                                 </h2>
-                                <div id="panelsStayOpen-compulsory_area" class="accordion-collapse collapse show"
+                                <div id="panelsStayOpen-bulletin_area" class="accordion-collapse collapse show"
+                                    aria-labelledby="bulletin_area">
+                                    <div class="accordion-body">
+                                        <div class="comp_container" id="comp_container" style="font-size: 14px;">
+                                            <h3 style="font-size: 18px; padding-top: 10px;"><b>🙈這裡是中山大學選課小助手 v1.0</b></h3>
+                                            <h3 style="font-size: 18px; padding-top: 10px;"><b>學期課程資料：1112 更新日期：2023/01/16</b></h3>
+                                            <div style="padding-top: 5px;"><b>🎉說明：</b></div>
+                                            <div>目前尚未加入響應式視窗設計，建議使用電腦瀏覽。此網站係本人不務正業之作品，程式寫得非常亂，還請多多包含。<br>
+                                            這是輔助大家選課的系統，課程資料是爬蟲下來的靜態資料，若有異動請聯絡我，感謝。</div>
+                                            <div style="padding-top: 5px;"><b><br>🎉最新功能：</b></div>
+                                            <div style="padding-top: 5px;">- 更新1112課表<br>
+                                            - 課表動態更新<br>
+                                            - 一鍵加入必修課<br>
+                                            - 更強大的篩選器<br>
+                                            - 本學期學程搜尋<br>
+                                            - Local Storage 關閉瀏覽器自動儲存選課資料</div>
+                                            <div style="padding-top: 5px;"><b><br>🎉原始碼及說明：</b></div>
+                                            <a style="padding-top: 5px;" href="https://github.com/CelleryLin/selector_helper">我的 Github</a>
+                                            <div style="padding-top: 5px;"><b><br>🎉錯誤回報&聯絡我：</b></div>
+                                            <div style="padding-top: 5px;">Gmail: 
+                                            <a href="mailto:yochen0123@gmail.com">yochen0123@gmail.com</a>
+                                            </div>
+                                            <br><br>
+                                            <div style="font-size: 14px; text-align: center;">by Cellery Lin. MEME113 </div>
+                                            <div style="text-align: center;"><span> Copyright © 2023 Cellery Lin. All rights reserved. </span></div> 
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="compulsory_area">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#panelsStayOpen-compulsory_area" aria-expanded="true"
+                                        aria-controls="panelsStayOpen-compulsory_area">
+                                        🤒 本學期必修
+                                    </button>
+                                </h2>
+                                <div id="panelsStayOpen-compulsory_area" class="accordion-collapse collapse"
                                     aria-labelledby="compulsory_area">
                                     <div class="accordion-body" style="padding: 0;">
                                         <div class="comp_container" id="comp_container">
@@ -237,7 +275,7 @@
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#panelsStayOpen-manual_area" aria-expanded="false"
                                         aria-controls="panelsStayOpen-manual_area">
-                                        手動填課 (物件較多開合可能會有些許卡頓，請耐心稍候)
+                                        🥵 手動填課 (物件較多開合可能會有些許卡頓，請耐心稍候)
                                     </button>
                                 </h2>
                                 <div id="panelsStayOpen-manual_area" class="accordion-collapse collapse"
@@ -275,7 +313,7 @@
                                             </div>
                                             <div style="text-align: center;">
                                                 <div class="form-outline" style="display: inline-block; padding: 10px; width: 80%;">
-                                                    <input type="search" id="form1" class="form-control" style="display: inline-block; border-radius: 100px; width: 100%" placeholder="Type query" aria-label="Search" />
+                                                    <input type="search" id="search_bar" class="form-control" style="display: inline-block; border-radius: 100px; width: 100%" placeholder="綜合搜尋：課程名稱、系所、老師、時間、學程..." aria-label="Search" />
                                                 </div>
                                             </div>
                                             <table id="list_content" style="display: inline-block; width: 100%;">
@@ -308,13 +346,13 @@
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#panelsStayOpen-auto_area" aria-expanded="false"
                                         aria-controls="panelsStayOpen-auto_area">
-                                        自動填課
+                                        🎰 自動填課(工程師還在肝，敬請期待)
                                     </button>
                                 </h2>
                                 <div id="panelsStayOpen-auto_area" class="accordion-collapse collapse"
                                     aria-labelledby="auto_area">
                                     <div class="accordion-body">
-                                        <span style="font-size: 14px" ><i>敬請期待！</i></span>
+                                        <span style="font-size: 14px" ><i>🚜🚜敬請期待！🚜🚜</i></span>
                                         
                                     </div>
                                 </div>
@@ -324,7 +362,7 @@
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#panelsStayOpen-selected_area" aria-expanded="false"
                                         aria-controls="panelsStayOpen-selected_area">
-                                        已選課程
+                                        😴 已選課程
                                     </button>
                                 </h2>
                                 <div id="panelsStayOpen-selected_area" class="accordion-collapse collapse"
