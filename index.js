@@ -33,11 +33,12 @@ function filter_Init(all_classes){
     filter_Day=['一','二','三','四','五','六','日'];
 
     //年級
-    filter_Grade=['(無)','一','二','三','四'];
-    filter_Grade_trans=['','一','二','三','四'];
+    filter_Grade=['一','二','三','四'];
+    filter_Grade_trans=['一','二','三','四'];
 
     //班級
     filter_Class=['甲','乙','全英'];
+    filter_Class_trans=['','甲','乙','全英'];
 
     //系所
     all_classes.map((val) => filter_Dep.push(val.Department))
@@ -99,6 +100,11 @@ function updateCheckbox(class_info){
     var classrow = document.getElementById(class_info["ClassID"]);
     classrow.childNodes[0].childNodes[0].childNodes[1].checked=class_info["Select"];
 
+    var classrow = document.getElementById(class_info["ClassID"]+"_comp");
+    if(classrow != null){
+        classrow.childNodes[0].childNodes[0].childNodes[1].checked=class_info["Select"];
+    }
+    
     save_course();
 }
 
@@ -115,6 +121,9 @@ function addanRow(tableRow, class_info, id_selector, i){
     }
     else if(id_selector=="selected"){
         row.id=class_info["ClassID"]+"_selected";
+    }
+    else if(id_selector=="comp"){
+        row.id=class_info["ClassID"]+"_comp";
     }
     
 
@@ -202,7 +211,8 @@ function addanRow(tableRow, class_info, id_selector, i){
 }
 
 function addClassRow(all_classes, filter){
-    list_delet_all_classes();
+    p("add")
+    list_delet_all_classes(document.getElementById("list_content"));
     var tableRow = document.getElementById("list_content");
     for(i=0;i<all_classes.length;i++){
         if(all_classes[i]["Visibility"]==1 || filter){
@@ -275,9 +285,11 @@ function main(csv_data){
             }
         })
     }
+    filter_Init(all_classes);
+    create_comp_fourm();
+    addClassRow(all_classes, 1);
 
-    addClassRow(all_classes, 1)
-    filter_Init(all_classes)
+    $('.selectpicker').selectpicker();
 }
 
 
@@ -350,6 +362,18 @@ function handleChange(checkbox,i) {
         var tableRow = document.getElementById("list_content_selected");
         addanRow(tableRow, all_classes[i], "selected", i);
     }
+    else if(checkbox=='comp1'){
+        all_classes[i]['Select']=1;
+        insertClass(all_classes[i],1);
+        var tableRow = document.getElementById("list_content_selected");
+        addanRow(tableRow, all_classes[i], "selected", i);
+    }
+    else if(checkbox=='comp0'){
+        all_classes[i]['Select']=0;
+        insertClass(all_classes[i],0);
+        var deletClass = document.getElementById(all_classes[i]['ClassID']+"_selected");
+        deletClass.parentNode.removeChild(deletClass);
+    }
     else{
         all_classes[i]['Select']=0;
         insertClass(all_classes[i],0);
@@ -383,11 +407,18 @@ filter_collapser.addEventListener("click", (e) =>{
     }
 
 });
-function list_delet_all_classes(){
-    var tableRow = document.getElementById("list_content");
-    var list_head = document.getElementById("list_head");
-    tableRow.innerHTML="";
-    tableRow.appendChild(list_head);
+const search_bar=document.getElementById("search_bar")
+search_bar.addEventListener("input", (e)=> {
+    
+    //filter_update_list();
+})
+
+function list_delet_all_classes(tableRow){
+    [].slice.call(tableRow.childNodes[1].children).forEach(val => {
+        if (val.id!="list_head"){
+            val.remove()
+        }
+    });
 }
 
 function Filter_logic_excute(class_info, filter_cat, filter_logic, filter_content, filter_type){
@@ -538,110 +569,112 @@ function Filter(filter_cat, filter_logic, filter_content){
     //     "ClassID": all_class_raw[i][4],
     //     "Visibility": 1
     // };
-    all_classes.forEach(val => {
+    all_classes.forEach((val,index) => {
         if(val["Visibility"]==1){
             var final_res=1;
-        switch (filter_cat){
-            case "Filter_Class":
-                final_res*=Filter_logic_excute(val, "Name", filter_logic, filter_content, "str");
-                break;
-            case "Filter_Time":
-                final_res*=Filter_logic_excute(val, "Time", filter_logic, filter_content, "obj");
-                break;
-            case "Filter_Day":
-                var filter_content_Trans=[]
-                filter_content.forEach( val_tmp => {
-                    filter_content_Trans.push(filter_Day[parseInt(val_tmp,10)]);
-                });
-                final_res*=Filter_logic_excute(val, "Time", filter_logic, filter_content_Trans, "obj");
-                break;
-            case "Filter_Grade":
-                var filter_content_Trans=""
-                filter_content.forEach( (val_tmp,index) => {
-                    if (index==0){
-                        filter_content_Trans += filter_Grade_trans[parseInt(val_tmp,10)];
-                    }
-                    else{
-                        filter_content_Trans += (","+filter_Grade_trans[parseInt(val_tmp,10)]);
-                    }
+            switch (filter_cat){
+                case "Filter_Class":
+                    final_res*=Filter_logic_excute(val, "Name", filter_logic, filter_content, "str");
+                    break;
+                case "Filter_Time":
+                    final_res*=Filter_logic_excute(val, "Time", filter_logic, filter_content, "obj");
+                    break;
+                case "Filter_Day":
+                    var filter_content_Trans=[]
+                    filter_content.forEach( val_tmp => {
+                        filter_content_Trans.push(filter_Day[parseInt(val_tmp,10)]);
+                    });
+                    final_res*=Filter_logic_excute(val, "Time", filter_logic, filter_content_Trans, "obj");
+                    break;
+                case "Filter_Grade":
+                    var filter_content_Trans=""
+                    filter_content.forEach( (val_tmp,index) => {
+                        if (index==0){
+                            filter_content_Trans += filter_Grade_trans[parseInt(val_tmp,10)];
+                        }
+                        else{
+                            filter_content_Trans += (","+filter_Grade_trans[parseInt(val_tmp,10)]);
+                        }
+                        
+                    });
+                    final_res*=Filter_logic_excute(val, "Grade", filter_logic, filter_content_Trans, "str");
+                    break;
+                case "Filter_ClassCat":
+                    var filter_content_Trans=""
+                    filter_content.forEach( (val_tmp,index) => {
+                        if (index==0){
+                            filter_content_Trans += filter_Class_trans[parseInt(val_tmp,10)];
+                        }
+                        else{
+                            filter_content_Trans += (","+filter_Class_trans[parseInt(val_tmp,10)]);
+                        }
+                        
+                    });
+                    final_res*=Filter_logic_excute(val, "Grade", filter_logic, filter_content_Trans, "str");
+                    break;
+                case "Filter_Dep":
+                    var filter_content_Trans=""
+                    filter_content.forEach( (val_tmp,index) => {
+                        if (index==0){
+                            filter_content_Trans += val_tmp;
+                        }
+                        else{
+                            filter_content_Trans += (","+val_tmp);
+                        }
+                        
+                    });
+                    final_res*=Filter_logic_excute(val, "Department", filter_logic, filter_content_Trans, "str");
+                    break;
+                case "Filter_Comp":
                     
-                });
-                final_res*=Filter_logic_excute(val, "Grade", filter_logic, filter_content_Trans, "str");
-                break;
-            case "Filter_ClassCat":
-                var filter_content_Trans=""
-                filter_content.forEach( (val_tmp,index) => {
-                    if (index==0){
-                        filter_content_Trans += filter_Class[parseInt(val_tmp,10)];
-                    }
-                    else{
-                        filter_content_Trans += (","+filter_Class[parseInt(val_tmp,10)]);
-                    }
-                    
-                });
-                final_res*=Filter_logic_excute(val, "Grade", filter_logic, filter_content_Trans, "str");
-                break;
-            case "Filter_Dep":
-                var filter_content_Trans=""
-                filter_content.forEach( (val_tmp,index) => {
-                    if (index==0){
-                        filter_content_Trans += val_tmp;
-                    }
-                    else{
-                        filter_content_Trans += (","+val_tmp);
-                    }
-                    
-                });
-                final_res*=Filter_logic_excute(val, "Department", filter_logic, filter_content_Trans, "str");
-                break;
-            case "Filter_Comp":
-                
-                var filter_content_Trans=""
-                filter_content.forEach( (val_tmp,index) => {
-                    if (index==0){
-                        filter_content_Trans += filter_Compulsory_trans[parseInt(val_tmp,10)];
-                    }
-                    else{
-                        filter_content_Trans += (","+filter_Compulsory_trans[parseInt(val_tmp,10)]);
-                    }
-                    
-                });
-                final_res*=Filter_logic_excute(val, "Compulsory", filter_logic, filter_content_Trans, "str");
-                break;
-            case "Filter_Credit":
-                var filter_content_Trans=""
-                filter_content.forEach( (val_tmp,index) => {
-                    if (index==0){
-                        filter_content_Trans += filter_Credit[parseInt(val_tmp,10)];
-                    }
-                    else{
-                        filter_content_Trans += (","+filter_Credit[parseInt(val_tmp,10)]);
-                    }
-                    
-                });
-                final_res*=Filter_logic_excute(val, "Credits", filter_logic, filter_content_Trans, "str");
-                break;
-            case "Filter_Teacher":
-                final_res*=Filter_logic_excute(val, "Teacher", filter_logic, filter_content.replace(/\s+/g, '').split(','), "obj");
-                break;
-            case "Filter_Prog":
-                final_res*=Filter_logic_excute(val, "Programs", filter_logic, filter_content.replace(/\s+/g, '').split(','), "obj");
-                break;
-            case "Filter_EMI":
-                var filter_content_Trans=""
-                filter_content.forEach( (val_tmp,index) => {
-                    if (index==0){
-                        filter_content_Trans += val_tmp;
-                    }
-                    else{
-                        filter_content_Trans += (","+val_tmp);
-                    }
-                    
-                });
-                final_res*=Filter_logic_excute(val, "EMI", filter_logic, filter_content_Trans, "str");
-                break;
-        }
-        val["Visibility"]=final_res;
+                    var filter_content_Trans=""
+                    filter_content.forEach( (val_tmp,index) => {
+                        if (index==0){
+                            filter_content_Trans += filter_Compulsory_trans[parseInt(val_tmp,10)];
+                        }
+                        else{
+                            filter_content_Trans += (","+filter_Compulsory_trans[parseInt(val_tmp,10)]);
+                        }
+                        
+                    });
+                    final_res*=Filter_logic_excute(val, "Compulsory", filter_logic, filter_content_Trans, "str");
+                    break;
+                case "Filter_Credit":
+                    var filter_content_Trans=""
+                    filter_content.forEach( (val_tmp,index) => {
+                        if (index==0){
+                            filter_content_Trans += filter_Credit[parseInt(val_tmp,10)];
+                        }
+                        else{
+                            filter_content_Trans += (","+filter_Credit[parseInt(val_tmp,10)]);
+                        }
+                        
+                    });
+                    final_res*=Filter_logic_excute(val, "Credits", filter_logic, filter_content_Trans, "str");
+                    break;
+                case "Filter_Teacher":
+                    final_res*=Filter_logic_excute(val, "Teacher", filter_logic, filter_content.replace(/\s+/g, '').split(','), "obj");
+                    break;
+                case "Filter_Prog":
+                    final_res*=Filter_logic_excute(val, "Programs", filter_logic, filter_content.replace(/\s+/g, '').split(','), "obj");
+                    break;
+                case "Filter_EMI":
+                    var filter_content_Trans=""
+                    filter_content.forEach( (val_tmp,index) => {
+                        if (index==0){
+                            filter_content_Trans += val_tmp;
+                        }
+                        else{
+                            filter_content_Trans += (","+val_tmp);
+                        }
+                        
+                    });
+                    final_res*=Filter_logic_excute(val, "EMI", filter_logic, filter_content_Trans, "str");
+                    break;
+                default:
+                    break;
+            }
+            val["Visibility"]=final_res;
         }
     });
 }
@@ -656,30 +689,51 @@ document.addEventListener("click",(val) => {
     }
 });
 
-document.addEventListener("input",(val) => {
-    if(val.target.id=="filter_switch"){
-        if ($('#filter_switch').is(':checked')){
-            var all_filter=[].slice.call($('#filter_content').children(".Filter_row"))
-            if(all_filter.length!=0){
-                all_filter.forEach(val => {
-                    filter_cat=(val.children[0].id)
-                    filter_logic=(val.children[1].children[0].children[0].value)
-                    tag_finder=val.children[2]
-                    while(tag_finder.tagName != "INPUT" && tag_finder.tagName !="SELECT"){
-                        tag_finder=tag_finder.children[0];
-                    }
-                    filter_content=($(tag_finder).val())
-                    Filter(filter_cat, filter_logic, filter_content)
-                    
-                });
-                addClassRow(all_classes, 0);
-            } 
+function filter_update_list(e){
+    if ($('#filter_switch').is(':checked')){
+        var all_filter=[].slice.call($('#filter_content').children(".Filter_row"))
+        if(all_filter.length!=0){
+            all_filter.forEach(val => {
+                filter_cat=(val.children[0].id)
+                filter_logic=(val.children[1].children[0].children[0].value)
+                tag_finder=val.children[2]
+                while(tag_finder.tagName != "INPUT" && tag_finder.tagName !="SELECT"){
+                    tag_finder=tag_finder.children[0];
+                }
+                filter_content=($(tag_finder).val())
+                Filter(filter_cat, filter_logic, filter_content)
+                
+            });
+            addClassRow(all_classes, 0);
         }
-        else{
+    }
+    if(e.target.id=="filter_switch"){
+        if (!($('#filter_switch').is(':checked'))){
             addClassRow(all_classes,1);
         }
     }
-})
+    if(e.target.id=="search_bar"){
+        all_classes.forEach(val => {
+            var Mix_string=val["Grade"]+val["Department"]+val["Compulsory"]+val["Credits"]+val["Teacher"]+val["Time"]+val["Programs"]+val["Name"]
+            if(val["Visibility"]==1){
+                
+                val["Visibility"]=Mix_string.includes(search_bar.value)
+                if(val["Visibility"]){
+                    p(Mix_string)
+                }
+            }
+        });
+        addClassRow(all_classes, 0);
+    }
+}
+
+document.addEventListener("input",(val) => {
+    filter_update_list(val);
+});
+
+document.addEventListener("change",(val) => {
+    filter_update_list(val);
+});
 
 function Filter_window(){
     const filter_sel_menu = document.getElementById("select_filter_content");
@@ -695,10 +749,59 @@ function Filter_window(){
     
 }
 
+
+function create_comp_fourm(){
+    var options_dep="";
+    var options_grade="";
+    var options_class='<option value="0">(無)</option>';
+
+    const content=document.getElementById("comp_sel_container");
+
+    filter_Dep.forEach((val,index)=>{
+        if(val.includes('系') || val.includes('人科')){
+            options_dep+=`<option value="${val}">${val}</option>`;
+        }
+    });
+
+    filter_Grade.forEach((val,index)=>{
+            options_grade+=`<option value="${index}">${val}</option>`;
+    });
+
+    filter_Class.forEach((val,index)=>{
+        options_class+=`<option value="${index+1}">${val}</option>`;
+    });
+    
+    content.innerHTML=`
+    <div style="display: inline-block; padding-right: 5px; width: 150px">
+        <select data-style="btn-white" class="selectpicker" data-live-search="true" data-width="100%" data-container="body" data-style="">
+            ${options_dep}
+        </select>
+    </div>
+    <div style="display: inline-block; padding-right: 5px; width: 80px">
+        <select data-style="btn-white" class="selectpicker" data-width="100%" data-container="body" data-style="">
+            ${options_grade}
+        </select>
+    </div>
+    <div style="display: inline-block; padding-right: 5px; width: 80px">
+        <select data-style="btn-white" class="selectpicker" data-width="100%" data-container="body" data-style="">
+            ${options_class}
+        </select>
+    </div>
+    <div style="display: inline-block;>
+        <button type="button" class="btn btn-light" onclick="comp_insert(0);">填入</button>
+    </div>
+    <div style="display: inline-block;>
+        <button type="button" class="btn btn-light" onclick="comp_insert(1);">取消填入</button>
+    </div>
+    `;
+
+    content.style.display="inline-block";
+
+}
+
 function appendFilter(append_i){
     toAppend=filter_category[append_i];
     const content=document.getElementById("filter_content");
-    const seleter_menu=document.getElementById("select_filter_content");
     var append_html;
     var newrow=document.createElement('div');
     switch (filter_category_index[append_i]){
@@ -739,7 +842,7 @@ function appendFilter(append_i){
                         </select>
                 </div>
                 <div style="display: inline-block; padding-right: 15px; width: 250px">
-                    <select data-style="btn-white" class="selectpicker" multiple data-actions-box="true" data-width="100%" data-container="body" data-style=">
+                    <select data-style="btn-white" class="selectpicker" multiple data-actions-box="true" data-width="100%" data-container="body">
                         ${options}
                     </select>
                 </div>
@@ -991,6 +1094,55 @@ function appendFilter(append_i){
     $('.selectpicker').selectpicker("refresh");
 
 }
+function comp_insert(isCancel){
+    const tableRow=document.getElementById('comp_content')
+    if(!isCancel){
+        list_delet_all_classes(tableRow)
+    }
+    const comp_filter=document.getElementById("comp_sel_container");
+    var comp_sel=[];
+    for(var i=0;i<3;i++){
+        var tag_finder=comp_filter.children[i]
+        p(tag_finder)
+        while(tag_finder.tagName!="SELECT"){
+            tag_finder=tag_finder.children[0]
+        }
+        comp_sel[i] = $(tag_finder).val()
+    }
+    all_classes.forEach((val,index) => {
+        if(val["Department"]==comp_sel[0]){
+            if(val["Grade"].includes(filter_Grade[parseInt(comp_sel[1],10)] )){
+                if(val["Grade"].includes(filter_Class_trans[parseInt(comp_sel[2],10)])){
+                    if(val["Compulsory"].includes("必")){
+                        if(isCancel){
+                            if(val["Select"]==1){
+                                handleChange("comp0",index);
+                            }
+                        }
+                        else{
+                            if(val["Select"]!=1){
+                                handleChange("comp1",index);
+                            }
+                            addanRow(tableRow, val, "comp", index);
+                        }
+                    }
+                    
+                }
+                
+            }
+        }
+        //final_res *= (val["Grade"].includes(comp_sel[1]))
+        //if(final_res){
+        //    p(val)
+        //}
+    })
+    
+    //p(Filter("Filter_Dep", "contains", comp_sel[0], "comp"));
+    //Filter("Filter_Grade", "contains", comp_sel[1], "comp");
+    //Filter("Filter_ClassCat", "contains", comp_sel[2], "comp");
+}
+
+
 
 function delet_Filter(event){
     var ptr=event.target
@@ -1000,7 +1152,11 @@ function delet_Filter(event){
     ptr.remove();
 }
 
-$('.selectpicker').selectpicker();
+
+$('.selectpicker').on('change', function(){
+    filter_update_list(this);
+ });
+
 
 function save_course(){
     //p("saved!");

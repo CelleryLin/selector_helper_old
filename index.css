@@ -27,7 +27,7 @@ td {
 }
 
 .schedule_th{
-    border: 2px solid black;
+    border: 2px solid rgb(250, 250, 250);
     text-align: center;
 }
 
@@ -78,7 +78,7 @@ td {
 }
 
 .addedclass {
-    background-color: #F9F9D7;
+    background-color: #d8d8c6;
     height: 100%;
     font-size: 14px;
     text-align: center;
@@ -196,6 +196,10 @@ td {
     --bs-btn-disabled-color: #000;
     --bs-btn-disabled-bg: #f8f9fa;
     --bs-btn-disabled-border-color: #f8f9fa;
+}
+
+.btn-light{
+    --bs-btn-bg: #e0e8f0;
 }
 
 .btn-group{

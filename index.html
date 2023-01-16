@@ -194,15 +194,41 @@
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="compulsory_area">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#panelsStayOpen-compulsory_area" aria-expanded="false"
+                                        data-bs-target="#panelsStayOpen-compulsory_area" aria-expanded="true"
                                         aria-controls="panelsStayOpen-compulsory_area">
                                         本學期必修
                                     </button>
                                 </h2>
                                 <div id="panelsStayOpen-compulsory_area" class="accordion-collapse collapse show"
                                     aria-labelledby="compulsory_area">
-                                    <div class="accordion-body">
-                                        必修必修
+                                    <div class="accordion-body" style="padding: 0;">
+                                        <div class="comp_container" id="comp_container">
+                                            <div style="display: block; padding-bottom: 5px; padding-left: 28px; margin-top: 10px;" class="Filter_lable">
+                                                請選擇系所和班級(目前只適用學士班)
+                                            </div>
+                                            <div id="comp_sel_container" style="padding-bottom: 5px; padding-left: 28px"></div>
+                                            <div>
+                                                <table id="comp_content" style="display: inline-block; width: 100%;">
+                                                    <tbody>
+                                                        <tr id="list_head" style="position: sticky; height: 50px; top: 0; z-index: 1; background-color: white;">
+                                                            <th style="width:5%; text-align: center;">選擇</th>
+                                                            <th style="width:22%; text-align: center;">課程名稱</th>
+                                                            <th style="width:6%; text-align: center;">時間</th>
+                                                            <th style="width:5%; text-align: center;">年級/班別</th>
+                                                            <th style="width:10%; text-align: center;">上課系所</th>
+                                                            <th style="width:3%; text-align: center;">必選修</th>
+                                                            <th style="width:3%; text-align: center;">學分數</th>
+                                                            <th style="width:13%; text-align: center;">授課教師</th>
+                                                            <th style="width:18%; text-align: center;">所屬學程</th>
+                                                            <th style="width:5%; text-align: center;">英文授課</th>
+                                                            <th style="width:10%; text-align: center;">教室</th>
+                                                            <th></th>
+                                                        </tr>                                                   
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -214,29 +240,11 @@
                                         手動填課 (物件較多開合可能會有些許卡頓，請耐心稍候)
                                     </button>
                                 </h2>
-                                <div id="panelsStayOpen-manual_area" class="accordion-collapse show"
+                                <div id="panelsStayOpen-manual_area" class="accordion-collapse collapse"
                                     aria-labelledby="manual_area" style="margin: 0px;">
-                                    <div class="accordion-body" style="padding: 0;">
+                                    <div class="accordion-body" style="padding: 0; position: relative;">
                                         <div class="list_container" style="max-height: 700px; min-height: 200px; overflow: auto;">
-                                            <table id="list_content" style="display: inline-block; width: 100%;">
-                                                <tbody>
-                                                    <tr id="list_head" style="position: sticky; height: 50px; top: 0; z-index: 1; background-color: white;">
-                                                        <th style="width:5%; text-align: center;">選擇</th>
-                                                        <th style="width:22%; text-align: center;">課程名稱</th>
-                                                        <th style="width:6%; text-align: center;">時間</th>
-                                                        <th style="width:5%; text-align: center;">年級/班別</th>
-                                                        <th style="width:10%; text-align: center;">上課系所</th>
-                                                        <th style="width:3%; text-align: center;">必選修</th>
-                                                        <th style="width:3%; text-align: center;">學分數</th>
-                                                        <th style="width:13%; text-align: center;">授課教師</th>
-                                                        <th style="width:18%; text-align: center;">所屬學程</th>
-                                                        <th style="width:5%; text-align: center;">英文授課</th>
-                                                        <th style="width:10%; text-align: center;">教室</th>
-                                                        <th></th>
-                                                    </tr>                                                   
-                                                </tbody>
-                                            </table>
-                                            <div style="display: block; position: absolute; top: 18%; right: 35px; z-index: 3; height: auto; width: 80%; max-height: 80%; min-height: 100px; text-align: right;">
+                                            <div style="position: absolute; top: 80px; right: 25px; z-index: 3; height: auto; width: 80%; max-height: 80%; min-height: 100px; text-align: right;">
                                                 <div style="display: block;">
                                                     <button id="filter_collapser" style="background-color: rgba(212, 212, 212, 0.5); text-align: right; border-radius: 10px;">
                                                         <i style="font-size:24px; color: #727272; padding: 3px;" class="fa">&#xf0d7;</i>
@@ -263,7 +271,35 @@
                                                     <hr style="color: #727272; width: 50%; height: 10px; padding: 0px; margin: 0px;">
                                                 </div>
                                             </div>
+                                            <div style="margin: 10px;">
+                                            </div>
+                                            <div style="text-align: center;">
+                                                <div class="form-outline" style="display: inline-block; padding: 10px; width: 80%;">
+                                                    <input type="search" id="form1" class="form-control" style="display: inline-block; border-radius: 100px; width: 100%" placeholder="Type query" aria-label="Search" />
+                                                </div>
+                                            </div>
+                                            <table id="list_content" style="display: inline-block; width: 100%;">
+                                                <tbody>
+                                                    <tr id="list_head" style="position: sticky; height: 50px; top: 0; z-index: 1; background-color: white;">
+                                                        <th style="width:5%; text-align: center;">選擇</th>
+                                                        <th style="width:22%; text-align: center;">課程名稱</th>
+                                                        <th style="width:6%; text-align: center;">時間</th>
+                                                        <th style="width:5%; text-align: center;">年級/班別</th>
+                                                        <th style="width:10%; text-align: center;">上課系所</th>
+                                                        <th style="width:3%; text-align: center;">必選修</th>
+                                                        <th style="width:3%; text-align: center;">學分數</th>
+                                                        <th style="width:13%; text-align: center;">授課教師</th>
+                                                        <th style="width:18%; text-align: center;">所屬學程</th>
+                                                        <th style="width:5%; text-align: center;">英文授課</th>
+                                                        <th style="width:10%; text-align: center;">教室</th>
+                                                        <th></th>
+                                                    </tr>                                                   
+                                                </tbody>
+                                            </table>
+                                        
+                                            
                                         </div>
+                                        
                                     </div>
                                 </div>
                             </div>
