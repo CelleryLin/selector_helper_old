@@ -273,15 +273,17 @@ function main(csv_data){
         };
         all_classes.push(class_info);
     }
-    
+
     var all_classes_read = JSON.parse(localStorage.getItem('NSYSU_Courses_Selector_Helper_Saved'));
-    all_classes_read.forEach( (val_old,index) => {
-        all_classes.forEach( (val_new, index) => {
-            if(val_old["ClassID"]==val_new["ClassID"]){
-                val_new["Select"]=val_old["Select"];
-            }
+    if(all_classes_read!=null){
+        all_classes_read.forEach( (val_old,index) => {
+            all_classes.forEach( (val_new, index) => {
+                if(val_old["ClassID"]==val_new["ClassID"]){
+                    val_new["Select"]=val_old["Select"];
+                }
+            })
         })
-    })
+    }
 
     all_classes.forEach( (val,index) => {
         if(val['Select']){
