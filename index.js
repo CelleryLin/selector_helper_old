@@ -1169,3 +1169,14 @@ function save_course(){
     
     localStorage.setItem('NSYSU_Courses_Selector_Helper_Saved', JSON.stringify(all_classes));
 }
+
+function delet_all_select(){
+    if(window.confirm("確定要刪除所選課程嗎？")){
+        all_classes.forEach((val,index) => {
+            if(val["Select"]==1){
+                handleChange("delet",index);
+            }
+        });
+
+    }
+}
