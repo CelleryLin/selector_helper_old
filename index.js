@@ -211,7 +211,7 @@ function addanRow(tableRow, class_info, id_selector, i){
 }
 
 function addClassRow(all_classes, filter){
-    p("add")
+    //p("add")
     list_delet_all_classes(document.getElementById("list_content"));
     var tableRow = document.getElementById("list_content");
     for(i=0;i<all_classes.length;i++){
@@ -725,9 +725,6 @@ function filter_update_list(e){
             if(val["Visibility"]==1){
                 
                 val["Visibility"]=Mix_string.includes(search_bar.value)
-                if(val["Visibility"]){
-                    p(Mix_string)
-                }
             }
         });
         addClassRow(all_classes, 0);
@@ -1110,7 +1107,6 @@ function comp_insert(isCancel){
     var comp_sel=[];
     for(var i=0;i<3;i++){
         var tag_finder=comp_filter.children[i]
-        p(tag_finder)
         while(tag_finder.tagName!="SELECT"){
             tag_finder=tag_finder.children[0]
         }
