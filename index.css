@@ -57,16 +57,17 @@ td {
     display: table-row;
 }
 
+.classes_row.overlapping{
+    background-color: #f7f7f7;
+    opacity: 60%;
+    display: table-row;
+}
+
 
 .classes_cell{
     display: table-cell;
 }
 
-.classes_row.show{
-    margin: 5px;
-    background-color: #efefef;
-    border-radius: 10px;
-}
 .classes_row:hover,
 .classes_row_hover {
     background-color: #e2e9d7;

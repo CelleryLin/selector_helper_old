@@ -93,6 +93,7 @@ function filter_Init(all_classes){
 
 }
 function updateCheckbox(class_info){
+    classOverlapping();
     var classrow=["", "_selected", "_comp"];
     classrow.forEach(val => {
         var thisrow = document.getElementById(class_info["ClassID"]+val)
@@ -105,9 +106,15 @@ function updateCheckbox(class_info){
 
 function addanRow(tableRow, class_info, id_selector, i){
     var row = document.createElement('div');
+
+    if(class_info["Overlapping"]){
+        row.className = 'classes_row overlapping';
+    }
+    else{
+        row.className = 'classes_row';
+    }
     
     
-    row.className = 'classes_row';
     if(id_selector=="list"){
         row.id=class_info["ClassID"];
     }
@@ -294,6 +301,7 @@ function main(csv_data){
             "Name": all_class_raw[i][7],
             "ClassID": all_class_raw[i][4],
             "Visibility": 1,
+            "Overlapping": 0,
             "MyComp": 0
         };
         all_classes.push(class_info);
@@ -305,6 +313,8 @@ function main(csv_data){
             all_classes.forEach( (val_new, index) => {
                 if(val_old["ClassID"]==val_new["ClassID"]){
                     val_new["Select"]=val_old["Select"];
+                    val_new["MyComp"]=val_old["MyComp"];
+                    val_new["Overlapping"]=val_old["Overlapping"];
                 }
             })
         })
@@ -741,7 +751,6 @@ function filter_update_list(e){
     toSearch=toSearch.replace('上午','早上');
     toSearch=toSearch.replace('早上','1%2%3%4');
     toSearch=toSearch.split(' ');
-    p(toSearch)
     all_classes.forEach(val => {
         var Mix_string=val["Grade"]+val["Department"]+val["Compulsory"]+val["Teacher"]+"星期"+val["Time"]+val["Programs"]+val["Name"]
         if(val["Visibility"]==1){
@@ -788,7 +797,6 @@ function comp_update_list(isCatChange){
         }
     });
     if(!isCatChange){
-        p("appending")
         $('.selectpicker.comp-class').empty();
         $('.selectpicker.comp-class').append(`<option value="" selected>(全)</option>`)
         getUnique(comp_all_classcat).forEach(val => {
@@ -1213,6 +1221,39 @@ function delet_Filter(event){
         ptr=ptr.parentNode
     }
     ptr.remove();
+}
+
+
+function classOverlapping(){
+    var selected_time=[];
+    all_classes.forEach(val => {
+        val["Overlapping"]=0;
+        if(val["Select"]){
+            val["Time"].forEach(val_time => {
+                var tmp=val_time.split(" ");
+                tmp[1].split('').forEach( val_mun => {
+                    selected_time.push(tmp[0]+" "+val_mun);
+                })
+            })
+        }
+    });
+    p(selected_time)
+    
+    selected_time.forEach(val_sel => {
+        all_classes.forEach(val_class => {
+            val_class["Time"].forEach(val_time => {
+                var tmp=val_time.split(" ");
+                tmp[1].split('').forEach( val_mun => {
+                    if(tmp[0]+" "+val_mun==val_sel){
+                        val_class["Overlapping"]=1;
+                        //p(val_class)
+                    }
+                });
+            });
+        });
+    });
+    p(isFinity)
+    addClassRow(all_classes,0);
 }
 
 function save_course(){
