@@ -245,20 +245,25 @@
                                                 請選擇系所和班級(目前只適用學士班)
                                             </div>
                                             <div id="comp_sel_container" style="padding-bottom: 5px; padding-left: 28px"></div>
-                                            <div id="comp_content" style="display: block; width: 100%; text-align: center;">
-                                                <div id="list_head" style="display: table-row; position: sticky; height: 50px; top: 0; z-index: 1; background-color: white;">
-                                                    <div style="display: table-cell; width:5%; text-align: center;">選擇</div>
-                                                    <div style="display: table-cell; width:22%; text-align: center;">課程名稱</div>
-                                                    <div style="display: table-cell; width:6%; text-align: center;">時間</div>
-                                                    <div style="display: table-cell; width:5%; text-align: center;">年級/班別</div>
-                                                    <div style="display: table-cell; width:10%; text-align: center;">上課系所</div>
-                                                    <div style="display: table-cell; width:3%; text-align: center;">必選修</div>
-                                                    <div style="display: table-cell; width:3%; text-align: center;">學分數</div>
-                                                    <div style="display: table-cell; width:13%; text-align: center;">授課教師</div>
-                                                    <div style="display: table-cell; width:18%; text-align: center;">所屬學程</div>
-                                                    <div style="display: table-cell; width:5%; text-align: center;">英文授課</div>
-                                                    <div style="display: table-cell; width:10%; text-align: center;">教室</div>
-                                                </div>                                                   
+                                            <div>
+                                                <table id="comp_content" style="display: inline-block; width: 100%;">
+                                                    <tbody>
+                                                        <tr id="list_head" style="position: sticky; height: 50px; top: 0; z-index: 1; background-color: white;">
+                                                            <th style="width:5%; text-align: center;">選擇</th>
+                                                            <th style="width:22%; text-align: center;">課程名稱</th>
+                                                            <th style="width:6%; text-align: center;">時間</th>
+                                                            <th style="width:5%; text-align: center;">年級/班別</th>
+                                                            <th style="width:10%; text-align: center;">上課系所</th>
+                                                            <th style="width:3%; text-align: center;">必選修</th>
+                                                            <th style="width:3%; text-align: center;">學分數</th>
+                                                            <th style="width:13%; text-align: center;">授課教師</th>
+                                                            <th style="width:18%; text-align: center;">所屬學程</th>
+                                                            <th style="width:5%; text-align: center;">英文授課</th>
+                                                            <th style="width:10%; text-align: center;">教室</th>
+                                                            <th></th>
+                                                        </tr>                                                   
+                                                    </tbody>
+                                                </table>
                                             </div>
                                             
                                         </div>
@@ -308,24 +313,27 @@
                                             </div>
                                             <div style="text-align: center;">
                                                 <div class="form-outline" style="display: inline-block; padding: 10px; width: 80%;">
-                                                    <input type="search" id="search_bar" class="form-control" style="display: inline-block; border-radius: 100px; width: 100%" placeholder="&nbsp;&nbsp;綜合搜尋...&nbsp;(例如：星期三 早上 博雅)" aria-label="Search" />
+                                                    <input type="search" id="search_bar" class="form-control" style="display: inline-block; border-radius: 100px; width: 100%" placeholder="綜合搜尋：課程名稱、系所、老師、時間、學程..." aria-label="Search" />
                                                 </div>
                                             </div>
-                                            <div id="list_content" style="display: block; width: 100%; text-align: center; vertical-align: middle;">
-                                                <div id="list_head" style="display: table-row; position: sticky; height: 50px; top: 0; z-index: 1; background-color: white;">
-                                                    <div style="display: table-cell; width:5%; text-align: center;">選擇</div>
-                                                    <div style="display: table-cell; width:22%; text-align: center;">課程名稱</div>
-                                                    <div style="display: table-cell; width:6%; text-align: center;">時間</div>
-                                                    <div style="display: table-cell; width:5%; text-align: center;">年級/班別</div>
-                                                    <div style="display: table-cell; width:10%; text-align: center;">上課系所</div>
-                                                    <div style="display: table-cell; width:3%; text-align: center;">必選修</div>
-                                                    <div style="display: table-cell; width:3%; text-align: center;">學分數</div>
-                                                    <div style="display: table-cell; width:13%; text-align: center;">授課教師</div>
-                                                    <div style="display: table-cell; width:18%; text-align: center;">所屬學程</div>
-                                                    <div style="display: table-cell; width:5%; text-align: center;">英文授課</div>
-                                                    <div style="display: table-cell; width:10%; text-align: center;">教室</div>
-                                                </div>                                                   
-                                            </div>
+                                            <table id="list_content" style="display: inline-block; width: 100%;">
+                                                <tbody>
+                                                    <tr id="list_head" style="position: sticky; height: 50px; top: 0; z-index: 1; background-color: white;">
+                                                        <th style="width:5%; text-align: center;">選擇</th>
+                                                        <th style="width:22%; text-align: center;">課程名稱</th>
+                                                        <th style="width:6%; text-align: center;">時間</th>
+                                                        <th style="width:5%; text-align: center;">年級/班別</th>
+                                                        <th style="width:10%; text-align: center;">上課系所</th>
+                                                        <th style="width:3%; text-align: center;">必選修</th>
+                                                        <th style="width:3%; text-align: center;">學分數</th>
+                                                        <th style="width:13%; text-align: center;">授課教師</th>
+                                                        <th style="width:18%; text-align: center;">所屬學程</th>
+                                                        <th style="width:5%; text-align: center;">英文授課</th>
+                                                        <th style="width:10%; text-align: center;">教室</th>
+                                                        <th></th>
+                                                    </tr>                                                   
+                                                </tbody>
+                                            </table>
                                         
                                             
                                         </div>
@@ -364,21 +372,27 @@
                                             <button type="button" class="btn btn-light" onclick="delet_all_select();">全部刪除</button>
                                         </div>
                                         <div class="list_container">
-                                            <div id="list_content_selected" style="display: block; width: 100%; text-align: center;">
-                                                <div id="list_head" style="display: table-row; position: sticky; height: 50px; top: 0; z-index: 1; background-color: white;">
-                                                    <div style="display: table-cell; width:5%; text-align: center;">選擇</div>
-                                                    <div style="display: table-cell; width:22%; text-align: center;">課程名稱</div>
-                                                    <div style="display: table-cell; width:6%; text-align: center;">時間</div>
-                                                    <div style="display: table-cell; width:5%; text-align: center;">年級/班別</div>
-                                                    <div style="display: table-cell; width:10%; text-align: center;">上課系所</div>
-                                                    <div style="display: table-cell; width:3%; text-align: center;">必選修</div>
-                                                    <div style="display: table-cell; width:3%; text-align: center;">學分數</div>
-                                                    <div style="display: table-cell; width:13%; text-align: center;">授課教師</div>
-                                                    <div style="display: table-cell; width:18%; text-align: center;">所屬學程</div>
-                                                    <div style="display: table-cell; width:5%; text-align: center;">英文授課</div>
-                                                    <div style="display: table-cell; width:10%; text-align: center;">教室</div>
-                                                </div>                                                   
-                                            </div>
+                                            <table id="list_content_selected" style="width: 100%;">
+                                                <thead>
+                                                    <tr style="position: sticky; height: 50px; top: 0; z-index: 1; background-color: white;">
+                                                        <th style="width:5%; text-align: center;">選擇</th>
+                                                        <th style="width:22%; text-align: center;">課程名稱</th>
+                                                        <th style="width:6%; text-align: center;">時間</th>
+                                                        <th style="width:5%; text-align: center;">年級/班別</th>
+                                                        <th style="width:10%; text-align: center;">上課系所</th>
+                                                        <th style="width:3%; text-align: center;">必選修</th>
+                                                        <th style="width:3%; text-align: center;">學分數</th>
+                                                        <th style="width:13%; text-align: center;">授課教師</th>
+                                                        <th style="width:18%; text-align: center;">所屬學程</th>
+                                                        <th style="width:5%; text-align: center;">英文授課</th>
+                                                        <th style="width:10%; text-align: center;">教室</th>
+                                                    </tr>
+                    
+                                                </thead>
+                                                <tbody>
+                    
+                                                </tbody>
+                                            </table>
                                         </div>
                                         
                                     </div>

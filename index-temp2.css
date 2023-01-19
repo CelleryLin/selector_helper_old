@@ -53,13 +53,10 @@ td {
 }
 
 .classes_row {
+    margin: 5px;
     background-color: #efefef;
-    display: table-row;
-}
-
-
-.classes_cell{
-    display: table-cell;
+    border-radius: 10px;
+    content-visibility: auto;
 }
 
 .classes_row.show{
@@ -67,6 +64,7 @@ td {
     background-color: #efefef;
     border-radius: 10px;
 }
+
 .classes_row:hover,
 .classes_row_hover {
     background-color: #e2e9d7;

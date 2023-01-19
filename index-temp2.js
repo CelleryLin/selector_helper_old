@@ -10,7 +10,6 @@ var filter_Teacher=[];
 var filter_Programs=[];
 var filter_EMI=[];
 var filter_Room=[];
-var isFinity=1;
 const filter_category=['課程名稱', '時間', '星期', '年級', '班別', '上課系所', '必選修', '學分數', '授課教師', '所屬學程', '英文授課'];
 const filter_category_index=['Class', 'Time', 'Day', 'Grade', 'ClassCat', 'Dep', 'Comp', 'Credit', 'Teacher', 'Prog', 'EMI'];
 function p(a){
@@ -93,19 +92,24 @@ function filter_Init(all_classes){
 
 }
 function updateCheckbox(class_info){
-    var classrow=["", "_selected", "_comp"];
-    classrow.forEach(val => {
-        var thisrow = document.getElementById(class_info["ClassID"]+val)
-        if(thisrow!=null){
-            thisrow.children[0].children[0].children[0].checked=class_info["Select"];
-        }
-    })
+    
+    var classrow = document.getElementById(class_info["ClassID"]+"_selected");
+    if(classrow != null){
+        classrow.childNodes[0].childNodes[0].childNodes[1].checked=class_info["Select"];
+    }
+    var classrow = document.getElementById(class_info["ClassID"]);
+    classrow.childNodes[0].childNodes[0].childNodes[1].checked=class_info["Select"];
+
+    var classrow = document.getElementById(class_info["ClassID"]+"_comp");
+    if(classrow != null){
+        classrow.childNodes[0].childNodes[0].childNodes[1].checked=class_info["Select"];
+    }
+    
     save_course();
 }
 
 function addanRow(tableRow, class_info, id_selector, i){
-    var row = document.createElement('div');
-    
+    var row = tableRow.insertRow(-1);
     
     row.className = 'classes_row';
     if(id_selector=="list"){
@@ -117,134 +121,106 @@ function addanRow(tableRow, class_info, id_selector, i){
     else if(id_selector=="comp"){
         row.id=class_info["ClassID"]+"_comp";
     }
-    tableRow.appendChild(row);
     
 
     //選擇
-    var cell0 = document.createElement('div')
+    var list_i=0;
     if(class_info["Select"]){
-        cell0.innerHTML=`<div style="text-align: center"> <input type="checkbox" style=" align: center" onchange='handleChange(this,${i});' checked> </div>`;
+        row.insertCell(list_i).innerHTML =`<div style="text-align: center"> <input type="checkbox" style=" align: center" onchange='handleChange(this,${i});' checked> </div>`;
     }
     else{
-        cell0.innerHTML =`<div style="text-align: center"> <input type="checkbox" style=" align: center" onchange='handleChange(this,${i});'> </div>`;
+        row.insertCell(list_i).innerHTML =`<div style="text-align: center"> <input type="checkbox" style=" align: center" onchange='handleChange(this,${i});'> </div>`;
     } 
-    cell0.className="classes_cell";
-    row.appendChild(cell0);
+    row.cells[list_i].className="cell_selected";
+    
+    list_i++
 
     //課程名稱
-    var cell1 = document.createElement('div')
-    cell1.innerHTML = class_info["Name"];
-    cell1.className="classes_cell"
-    row.appendChild(cell1);
+    row.insertCell(list_i).innerHTML = class_info["Name"];
+    row.cells[list_i].className="cell_name"
+    list_i++
 
     //時間
-    var cell2 = document.createElement('div')
     var times = class_info["Time"];
     var times_html = "";
     for(j=0;j<times.length;j++){
         times_html += ("<div style=\"text-align: center; margin: 1px; padding: 3px; background-color: #D5CAF9; border-radius: 3px \" >" + times[j] + "</div>");
     }
-    cell2.innerHTML = times_html;
-    cell2.className="classes_cell";
-    row.appendChild(cell2);
+    row.insertCell(list_i).innerHTML = times_html;
+    row.cells[list_i].className="cell_time";
+    list_i++
 
     //年級班級
-    var cell3 = document.createElement('div')
-    cell3.innerHTML = `<div style="text-align: center; " > ${class_info["Grade"]} </div>`
-    cell3.className="classes_cell"
-    row.appendChild(cell3);
+    row.insertCell(list_i).innerHTML = `<div style="text-align: center; " > ${class_info["Grade"]} </div>`
+    row.cells[list_i].className="cell_class"
+    list_i++
 
     //上課系所
-    var cell4 = document.createElement('div')
-    cell4.innerHTML = class_info["Department"];
-    cell4.className="classes_cell"
-    row.appendChild(cell4);
+    row.insertCell(list_i).innerHTML = class_info["Department"];
+    row.cells[list_i].className="cell_dep"
+    list_i++
 
     //必選修
-    var cell5 = document.createElement('div')
-    cell5.innerHTML = class_info["Compulsory"];
-    cell5.className="classes_cell";
-    row.appendChild(cell5);
+    row.insertCell(list_i).innerHTML = class_info["Compulsory"];
+    row.cells[list_i].className="cell_com";
+    list_i++
 
     //學分
-    var cell6 = document.createElement('div')
-    cell6.innerHTML = class_info["Credits"];
-    cell6.className="classes_cell";
-    row.appendChild(cell6);
+    row.insertCell(list_i).innerHTML = class_info["Credits"];
+    row.cells[list_i].className="cell_credit";
+    list_i++
 
     //老師
-    var cell7 = document.createElement('div')
     var teachers = class_info["Teacher"];
     var teacher_html = "";
     for(j=0;j<teachers.length;j++){
         teacher_html += `<div style="display: inline-block; text-align: center; margin: 3px; padding: 5px; background-color: #FCFCE0; border-radius: 3px " > ${teachers[j]}</div>`;
     }
-    cell7.innerHTML = teacher_html;
-    cell7.className="classes_cell";
-    row.appendChild(cell7);
+    row.insertCell(list_i).innerHTML = teacher_html;
+    row.cells[list_i].className="cell_teacher";
+    list_i++
     
     //學程
-    var cell8 = document.createElement('div')
     var programs = class_info["Programs"];
     if (programs[0]!=''){
         var programs_html = "";
         for(j=0;j<programs.length;j++){
             programs_html += ("<div style=\"text-align: left; margin: 3px; padding: 3px; background-color: #D5CAF9; border-radius: 3px \" >" + programs[j] + "</div>");
         }
-        cell8.innerHTML = programs_html;
+        row.insertCell(list_i).innerHTML = programs_html;
     }
     else{
-        cell8.innerHTML = "";
+        row.insertCell(list_i).innerHTML = "";
     }
-    cell8.className="classes_cell";
-    row.appendChild(cell8);
+    row.cells[list_i].className="cell_prog";
+    list_i++
 
     //EMI
-    var cell9 = document.createElement('div')
-    cell9.innerHTML ="<div style=\"text-align: center; \" >" + class_info["EMI"] + "</div>"
-    cell9.className="classes_cell";
-    row.appendChild(cell9);
+    row.insertCell(list_i).innerHTML ="<div style=\"text-align: center; \" >" + class_info["EMI"] + "</div>"
+    row.cells[list_i].className="cell_EMI";
+    list_i++
 
     //教室
-    var cell10 = document.createElement('div')
-    cell10.innerHTML =class_info["Room"];
-    cell10.className="classes_cell";
-    row.appendChild(cell10);
+    row.insertCell(list_i).innerHTML =class_info["Room"];
+    row.cells[list_i].className="cell_room";
 
-    
-
-}
-
-function show_more(filter){
-    isFinity=0;
-    addClassRow(all_classes, filter);
 }
 
 function addClassRow(all_classes, filter){
-    list_delet_all_classes(document.getElementById("list_content"));
-    var tableRow = document.getElementById("list_content");
-    var row_count=0;
-    for(i=0;i<all_classes.length;i++){
-        if(all_classes[i]["Visibility"]==1 || filter){
-            if(row_count>=100 && isFinity){
-                const show_more = document.createElement('div');
-                show_more.innerHTML="顯示更多...";
-                show_more.className="classes_row";
-                show_more.style.textAlign="Center";
-                show_more.style.display="block";
-                show_more.setAttribute('onclick', `show_more(${filter});`)
-                tableRow.appendChild(show_more);
-                break;
-            }
-            else{
+    return new Promise((resolve) => {
+        //p("add")
+        list_delet_all_classes(document.getElementById("list_content"));
+        var tableRow = document.getElementById("list_content");
+        for(i=0;i<all_classes.length;i++){
+            if(all_classes[i]["Visibility"]==1 || filter){
                 addanRow(tableRow, all_classes[i],"list", i);
             }
-            row_count++;
-
         }
-    }
-    p(row_count);
-    isFinity=1;
+        all_classes.forEach(val => {
+            val["Visibility"]=1;
+        });
+        resolve(0);
+    });
 }
 
 var all_class_raw=[];
@@ -269,8 +245,8 @@ function main(csv_data){
     const grade_index=['','一', '二','三', '四'];
     all_class_raw=csv_data.data
     all_classes=[]
-    for(i=1;i<all_class_raw.length;i++){
-    //for(i=1;i<200;i++){
+    for(i=1;i<all_class_raw.length-1;i++){
+    //for(i=1;i<1000;i++){
         //time_sort(all_class_raw[i]);
         var sorted_time=[];
         for(j=18;j<=24;j++){
@@ -293,8 +269,7 @@ function main(csv_data){
             "Select": 0,
             "Name": all_class_raw[i][7],
             "ClassID": all_class_raw[i][4],
-            "Visibility": 1,
-            "MyComp": 0
+            "Visibility": 1
         };
         all_classes.push(class_info);
     }
@@ -320,17 +295,27 @@ function main(csv_data){
 
     filter_Init(all_classes);
     create_comp_fourm();
-    addClassRow(all_classes, 1);
-    comp_update_list();
+    addClassRow(all_classes, 1).then( () => {
+        const observer = new IntersectionObserver((entries) => {
+            //p(entries);
+            entries.forEach(entry => {
+                //entry.target.classList.toggle("show", entry.isIntersecting);
+            })
+        })
+        const classes_row=document.querySelectorAll(".classes_row");
+        classes_row.forEach(val => {
+            observer.observe(val);
+        });
+    });
 
     $('.selectpicker').selectpicker();
 }
 
 
 Papa.parse("./all_classes.csv", {
-    download: true,
+    download: true,	
     complete: function(csv_data) {
-        main(csv_data);
+        main(csv_data)
 	}
 });
 
@@ -424,11 +409,9 @@ filter_collapser.addEventListener("click", (e) =>{
     var fil_content = document.getElementById("filter_content");
     if (fil_content.style.display === "block") {
         fil_content.style.display = "none";
-        fil_content.style.zIndex = -1;
     }
     else {
         fil_content.style.display = "block";
-        fil_content.style.zIndex = 3;
     }
 
     if(dir_trigger<0){
@@ -445,7 +428,7 @@ filter_collapser.addEventListener("click", (e) =>{
 });
 
 function list_delet_all_classes(tableRow){
-    [].slice.call(tableRow.children).forEach(val => {
+    [].slice.call(tableRow.childNodes[1].children).forEach(val => {
         if (val.id!="list_head"){
             val.remove()
         }
@@ -584,6 +567,22 @@ function Filter_logic_excute(class_info, filter_cat, filter_logic, filter_conten
 
 }
 function Filter(filter_cat, filter_logic, filter_content){
+    // class_info = {
+    //     "Grade": (grade_index[all_class_raw[i][5]]+all_class_raw[i][6].split('班')[0]),
+    //     "Department": all_class_raw[i][3],
+    //     "Compulsory": all_class_raw[i][11],
+    //     "Credits": all_class_raw[i][9],
+    //     "Teacher": all_class_raw[i][16].split(','),
+    //     "Time": sorted_time,
+    //     "Programs": all_class_raw[i][26].replaceAll('\'','').replaceAll(' ','').split(','),
+    //     "Room": all_class_raw[i][17],
+    //     "EMI": all_class_raw[i][27],
+    //     "Comment": all_class_raw[i][25],
+    //     "Select": 0,
+    //     "Name": all_class_raw[i][7],
+    //     "ClassID": all_class_raw[i][4],
+    //     "Visibility": 1
+    // };
     all_classes.forEach((val,index) => {
         if(val["Visibility"]==1){
             var final_res=1;
@@ -704,14 +703,7 @@ document.addEventListener("click",(val) => {
     }
 });
 
-//Bookmark
 function filter_update_list(e){
-    if(e.target.parentNode.parentNode.className=="classes_cell"){
-        return 0;
-    }
-    all_classes.forEach(val => {
-        val["Visibility"]=1;
-    });
     if ($('#filter_switch').is(':checked')){
         var all_filter=[].slice.call($('#filter_content').children(".Filter_row"))
         if(all_filter.length!=0){
@@ -734,98 +726,27 @@ function filter_update_list(e){
             addClassRow(all_classes,1);
         }
     }
-    var toSearch=search_bar.value
-    toSearch=toSearch.replace('年級','');
-    toSearch=toSearch.replace('班','');
-    toSearch=toSearch.replace('下午','5%6%7%8');
-    toSearch=toSearch.replace('上午','早上');
-    toSearch=toSearch.replace('早上','1%2%3%4');
-    toSearch=toSearch.split(' ');
-    p(toSearch)
-    all_classes.forEach(val => {
-        var Mix_string=val["Grade"]+val["Department"]+val["Compulsory"]+val["Teacher"]+"星期"+val["Time"]+val["Programs"]+val["Name"]
-        if(val["Visibility"]==1){
-            var final_res=1;
-            toSearch.forEach(val_search => {
-                var or_res=0;
-                val_search.split('%').forEach( val_search_or => {
-                    or_res+=Mix_string.includes(val_search_or)
-                })
-                final_res*=(!!or_res)
-            })
-            val["Visibility"]=final_res
-        }
-    });
-    addClassRow(all_classes, 0);
-}
-
-function comp_update_list(isCatChange){
-    const tableRow=document.getElementById('comp_content');
-    list_delet_all_classes(tableRow);
-
-    const comp_filter=document.getElementById("comp_sel_container");
-    var comp_sel=[];
-    for(var i=0;i<3;i++){
-        var tag_finder=comp_filter.children[i];
-        while(tag_finder.tagName!="SELECT"){
-            tag_finder=tag_finder.children[0];
-        }
-        comp_sel[i] = $(tag_finder).val();
-    }
-    var comp_all_classcat=[];
-    all_classes.forEach((val,index) => {
-        val["MyComp"]=0;
-        if(val["Department"]==comp_sel[0]){
-            if(val["Grade"].includes(filter_Grade[parseInt(comp_sel[1],10)] )){
-                if(val["Compulsory"].includes("必")){
-                    comp_all_classcat.push(val["Grade"].substring(1));
-                    if(val["Grade"].includes(comp_sel[2])){
-                        val["MyComp"]=1;
-                        addanRow(tableRow, val, "comp", index);
-                    }
-                }
-            }
-        }
-    });
-    if(!isCatChange){
-        p("appending")
-        $('.selectpicker.comp-class').empty();
-        $('.selectpicker.comp-class').append(`<option value="" selected>(全)</option>`)
-        getUnique(comp_all_classcat).forEach(val => {
-            if(val!=""){
-                p(val)
-                $('.selectpicker.comp-class').append(`<option value="${val}">${val}</option>`)
+    if(e.target.id=="search_bar"){
+        var toSearch=search_bar.value
+        toSearch=toSearch.replace('星期','');
+        all_classes.forEach(val => {
+            var Mix_string=val["Grade"]+val["Department"]+val["Compulsory"]+val["Credits"]+val["Teacher"]+val["Time"]+val["Programs"]+val["Name"]
+            if(val["Visibility"]==1){
+                
+                val["Visibility"]=Mix_string.includes(toSearch)
             }
         });
-        $('.selectpicker.comp-class').selectpicker("refresh");
+        addClassRow(all_classes, 0);
     }
-    
 }
 
-//Bookmark
 document.addEventListener("input",(val) => {
     filter_update_list(val);
 });
 
 document.addEventListener("change",(val) => {
-    if(val.target.parentNode.parentNode.parentNode.id=="comp_sel_container"){
-        if(val.target.className=="selectpicker comp-class"){
-            comp_update_list(1);
-        }
-        else{
-            comp_update_list(0);
-        }
-    }
-
-    if(val.target.parentNode.parentNode.parentNode.className=="Filter_row"){
-        filter_update_list(val);
-    }
-    
+    filter_update_list(val);
 });
-
-$('.selectpicker').on('change', function(){
-    filter_update_list(this);
- });
 
 function Filter_window(){
     const filter_sel_menu = document.getElementById("select_filter_content");
@@ -845,7 +766,7 @@ function Filter_window(){
 function create_comp_fourm(){
     var options_dep="";
     var options_grade="";
-    var options_class='<option value="" selected>(全)</option>';
+    var options_class='<option value="0">(無)</option>';
 
     const content=document.getElementById("comp_sel_container");
 
@@ -870,27 +791,27 @@ function create_comp_fourm(){
         </select>
     </div>
     <div style="display: inline-block; padding-right: 5px; width: 80px">
-        <select data-style="btn-white" class="selectpicker" data-width="100%" data-container="body">
+        <select data-style="btn-white" class="selectpicker" data-width="100%" data-container="body" data-style="">
             ${options_grade}
         </select>
     </div>
     <div style="display: inline-block; padding-right: 5px; width: 80px">
-        <select data-style="btn-white" class="selectpicker comp-class" data-width="100%" data-container="body">
+        <select data-style="btn-white" class="selectpicker" data-width="100%" data-container="body" data-style="">
             ${options_class}
         </select>
     </div>
     <div style="display: inline-block;>
-        <button type="button" class="btn btn-light" onclick="comp_insert(0);">全部填入</button>
+        <button type="button" class="btn btn-light" onclick="comp_insert(0);">填入</button>
     </div>
     <div style="display: inline-block;>
-        <button type="button" class="btn btn-light" onclick="comp_insert(1);">全部取消</button>
+        <button type="button" class="btn btn-light" onclick="comp_insert(1);">取消填入</button>
     </div>
     `;
 
     content.style.display="inline-block";
 
 }
-//Bookmark
+
 function appendFilter(append_i){
     toAppend=filter_category[append_i];
     const content=document.getElementById("filter_content");
@@ -1187,22 +1108,50 @@ function appendFilter(append_i){
 
 }
 function comp_insert(isCancel){
-    const tableRow=document.getElementById("comp_content");
+    const tableRow=document.getElementById('comp_content')
+    if(!isCancel){
+        list_delet_all_classes(tableRow)
+    }
+    const comp_filter=document.getElementById("comp_sel_container");
+    var comp_sel=[];
+    for(var i=0;i<3;i++){
+        var tag_finder=comp_filter.children[i]
+        while(tag_finder.tagName!="SELECT"){
+            tag_finder=tag_finder.children[0]
+        }
+        comp_sel[i] = $(tag_finder).val()
+    }
     all_classes.forEach((val,index) => {
-        if(val["MyComp"]==1){
-            if(isCancel){
-                if(val["Select"]==1){
-                    handleChange("comp0",index);
+        if(val["Department"]==comp_sel[0]){
+            if(val["Grade"].includes(filter_Grade[parseInt(comp_sel[1],10)] )){
+                if(val["Grade"].includes(filter_Class_trans[parseInt(comp_sel[2],10)])){
+                    if(val["Compulsory"].includes("必")){
+                        if(isCancel){
+                            if(val["Select"]==1){
+                                handleChange("comp0",index);
+                            }
+                        }
+                        else{
+                            if(val["Select"]!=1){
+                                handleChange("comp1",index);
+                            }
+                            addanRow(tableRow, val, "comp", index);
+                        }
+                    }
+                    
                 }
-            }
-            else{
-                if(val["Select"]!=1){
-                    handleChange("comp1",index);
-                }
-                //addanRow(tableRow, val, "comp", index);
+                
             }
         }
-    });
+        //final_res *= (val["Grade"].includes(comp_sel[1]))
+        //if(final_res){
+        //    p(val)
+        //}
+    })
+    
+    //p(Filter("Filter_Dep", "contains", comp_sel[0], "comp"));
+    //Filter("Filter_Grade", "contains", comp_sel[1], "comp");
+    //Filter("Filter_ClassCat", "contains", comp_sel[2], "comp");
 }
 
 
@@ -1215,6 +1164,12 @@ function delet_Filter(event){
     ptr.remove();
 }
 
+
+$('.selectpicker').on('change', function(){
+    filter_update_list(this);
+ });
+
+
 function save_course(){
     
     localStorage.setItem('NSYSU_Courses_Selector_Helper_Saved', JSON.stringify(all_classes));
@@ -1225,7 +1180,6 @@ function delet_all_select(){
         all_classes.forEach((val,index) => {
             if(val["Select"]==1){
                 handleChange("delet",index);
-                localStorage.clear();
             }
         });
 
