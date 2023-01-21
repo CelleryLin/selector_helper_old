@@ -140,7 +140,9 @@ function addanRow(tableRow, class_info, id_selector, i){
 
     //課程名稱
     var cell1 = document.createElement('div')
-    cell1.innerHTML = class_info["Name"];
+    cell1.innerHTML = `
+        <a href="${class_info["URL"]}" class="class_url" target="_blank"> ${class_info["Name"]} </a>
+    `
     cell1.className="classes_cell"
     row.appendChild(cell1);
 
@@ -184,7 +186,12 @@ function addanRow(tableRow, class_info, id_selector, i){
     var teachers = class_info["Teacher"];
     var teacher_html = "";
     for(j=0;j<teachers.length;j++){
-        teacher_html += `<div style="display: inline-block; text-align: center; margin: 3px; padding: 5px; background-color: #FCFCE0; border-radius: 3px " > ${teachers[j]}</div>`;
+        teacher_html += `
+            <div style="display: inline-block; text-align: center; margin: 3px; padding: 5px; background-color: #FCFCE0; border-radius: 3px " >
+                <a href="https://www.google.com/search?q=中山+${teachers[j]}+dcard+%7C+ptt" class="class_url" target="_blank">    
+                    ${teachers[j]}
+                </a>
+            </div>`;
     }
     cell7.innerHTML = teacher_html;
     cell7.className="classes_cell";
@@ -299,6 +306,7 @@ function main(csv_data){
             "Comment": all_class_raw[i][25],
             "Select": 0,
             "Name": all_class_raw[i][7],
+            "URL": all_class_raw[i][8],
             "ClassID": all_class_raw[i][4],
             "Visibility": 1,
             "Overlapping": 0,

@@ -23,6 +23,16 @@ td {
     background-color: #eeeeee;  
 }
 
+.class_url{
+    color: #000;
+    text-decoration: none;
+}
+
+.class_url:hover {
+    color: rgb(43, 182, 187);
+    text-decoration: underline;
+    transition: 0.1s;
+}
 
 .table th {
     position: relative;
