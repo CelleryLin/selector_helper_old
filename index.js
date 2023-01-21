@@ -440,7 +440,7 @@ filter_collapser.addEventListener("click", (e) =>{
     var fil_content = document.getElementById("filter_content");
     if (fil_content.style.display === "block") {
         fil_content.style.display = "none";
-        fil_content.style.zIndex = -1;
+        fil_content.style.zIndex = 0;
     }
     else {
         fil_content.style.display = "block";

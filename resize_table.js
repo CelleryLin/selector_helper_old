@@ -49,7 +49,8 @@ const cols_len = cols.length;
     resizer.classList.add('resizer');
 
     // Set the height
-    resizer.style.height = `${table.offsetHeight/2}px`;
+    //resizer.style.height = `${table.offsetHeight/2}px`;
+    resizer.style.height = "100%";
 
     // Add a resizer element to the column
     col.appendChild(resizer);
