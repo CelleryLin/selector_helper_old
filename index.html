@@ -20,6 +20,7 @@
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Noto Sans' rel='stylesheet'>
     <link rel="stylesheet" href="./index.css">
 </head>
 
@@ -142,7 +143,7 @@
                                     <td id="78" class="schedule_th"></td>
                                 </tr>
                                 <tr class="schedule_tr">
-                                    <th class="schedule_th">9<br>17:10-18:00</th>
+                                    <td class="schedule_th">9<br>17:10-18:00</th>
                                     <td id="19" class="schedule_th"></td>
                                     <td id="29" class="schedule_th"></td>
                                     <td id="39" class="schedule_th"></td>
@@ -200,50 +201,6 @@
                     <div class="function_container" style="height: 100%; overflow:auto;">
                         <div class="accordion">
                             <div class="accordion-item">
-                                <h2 class="accordion-header" id="bulletin_area">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#panelsStayOpen-bulletin_area" aria-expanded="true"
-                                        aria-controls="panelsStayOpen-bulletin_area">
-                                        🎉 公告
-                                    </button>
-                                </h2>
-                                <div id="panelsStayOpen-bulletin_area" class="accordion-collapse collapse show"
-                                    aria-labelledby="bulletin_area">
-                                    <div class="accordion-body">
-                                        <div class="comp_container" id="comp_container" style="font-size: 14px;">
-                                            <h3 style="font-size: 18px; padding-top: 10px;"><b>🙈這裡是中山大學選課小助手 v1.1</b></h3>
-                                            <h3 style="font-size: 18px; padding-top: 10px;"><b>學期課程資料：1112 更新日期：2023/01/16</b></h3>
-                                            <div style="padding-top: 5px;"><b>🎉說明：</b></div>
-                                            <div>目前尚未加入響應式視窗設計，建議<span style="color: rgb(189, 46, 46);"><b>使用電腦瀏覽</b></span>(手機介面幾乎沒辦法使用)。此網站係本人不務正業之作品，程式寫得非常亂，還請多多包含。<br>
-                                            這是輔助大家選課的系統，<span style="color: rgb(189, 46, 46);"><b>僅供參考</b></span>。課程資料是爬蟲下來的靜態資料，若有校方有異動，本人尚未更新的話請聯絡我，感謝。</div>
-                                            <div style="padding-top: 5px;"><b><br>🎉最新功能：</b></div>
-                                            <div style="padding-top: 5px;">- 更新1112課表<br>
-                                            - 課表動態更新<br>
-                                            - 一鍵加入必修課<br>
-                                            - 更強大的篩選器以及智慧搜尋<br>
-                                            - 本學期學程搜尋<br>
-                                            - 顯示衝堂<br>
-                                            - Local Storage 關閉瀏覽器自動儲存選課資料</div>
-                                            <div style="padding-top: 5px;"><b><br>🎉已知問題：</b></div>
-                                            <div style="padding-top: 5px;">
-                                            - 校方資料有課號相同但課程卻不同的狀況，可能會造成顯示上的Bug，重新整理並且任意點選一堂課程再取消即可恢復正常。<br>
-                                            - 介面有待優化<br>
-                                            </div>
-                                            <div style="padding-top: 5px;"><b><br>🎉原始碼及說明：</b></div>
-                                            <a style="padding-top: 5px;" href="https://github.com/CelleryLin/selector_helper">我的 Github</a>
-                                            <div style="padding-top: 5px;"><b><br>🎉錯誤回報&聯絡我：</b></div>
-                                            <div style="padding-top: 5px;">Gmail: 
-                                            <a href="mailto:yochen0123@gmail.com">yochen0123@gmail.com</a>
-                                            </div>
-                                            <br><br>
-                                            <div style="font-size: 14px; text-align: center;">by Cellery Lin. MEME113 </div>
-                                            <div style="text-align: center;"><span> Copyright © 2023 Cellery Lin. All rights reserved. </span></div> 
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
                                 <h2 class="accordion-header" id="compulsory_area">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#panelsStayOpen-compulsory_area" aria-expanded="true"
@@ -259,19 +216,19 @@
                                                 請選擇系所和班級(目前只適用學士班)
                                             </div>
                                             <div id="comp_sel_container" style="padding-bottom: 5px; padding-left: 28px"></div>
-                                            <div id="comp_content" style="display: block; width: 100%; text-align: center;">
-                                                <div id="list_head" style="display: table-row; position: sticky; height: 50px; top: 0; z-index: 1; background-color: white;">
-                                                    <div style="display: table-cell; width:5%; text-align: center;">選擇</div>
-                                                    <div style="display: table-cell; width:22%; text-align: center;">課程名稱</div>
-                                                    <div style="display: table-cell; width:6%; text-align: center;">時間</div>
-                                                    <div style="display: table-cell; width:5%; text-align: center;">班級</div>
-                                                    <div style="display: table-cell; width:10%; text-align: center;">上課系所</div>
-                                                    <div style="display: table-cell; width:3%; text-align: center;">必選修</div>
-                                                    <div style="display: table-cell; width:3%; text-align: center;">學分數</div>
-                                                    <div style="display: table-cell; width:13%; text-align: center;">授課教師</div>
-                                                    <div style="display: table-cell; width:18%; text-align: center;">所屬學程</div>
-                                                    <div style="display: table-cell; width:5%; text-align: center;">英文授課</div>
-                                                    <div style="display: table-cell; width:10%; text-align: center;">教室</div>
+                                            <div id="comp_content" style="display: block; width: 100%; text-align: center; max-height: 350px; overflow: auto;">
+                                                <div id="list_head" class="list_lead_container">
+                                                    <div class="list_head" style="width:5%;">選擇</div>
+                                                    <div class="list_head" style="width:22%;">課程名稱</div>
+                                                    <div class="list_head" style="width:6%;">時間</div>
+                                                    <div class="list_head" style="width:5%;">班級</div>
+                                                    <div class="list_head" style="width:10%;">上課系所</div>
+                                                    <div class="list_head" style="width:3%;">必選修</div>
+                                                    <div class="list_head" style="width:3%;">學分數</div>
+                                                    <div class="list_head" style="width:13%;">授課教師</div>
+                                                    <div class="list_head" style="width:18%;">所屬學程</div>
+                                                    <div class="list_head" style="width:5%;">英文授課</div>
+                                                    <div class="list_head" style="width:10%;">教室</div>
                                                 </div>                                                   
                                             </div>
                                             
@@ -296,27 +253,37 @@
                                                     <input type="search" id="search_bar" class="form-control" style="display: inline-block; border-radius: 100px; width: 100%" placeholder="&nbsp;&nbsp;綜合搜尋...&nbsp;(例如：星期三 早上 博雅)" aria-label="Search" />
                                                 </div>
                                             </div>
-
-                                            <div style="display: block; text-align: right; top: -10px; padding-right: 10px;">
-                                                篩選器&nbsp
-                                                <button id="filter_collapser" style="background-color: rgba(212, 212, 212, 0.5); text-align: center; border-radius: 10px; ">
-                                                    <i style="font-size:24px; color: #727272; padding: 3px;" class="fa">&#xf0d7;</i>
-                                                </button>
-                                            </div>
-                                            <div id="filter_content" class="filter_content">
-                                                <div style="position: absolute; left: 10px; top: 3px; padding: 5px; font-size: 18px; display: block; z-index: 3;">
-                                                    <span>使用篩選器：</span>
-        
-                                                    <div class="form-check form-switch" style="display: inline-block;">
-                                                        <input class="form-check-input" type="checkbox" role="switch" id="filter_switch" style="margin-left: 5px;">
-                                                        <label style="padding-left: 7px; margin: 3px;" id="filter_switch_status">啟用</label>
+                                            <div style="display: block; text-align: right;">
+                                                <div style="display: table-row; font-size: 13px; right: 10px;">
+                                                    <div class="form-check form-switch" style="display: table-cell; vertical-align: middle;">
+                                                        <input class="form-check-input" type="checkbox" role="switch" id="overlapping_show_switch" style="margin-left: 5px; vertical-align: middle; display: table-cell;" checked>
+                                                        <label style="padding-left: 7px; margin: 3px; vertical-align: middle; display: table-cell;">衝堂顯示</label>
+                                                        
                                                     </div>
-                                                
+                                                    <label style="padding-left: 7px; margin: 3px; padding-left: 100px; vertical-align: middle; display: table-cell;">篩選器&nbsp</label>
+                                                    <button id="filter_collapser" style="background-color: rgba(212, 212, 212, 0.5); text-align: center; border-radius: 10px; vertical-align: middle; display: table-cell;">
+                                                        <i style="font-size:24px; color: #727272; padding: 3px;" class="fa">&#xf0d7;</i>
+                                                    </button>
+                                                    
                                                 </div>
-                                                <div style="position: relative; top: 3px; padding: 17px; margin-bottom: 15px;"></div>
-                                                
-                                                <div style="position: relative; display: block; padding: 5px; z-index: 3;">
-                                                    <button class="add_filter_btn" onclick="Filter_window();"><i style="font-size:20px" class="fa-solid">&#x2b;</i></button>
+                                            </div>
+                                            
+                                            <div style="text-align: center;">
+                                                <div id="filter_content" class="filter_content">
+                                                    <div style="position: absolute; left: 10px; top: 3px; padding: 5px; font-size: 18px; display: block; z-index: 3; font-weight: normal;">
+                                                        <span>使用篩選器：</span>
+            
+                                                        <div class="form-check form-switch" style="display: inline-block;">
+                                                            <input class="form-check-input" type="checkbox" role="switch" id="filter_switch" style="margin-left: 5px;">
+                                                            <label style="padding-left: 7px; margin: 3px;" id="filter_switch_status">啟用</label>
+                                                        </div>
+                                                    
+                                                    </div>
+                                                    <div style="position: relative; top: 3px; padding: 17px; margin-bottom: 15px;"></div>
+                                                    
+                                                    <div style="position: relative; display: block; padding: 5px; z-index: 3;">
+                                                        <button class="add_filter_btn" onclick="Filter_window();"><i style="font-size:20px" class="fa-solid">&#x2b;</i></button>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div id="select_filter_content" class="select_filter_content" style="display: none; z-index: 3;">
@@ -328,19 +295,19 @@
                                         </div>
                                         <div class="list_container" style="max-height: 700px; min-height: 200px; overflow: auto;">
                                             
-                                            <div id="list_content" style="display: block; width: 100%; text-align: center; vertical-align: middle;">
-                                                <div id="list_head" style="display: table-row; position: sticky; height: 50px; top: 0; z-index: 1; background-color: white;">
-                                                    <div style="display: table-cell; width:5%; text-align: center;">選擇</div>
-                                                    <div style="display: table-cell; width:22%; text-align: center;">課程名稱</div>
-                                                    <div style="display: table-cell; width:6%; text-align: center;">時間</div>
-                                                    <div style="display: table-cell; width:5%; text-align: center;">班級</div>
-                                                    <div style="display: table-cell; width:10%; text-align: center;">上課系所</div>
-                                                    <div style="display: table-cell; width:3%; text-align: center;">必選修</div>
-                                                    <div style="display: table-cell; width:3%; text-align: center;">學分數</div>
-                                                    <div style="display: table-cell; width:13%; text-align: center;">授課教師</div>
-                                                    <div style="display: table-cell; width:18%; text-align: center;">所屬學程</div>
-                                                    <div style="display: table-cell; width:5%; text-align: center;">英文授課</div>
-                                                    <div style="display: table-cell; width:10%; text-align: center;">教室</div>
+                                            <div id="list_content" style="display: block; width: 100%; text-align: center;">
+                                                <div id="list_head" class="list_lead_container">
+                                                    <div class="list_head" style="width:5%;">選擇</div>
+                                                    <div class="list_head" style="width:22%;">課程名稱</div>
+                                                    <div class="list_head" style="width:6%;">時間</div>
+                                                    <div class="list_head" style="width:5%;">班級</div>
+                                                    <div class="list_head" style="width:10%;">上課系所</div>
+                                                    <div class="list_head" style="width:3%;">必選修</div>
+                                                    <div class="list_head" style="width:3%;">學分數</div>
+                                                    <div class="list_head" style="width:13%;">授課教師</div>
+                                                    <div class="list_head" style="width:18%;">所屬學程</div>
+                                                    <div class="list_head" style="width:5%;">英文授課</div>
+                                                    <div class="list_head" style="width:10%;">教室</div>
                                                 </div>                                                   
                                             </div>
                                         
@@ -381,27 +348,71 @@
                                             <div style="display: inline-block; font-weight: normal; font-size: 16px;">已選學分：<span id="all_credits" style="font-weight: bold; background-color: #e0e8f0; padding: 5px; border-radius: 3px;">32</span></div>
                                             <div style="display: inline-block; font-weight: normal; font-size: 16px; padding-left: 5px;">總時數：<span id="tt_time" style="font-weight: bold; background-color: #e0e8f0; padding: 5px; border-radius: 3px;">32</span></div>
                                             <div style="display: block; padding-top: 10px;">
-                                                <button type="button" class="btn btn-light" onclick="delet_all_select();">全部刪除</button>
+                                                <button style="background-color: #9c4b4b; font-weight: bold;" type="button" class="btn btn-light" onclick="delet_all_select();"><span style="color: #fff">全部刪除</span></button>
                                             </div>
                                         </div>
-                                        <div class="list_container">
+                                        <div class="list_container" style="max-height: 700px; overflow: auto;">
                                             <div id="list_content_selected" style="display: block; width: 100%; text-align: center;">
-                                                <div id="list_head" style="display: table-row; position: sticky; height: 50px; top: 0; z-index: 1; background-color: white;">
-                                                    <div style="display: table-cell; width:5%; text-align: center;">選擇</div>
-                                                    <div style="display: table-cell; width:22%; text-align: center;">課程名稱</div>
-                                                    <div style="display: table-cell; width:6%; text-align: center;">時間</div>
-                                                    <div style="display: table-cell; width:5%; text-align: center;">班級</div>
-                                                    <div style="display: table-cell; width:10%; text-align: center;">上課系所</div>
-                                                    <div style="display: table-cell; width:3%; text-align: center;">必選修</div>
-                                                    <div style="display: table-cell; width:3%; text-align: center;">學分數</div>
-                                                    <div style="display: table-cell; width:13%; text-align: center;">授課教師</div>
-                                                    <div style="display: table-cell; width:18%; text-align: center;">所屬學程</div>
-                                                    <div style="display: table-cell; width:5%; text-align: center;">英文授課</div>
-                                                    <div style="display: table-cell; width:10%; text-align: center;">教室</div>
+                                                <div id="list_head" class="list_lead_container">
+                                                    <div class="list_head" style="width:5%;">選擇</div>
+                                                    <div class="list_head" style="width:22%;">課程名稱</div>
+                                                    <div class="list_head" style="width:6%;">時間</div>
+                                                    <div class="list_head" style="width:5%;">班級</div>
+                                                    <div class="list_head" style="width:10%;">上課系所</div>
+                                                    <div class="list_head" style="width:3%;">必選修</div>
+                                                    <div class="list_head" style="width:3%;">學分數</div>
+                                                    <div class="list_head" style="width:13%;">授課教師</div>
+                                                    <div class="list_head" style="width:18%;">所屬學程</div>
+                                                    <div class="list_head" style="width:5%;">英文授課</div>
+                                                    <div class="list_head" style="width:10%;">教室</div>
                                                 </div>                                                   
                                             </div>
                                         </div>
                                         
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="bulletin_area">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#panelsStayOpen-bulletin_area" aria-expanded="true"
+                                        aria-controls="panelsStayOpen-bulletin_area">
+                                        🎉 公告
+                                    </button>
+                                </h2>
+                                <div id="panelsStayOpen-bulletin_area" class="accordion-collapse collapse show"
+                                    aria-labelledby="bulletin_area">
+                                    <div class="accordion-body">
+                                        <div class="comp_container" id="comp_container" style="font-size: 14px;">
+                                            <h3 style="font-size: 18px; padding-top: 10px;"><b>🙈這裡是中山大學選課小助手 v1.1</b></h3>
+                                            <h3 style="font-size: 18px; padding-top: 10px;"><b>學期課程資料：1112 更新日期：2023/01/16</b></h3>
+                                            <div style="padding-top: 5px;"><b>🎉說明：</b></div>
+                                            <div>目前尚未加入響應式視窗設計，建議<span style="color: rgb(189, 46, 46);"><b>使用電腦瀏覽</b></span>(手機介面幾乎沒辦法使用)。此網站係本人不務正業之作品，程式寫得非常亂，還請多多包含。<br>
+                                            這是輔助大家選課的系統，<span style="color: rgb(189, 46, 46);"><b>僅供參考</b></span>。課程資料是爬蟲下來的靜態資料，若有校方有異動，本人尚未更新的話請聯絡我，感謝。</div>
+                                            <div style="padding-top: 5px;"><b><br>🎉最新功能：</b></div>
+                                            <div style="padding-top: 5px;">- 更新1112課表<br>
+                                            - 課表動態更新<br>
+                                            - 一鍵加入必修課<br>
+                                            - 更強大的篩選器以及智慧搜尋<br>
+                                            - 本學期學程搜尋<br>
+                                            - 顯示衝堂<br>
+                                            - Local Storage 關閉瀏覽器自動儲存選課資料</div>
+                                            <div style="padding-top: 5px;"><b><br>🎉已知問題：</b></div>
+                                            <div style="padding-top: 5px;">
+                                            - 校方資料有課號相同但課程卻不同的狀況，可能會造成顯示上的Bug，重新整理並且任意點選一堂課程再取消即可恢復正常。<br>
+                                            - 介面有待優化<br>
+                                            </div>
+                                            <div style="padding-top: 5px;"><b><br>🎉原始碼及說明：</b></div>
+                                            <a style="padding-top: 5px;" href="https://github.com/CelleryLin/selector_helper">我的 Github</a>
+                                            <div style="padding-top: 5px;"><b><br>🎉錯誤回報&聯絡我：</b></div>
+                                            <div style="padding-top: 5px;">Gmail: 
+                                            <a href="mailto:yochen0123@gmail.com">yochen0123@gmail.com</a>
+                                            </div>
+                                            <br><br>
+                                            <div style="font-size: 14px; text-align: center;">by Cellery Lin. MEME113 </div>
+                                            <div style="text-align: center;"><span> Copyright © 2023 Cellery Lin. All rights reserved. </span></div> 
+                                            
+                                        </div>
                                     </div>
                                 </div>
                             </div>

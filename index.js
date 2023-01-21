@@ -440,12 +440,12 @@ const filter_collapser=document.getElementById("filter_collapser");
 filter_collapser.addEventListener("click", (e) =>{
     dir_trigger*=-1;
     var fil_content = document.getElementById("filter_content");
-    if (fil_content.style.display === "block") {
+    if (fil_content.style.display === "inline-block") {
         fil_content.style.display = "none";
         fil_content.style.zIndex = 0;
     }
     else {
-        fil_content.style.display = "block";
+        fil_content.style.display = "inline-block";
         fil_content.style.zIndex = 3;
     }
 
@@ -731,6 +731,7 @@ function filter_update_list(e){
         val["Visibility"]=1;
     });
     if ($('#filter_switch').is(':checked')){
+        document.getElementById("filter_switch_status").innerHTML="已啟用"
         var all_filter=[].slice.call($('#filter_content').children(".Filter_row"))
         if(all_filter.length!=0){
             all_filter.forEach(val => {
@@ -746,6 +747,9 @@ function filter_update_list(e){
             });
             addClassRow(all_classes, 0);
         }
+    }
+    else{
+        document.getElementById("filter_switch_status").innerHTML="已停用"
     }
     if(e.target.id=="filter_switch"){
         if (!($('#filter_switch').is(':checked'))){
@@ -820,6 +824,13 @@ function comp_update_list(isCatChange){
 
 //Bookmark
 document.addEventListener("input",(val) => {
+    p(val.target)
+    if($('#overlapping_show_switch').is(':checked')){
+        document.querySelector(':root').style.setProperty('--over_lap', 'table-row');
+    }
+    else{
+        document.querySelector(':root').style.setProperty('--over_lap', 'none');
+    }
     filter_update_list(val);
 });
 
@@ -895,10 +906,10 @@ function create_comp_fourm(){
             ${options_class}
         </select>
     </div>
-    <div style="display: inline-block;>
+    <div style="display: inline-block;">
         <button type="button" class="btn btn-light" onclick="comp_insert(0);">全部填入</button>
     </div>
-    <div style="display: inline-block;>
+    <div style="display: inline-block;">
         <button type="button" class="btn btn-light" onclick="comp_insert(1);">全部取消</button>
     </div>
     `;

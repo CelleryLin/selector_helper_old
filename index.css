@@ -1,17 +1,18 @@
 :root {
     --td-round: 8px;
+    --over_lap: table-row;
 }
 
 * {
     margin: 0;
     padding: 0;
     border: none;
-    font-family: Arial, sans-serif;
+    font-family: Arial, 'Noto Sans';
 }
   
 body {
     font-size: 12px;
-    background-color: #f9f9f9;
+    background-color: #fefefe;
     height: 100vh;
     width: 100vw;
 }
@@ -19,6 +20,7 @@ body {
 td {
     text-align: center;
     border-radius: var(--td-round);
+    background-color: #eeeeee;  
 }
 
 
@@ -72,7 +74,7 @@ td {
 .classes_row.overlapping{
     background-color: #f7f7f7;
     opacity: 60%;
-    display: table-row;
+    display: var(--over_lap);
     z-index: 2;
 }
 
@@ -84,6 +86,25 @@ td {
     padding-top: 10px;
 }
 
+.list_lead_container{
+    display: table-row;
+    position: sticky;
+    height: 50px;
+    top: 0;
+    z-index: 1;
+    background-color: #ffffffcf;
+    backdrop-filter: blur(8px);
+    
+    box-shadow: 0px 10px 33px -15px rgba(0,0,0,0.13);
+}
+
+.list_head{
+    display: table-cell;
+    text-align: center;
+    font-weight: bold;
+    vertical-align: middle;
+
+}
 .classes_cell{
     display: table-cell;
 }
@@ -100,7 +121,7 @@ td {
 }
 
 .addedclass {
-    background-color: #d8d8c6;
+    background-color: #ececcd;
     height: 100%;
     font-size: 13px;
     text-align: center;
@@ -110,26 +131,25 @@ td {
     align-items: center;
     justify-content: center;
     border-radius: var(--td-round);
+    padding: 8px;
 }
 
 
 .filter_content{
     display: none;
     position: relative;
-    top: 0px;
-    right: 0px;
+    top: 5px;
+    margin-bottom: 10px;
     height: auto;
     max-height: 800%;
-    width: 100%;
-    background-color: #f5f5f5e5;
-    backdrop-filter: blur(5px);
-    margin: 5px;
+    width: 90%;
     border-radius: 10px;
+    background-color: #eaeaea;
+    backdrop-filter: blur(5px);
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     text-align: center;
     overflow-y: auto;
     overflow-x: hidden;
-    z-index: 3;
 
 }
 .filter_content.button{
@@ -218,6 +238,11 @@ td {
     --bs-btn-disabled-color: #000;
     --bs-btn-disabled-bg: #f8f9fa;
     --bs-btn-disabled-border-color: #f8f9fa;
+}
+
+
+.accordion {
+    --bs-accordion-bg: #fff;
 }
 
 .btn-light{
