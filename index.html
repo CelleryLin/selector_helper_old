@@ -25,6 +25,29 @@
 </head>
 
 <body>
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">⚠️ 注意</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="background-color: #ffffff00;"">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <span style="font-size: 20px; font-weight: bold;">
+                        確定要刪除所選課程嗎？
+                    </span>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" style="background-color: #9c4b4b;" onclick="delet_all_select();" data-dismiss="modal">全部刪除</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="App_container" id="App_container" style="max-height: 100%; width: 100%; overflow: hidden;">
         <table id="resizable_table" style=" display: table; width: 100%; height: 100vh;">
             <thead>
@@ -348,7 +371,7 @@
                                             <div style="display: inline-block; font-weight: normal; font-size: 16px;">已選學分：<span id="all_credits" style="font-weight: bold; background-color: #e0e8f0; padding: 5px; border-radius: 3px;">32</span></div>
                                             <div style="display: inline-block; font-weight: normal; font-size: 16px; padding-left: 5px;">總時數：<span id="tt_time" style="font-weight: bold; background-color: #e0e8f0; padding: 5px; border-radius: 3px;">32</span></div>
                                             <div style="display: block; padding-top: 10px;">
-                                                <button style="background-color: #9c4b4b; font-weight: bold;" type="button" class="btn btn-light" onclick="delet_all_select();"><span style="color: #fff">全部刪除</span></button>
+                                                <button style="background-color: #9c4b4b; font-weight: bold;" type="button" class="btn btn-light" onclick="" data-toggle="modal" data-target="#exampleModalCenter"><span style="color: #fff">全部刪除</span></button>
                                             </div>
                                         </div>
                                         <div class="list_container" style="max-height: 700px; overflow: auto;">

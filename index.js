@@ -1316,15 +1316,12 @@ function save_course(){
 }
 
 function delet_all_select(){
-    if(window.confirm("確定要刪除所選課程嗎？")){
-        all_classes.forEach((val,index) => {
-            val["Overlapping"]=0;
-            if(val["Select"]==1){
-                handleChange("delet",index);
-                localStorage.clear();
-            }
-        });
-
-    }
+    all_classes.forEach((val,index) => {
+        val["Overlapping"]=0;
+        if(val["Select"]==1){
+            handleChange("delet",index);
+            localStorage.clear();
+        }
+    });
 }
 
