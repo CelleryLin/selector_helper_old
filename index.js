@@ -11,7 +11,7 @@ var filter_Programs=[];
 var filter_EMI=[];
 var filter_Room=[];
 var isFinity=1;
-const filter_category=['課程名稱', '時間', '星期', '年級', '班別', '上課系所', '必選修', '學分數', '授課教師', '所屬學程', '英文授課'];
+const filter_category=['課程名稱', '節次', '星期', '年級', '班別', '上課系所', '必選修', '學分數', '授課教師', '所屬學程', '英文授課'];
 const filter_category_index=['Class', 'Time', 'Day', 'Grade', 'ClassCat', 'Dep', 'Comp', 'Credit', 'Teacher', 'Prog', 'EMI'];
 function p(a){
     console.log(a);
@@ -93,7 +93,6 @@ function filter_Init(all_classes){
 
 }
 function updateCheckbox(class_info){
-    classOverlapping();
     var classrow=["", "_selected", "_comp"];
     classrow.forEach(val => {
         var thisrow = document.getElementById(class_info["ClassID"]+val)
@@ -101,6 +100,7 @@ function updateCheckbox(class_info){
             thisrow.children[0].children[0].children[0].checked=class_info["Select"];
         }
     })
+    
     save_course();
 }
 
@@ -235,7 +235,7 @@ function addClassRow(all_classes, filter){
         if(all_classes[i]["Visibility"]==1 || filter){
             if(row_count>=100 && isFinity){
                 const show_more = document.createElement('div');
-                show_more.innerHTML="顯示更多...";
+                show_more.innerHTML="顯示全部... (注意：可能會造成些微卡頓)";
                 show_more.className="classes_row";
                 show_more.style.textAlign="Center";
                 show_more.style.display="block";
@@ -320,9 +320,14 @@ function main(csv_data){
         })
     }
 
+    all_classes=Array.from(
+        new Set(all_classes.map((object) => JSON.stringify(object)))
+        ).map((string) => JSON.parse(string))
+
     all_classes.forEach( (val,index) => {
         if(val['Select']){
             insertClass(val,1);
+            p(val)
             var tableRow = document.getElementById("list_content_selected");
             addanRow(tableRow, val, "selected", index);
         }
@@ -424,6 +429,7 @@ function handleChange(checkbox,i) {
         var deletClass = document.getElementById(all_classes[i]['ClassID']+"_selected");
         deletClass.parentNode.removeChild(deletClass);
     }
+    classOverlapping();
     updateCheckbox(all_classes[i]);
 }
 
@@ -1228,6 +1234,10 @@ function classOverlapping(){
     var selected_time=[];
     all_classes.forEach(val => {
         val["Overlapping"]=0;
+        var row=document.getElementById(val["ClassID"]);
+        if(row != null){
+            row.className="classes_row";
+        }
         if(val["Select"]){
             val["Time"].forEach(val_time => {
                 var tmp=val_time.split(" ");
@@ -1237,23 +1247,27 @@ function classOverlapping(){
             })
         }
     });
-    p(selected_time)
+    //p(selected_time)
     
     selected_time.forEach(val_sel => {
         all_classes.forEach(val_class => {
+            var row=document.getElementById(val_class["ClassID"]);
             val_class["Time"].forEach(val_time => {
                 var tmp=val_time.split(" ");
                 tmp[1].split('').forEach( val_mun => {
                     if(tmp[0]+" "+val_mun==val_sel){
                         val_class["Overlapping"]=1;
+                        if(row != null){
+                            row.className="classes_row overlapping";
+                        }
                         //p(val_class)
                     }
                 });
             });
         });
     });
-    p(isFinity)
-    addClassRow(all_classes,0);
+    //p(isFinity)
+    //addClassRow(all_classes,0);
 }
 
 function save_course(){
@@ -1264,6 +1278,7 @@ function save_course(){
 function delet_all_select(){
     if(window.confirm("確定要刪除所選課程嗎？")){
         all_classes.forEach((val,index) => {
+            val["Overlapping"]=0;
             if(val["Select"]==1){
                 handleChange("delet",index);
                 localStorage.clear();
