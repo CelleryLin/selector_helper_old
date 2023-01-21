@@ -337,6 +337,7 @@ function main(csv_data){
     create_comp_fourm();
     addClassRow(all_classes, 1);
     comp_update_list();
+    calc_stat();
 
     $('.selectpicker').selectpicker();
 }
@@ -431,6 +432,7 @@ function handleChange(checkbox,i) {
     }
     classOverlapping();
     updateCheckbox(all_classes[i]);
+    calc_stat();
 }
 
 var dir_trigger=-1;
@@ -1269,6 +1271,25 @@ function classOverlapping(){
     //p(isFinity)
     //addClassRow(all_classes,0);
 }
+
+function calc_stat(){
+    var tt_credits=0;
+    var tt_time=0;
+    all_classes.forEach(val => {
+        if(val["Select"]){
+            tt_credits+=parseInt(val["Credits"],10);
+            val["Time"].forEach( val_time => {
+                tt_time+=val_time.split("").length-2
+            })
+        }
+    });
+    document.getElementById("all_credits").innerHTML=tt_credits;
+    document.getElementById("tt_time").innerHTML=tt_time;
+}
+
+
+
+
 
 function save_course(){
     
