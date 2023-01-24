@@ -23,15 +23,19 @@ td {
     background-color: #eeeeee;  
 }
 
+ul {
+    padding: 0px 20px 0px 20px;
+    font-weight: bold;
+}
+
 .class_url{
     color: #000;
     text-decoration: none;
 }
 
 .class_url:hover {
-    color: rgb(43, 182, 187);
+    color: rgb(55, 120, 173);
     text-decoration: underline;
-    transition: 0.1s;
 }
 
 .table th {
@@ -92,6 +96,10 @@ td {
     font-weight: normal;
 }
 
+.sortable_container {
+    font-weight: normal;
+}
+
 .search_container{
     padding-top: 10px;
 }
@@ -144,6 +152,21 @@ td {
     padding: 8px;
 }
 
+.addedclass.pending {
+    background-color: #cacef3;
+    opacity: 70%;
+    height: 100%;
+    font-size: 13px;
+    text-align: center;
+    position: relative;
+    vertical-align: top;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--td-round);
+    padding: 8px;
+}
+
 
 .filter_content{
     display: none;
@@ -168,7 +191,6 @@ td {
 
 .select_filter_content{
     position: absolute;
-    top: 100px;
     right: 23%;
     height: 200px;
     width: 150px;
@@ -217,6 +239,10 @@ td {
 .Filter_lable{
     font-size: 16px;
     padding-right: 15px;
+    display: block;
+    padding-bottom: 5px;
+    padding-left: 28px;
+    margin-top: 10px;
 }
 
 .chart_container{
@@ -282,4 +308,75 @@ td {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: rgb(139, 157, 160);
+}
+
+
+.ui-state-default{
+    list-style-type: none;
+    font-size: 16px;
+    margin: 5px;
+    border-radius: 30px;
+    background-color: #efefef;
+    padding: 10px 0px 10px 10px;
+
+}
+
+.ui-state-default:hover{
+    list-style-type: none;
+    font-size: 16px;
+    margin: 5px;
+    border-radius: 30px;
+    background-color: #e2e9d7;
+    padding: 10px 0px 10px 10px;
+}
+
+.ui-state-highlight{
+    list-style-type: none;
+    font-size: 20px;
+    margin: 10px;
+    border-radius: 30px;
+    background-color: #d1e3e7;
+    padding: 10px;
+    border-style: none;
+}
+
+.sortable_cat{
+    display: inline-block;
+}
+
+.sortable_row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:0px 10px 0px 10px;
+
+}
+
+.select_sortable_content{
+    display: none;
+    z-index: 3;
+    position: absolute;
+    height: 200px;
+    width: 150px;
+    background-color: #fafafafa;
+    backdrop-filter: blur(5px);
+    margin: 3px;
+    padding: 5px;
+    border-radius: 10px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    text-align: left;
+    font-size: 18px;
+    overflow: auto;
+}
+
+.ui-state-disabled{
+    opacity: 80%;
+}
+.sortable_select_btn{
+    background-color: #ffffff00;
+    border-radius: 5px;
+    padding-left: 8px;
+}
+.sortable_select_btn:hover{
+    background-color: #d4d4d49f;
 }

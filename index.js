@@ -12,6 +12,7 @@ var filter_EMI=[];
 var filter_Room=[];
 var isFinity=1;
 const filter_category=['課程名稱', '節次', '星期', '年級', '班別', '上課系所', '必選修', '學分數', '授課教師', '所屬學程', '英文授課'];
+const list=['博雅課程','運動與健康(體適能或游泳)','運動與健康(其他)','跨院選修','隨機課程','中文思辨與表達','英文初級','英文中級','英文中高級','英文高級']
 const filter_category_index=['Class', 'Time', 'Day', 'Grade', 'ClassCat', 'Dep', 'Comp', 'Credit', 'Teacher', 'Prog', 'EMI'];
 function p(a){
     console.log(a);
@@ -92,6 +93,24 @@ function filter_Init(all_classes){
     });
 
 }
+
+function sortable_Init(){
+    //const list=['博雅課程','系上選修','運動與健康(體適能或游泳)','運動與健康(其他)','跨願選修','隨機課程','中文思辨與表達','英文初級','英文中級','英文中高級','英文高級']
+    const filter_selector=document.getElementById("select_sortable_content");
+
+    list.forEach(val => {
+        const newdiv = document.createElement('div');
+        newdiv.className="sortable_select_btn";
+        newdiv.innerHTML=`
+        <div>${val}</div>
+        `;
+        newdiv.setAttribute('onclick',`appendSortable('${val}');`);
+        filter_selector.appendChild(newdiv);
+    });
+}
+
+
+
 function updateCheckbox(class_info){
     var classrow=["", "_selected", "_comp"];
     classrow.forEach(val => {
@@ -282,8 +301,9 @@ function main(csv_data){
     const day_index=['一 ', '二 ', '三 ', '四 ', '五 ', '六 ', '日 '];
     const grade_index=['','一', '二','三', '四'];
     all_class_raw=csv_data.data
+    p(all_class_raw)
     all_classes=[]
-    for(i=1;i<all_class_raw.length;i++){
+    for(i=1;i<=all_class_raw.length-2;i++){
     //for(i=1;i<200;i++){
         //time_sort(all_class_raw[i]);
         var sorted_time=[];
@@ -310,7 +330,8 @@ function main(csv_data){
             "ClassID": all_class_raw[i][4],
             "Visibility": 1,
             "Overlapping": 0,
-            "MyComp": 0
+            "MyComp": 0,
+            "Pending": 0
         };
         all_classes.push(class_info);
     }
@@ -321,11 +342,12 @@ function main(csv_data){
             all_classes.forEach( (val_new, index) => {
                 if(val_old["ClassID"]==val_new["ClassID"]){
                     val_new["Select"]=val_old["Select"];
+                    val_new["Pending"]=val_old["Pending"];
                     val_new["MyComp"]=val_old["MyComp"];
                     val_new["Overlapping"]=val_old["Overlapping"];
                 }
-            })
-        })
+            });
+        });
     }
 
     all_classes=Array.from(
@@ -334,20 +356,32 @@ function main(csv_data){
 
     all_classes.forEach( (val,index) => {
         if(val['Select']){
-            insertClass(val,1);
-            p(val)
+            if(val['Pending']){
+                insertClass(val,1,"auto");
+            }
+            else{
+                insertClass(val,1);
+            }
+            
             var tableRow = document.getElementById("list_content_selected");
             addanRow(tableRow, val, "selected", index);
         }
     });
 
     filter_Init(all_classes);
+    sortable_Init();
     create_comp_fourm();
     addClassRow(all_classes, 1);
     comp_update_list();
     calc_stat();
 
     $('.selectpicker').selectpicker();
+
+    $(document).ready( function() {
+        $( "#sortable" ).sortable({
+          items: "li:not(.ui-state-disabled)"
+        }).disableSelection();
+    });
 }
 
 
@@ -367,7 +401,7 @@ function ClassLayout(cell_index){
     }
 }
 
-function insertClass(class_info, isSelected){
+function insertClass(class_info, isSelected, isAuto="norm"){
     const schedule = document.getElementById('schedule_content');
     for(i=0;i<class_info['Time'].length;i++){
         var timedata=class_info['Time'][i].split('');
@@ -395,7 +429,12 @@ function insertClass(class_info, isSelected){
                 var addedClass = document.createElement('div');
                 addedClass.id = class_info['ClassID']+"_table";
                 addedClass.innerHTML =`<span style="display: table-cell; vertical-align: middle;">${class_info["Name"]}<br>${class_info["ClassID"]}</span>`;
-                addedClass.className="addedclass";
+                if(isAuto=="auto"){
+                    addedClass.className="addedclass pending";
+                }
+                else{
+                    addedClass.className="addedclass";
+                }
                 cell_index.appendChild(addedClass);
                 
             }
@@ -429,6 +468,20 @@ function handleChange(checkbox,i) {
     else if(checkbox=='comp0'){
         all_classes[i]['Select']=0;
         insertClass(all_classes[i],0);
+        var deletClass = document.getElementById(all_classes[i]['ClassID']+"_selected");
+        deletClass.parentNode.removeChild(deletClass);
+    }
+    else if(checkbox=='auto1'){
+        all_classes[i]['Pending']=1;
+        all_classes[i]['Select']=1;
+        insertClass(all_classes[i],1,"auto");
+        var tableRow = document.getElementById("list_content_selected");
+        addanRow(tableRow, all_classes[i], "selected", i);
+    }
+    else if(checkbox=='auto0'){
+        all_classes[i]['Pending']=0;
+        all_classes[i]['Select']=0;
+        insertClass(all_classes[i],0,"auto");
         var deletClass = document.getElementById(all_classes[i]['ClassID']+"_selected");
         deletClass.parentNode.removeChild(deletClass);
     }
@@ -721,12 +774,15 @@ function Filter(filter_cat, filter_logic, filter_content){
 }
 
 document.addEventListener("click",(val) => {
-    const content=document.getElementById("filter_content");
-    const isClosest = val.target.closest("#select_filter_content");
+    const filter_isClosest = val.target.closest("#select_filter_content");
+    const sort_isCloset = val.target.closest("#select_sortable_content");
     const filter_sel_menu = document.getElementById("select_filter_content");
-    filter_sel_menu.style.top=`${content.getBoundingClientRect().height+50}px`;
-    if ((filter_sel_menu.style.display == "inline-block") && (isClosest == null)){
+    const sort_sel_menu = document.getElementById("select_sortable_content");
+    if ((filter_sel_menu.style.display == "inline-block") && (filter_isClosest == null)){
         filter_sel_menu.style.display="none";
+    }
+    if ((sort_sel_menu.style.display == "inline-block") && (sort_isCloset == null)){
+        sort_sel_menu.style.display="none";
     }
 });
 
@@ -821,7 +877,6 @@ function comp_update_list(isCatChange){
         $('.selectpicker.comp-class').append(`<option value="" selected>(全)</option>`)
         getUnique(comp_all_classcat).forEach(val => {
             if(val!=""){
-                p(val)
                 $('.selectpicker.comp-class').append(`<option value="${val}">${val}</option>`)
             }
         });
@@ -832,7 +887,6 @@ function comp_update_list(isCatChange){
 
 //Bookmark
 document.addEventListener("input",(val) => {
-    p(val.target)
     if($('#overlapping_show_switch').is(':checked')){
         document.querySelector(':root').style.setProperty('--over_lap', 'table-row');
     }
@@ -925,7 +979,7 @@ function create_comp_fourm(){
     content.style.display="inline-block";
 
 }
-//Bookmark
+
 function appendFilter(append_i){
     toAppend=filter_category[append_i];
     const content=document.getElementById("filter_content");
@@ -1248,8 +1302,16 @@ function delet_Filter(event){
         ptr=ptr.parentNode
     }
     ptr.remove();
+    filter_update_list(event)
 }
 
+function delet_Sortable(event){
+    var ptr=event.target
+    while(ptr.tagName != "LI"){
+        ptr=ptr.parentNode
+    }
+    ptr.remove();
+}
 
 function classOverlapping(){
     var selected_time=[];
@@ -1306,6 +1368,212 @@ function calc_stat(){
     document.getElementById("tt_time").innerHTML=tt_time;
 }
 
+function appendSortable(a){
+    const table = document.getElementById("sortable");
+    const newdiv = document.createElement('li');
+    newdiv.className="ui-state-default"
+    newdiv.id=a
+    newdiv.innerHTML=`
+    <div style="display: block; text-align: center;">
+        <div class="sortable_row">
+            <div class="sortable_cat">${a}</div>
+            <div style="display: inline-block; padding 5px; right: 0px;">
+                <button class="add_filter_btn" onclick="delet_Sortable(event);"><div style="font-size: 18px;"><i style="font-size:12px" class="fa">&#xf00d;</i></div></button>
+            </div>
+        </div>
+    </div>
+    
+    `
+    table.appendChild(newdiv)
+}
+
+
+function Sortable_window(){
+    const filter_sel_menu = document.getElementById("select_sortable_content");
+    if(filter_sel_menu.style.display=="inline-block"){
+        filter_sel_menu.style.display="none";
+    }
+    else{
+        setTimeout(function(){
+            filter_sel_menu.style.display="inline-block";
+        }, 10);
+    }
+}
+
+function random_class(got_classes){
+    return new Promise(resolve => {
+        const res_class = got_classes[Math.floor(Math.random()*got_classes.length)];
+        handleChange("auto1",res_class[1]);
+        resolve(0);
+    });
+    
+}
+
+
+function pendingClasses(){
+    all_classes.forEach((val,index) => {
+        if(val["Pending"]){
+            handleChange("auto0", index);
+        }
+    });
+    //const list=['博雅課程','運動與健康(體適能或游泳)','運動與健康(其他)','跨願選修','隨機課程','中文思辨與表達','英文初級','英文中級','英文中高級','英文高級']
+    const list = document.getElementById("sortable");
+    const ele = [].slice.call(list.children)
+    for (var i=0;i<ele.length;i++){
+        const got_classes = [];
+        switch (ele[i].id){
+            case '博雅課程':
+                all_classes.forEach((val_class,index) => {
+                    if(val_class["Overlapping"]==0 && val_class["Select"]==0){
+                        if(val_class["Department"].includes("博雅向度")){
+                            got_classes.push([val_class,index]);
+                        }
+                    } 
+                });
+                if(got_classes.length!=0){
+                    random_class(got_classes).then();
+                }
+                break;
+
+            case '運動與健康(體適能或游泳)':
+                all_classes.forEach((val_class,index) => {
+                    if(val_class["Overlapping"]==0 && val_class["Select"]==0){
+                        if(val_class["Department"].includes("運動健康") && val_class["Grade"].includes("一")){
+                            got_classes.push([val_class,index]);
+                        }
+                    } 
+                });
+                if(got_classes.length!=0){
+                    random_class(got_classes).then();
+                }
+                break;
+
+            case '運動與健康(其他)':
+                all_classes.forEach((val_class,index) => {
+                    if(val_class["Overlapping"]==0 && val_class["Select"]==0){
+                        if(val_class["Department"].includes("運動健康") && (!val_class["Grade"].includes("一"))){
+                            got_classes.push([val_class,index]);
+                        }
+                    } 
+                });
+                if(got_classes.length!=0){
+                    random_class(got_classes).then();
+                }
+                break;
+            case '跨院選修':
+                all_classes.forEach((val_class,index) => {
+                    if(val_class["Overlapping"]==0 && val_class["Select"]==0){
+                        if(val_class["Department"].includes("跨院選修")){
+                            got_classes.push([val_class,index]);
+                        }
+                    } 
+                });
+                if(got_classes.length!=0){
+                    random_class(got_classes).then();
+                }
+                break;
+            
+            case '隨機課程':
+            all_classes.forEach((val_class,index) => {
+                if(val_class["Overlapping"]==0 && val_class["Select"]==0){
+                    got_classes.push([val_class,index]);
+                } 
+            });
+            if(got_classes.length!=0){
+                random_class(got_classes).then();
+            }
+            break;
+
+        case '中文思辨與表達':
+            all_classes.forEach((val_class,index) => {
+                if(val_class["Overlapping"]==0 && val_class["Select"]==0){
+                    if(val_class["Department"].includes("中文思辨與表達")){
+                        got_classes.push([val_class,index]);
+                    }
+                } 
+            });
+            if(got_classes.length!=0){
+                random_class(got_classes).then();
+            }
+            break;
+
+        case '英文初級':
+            all_classes.forEach((val_class,index) => {
+                if(val_class["Overlapping"]==0 && val_class["Select"]==0){
+                    if(val_class["Department"].includes("英文初級")){
+                        got_classes.push([val_class,index]);
+                    }
+                } 
+            });
+            if(got_classes.length!=0){
+                random_class(got_classes).then();
+            }
+            break;
+
+        case '英文中級':
+            all_classes.forEach((val_class,index) => {
+                if(val_class["Overlapping"]==0 && val_class["Select"]==0){
+                    if(val_class["Department"].includes("英文中級")){
+                        got_classes.push([val_class,index]);
+                    }
+                } 
+            });
+            if(got_classes.length!=0){
+                random_class(got_classes).then();
+            }
+            break;
+
+    case '英文中高級':
+        all_classes.forEach((val_class,index) => {
+            if(val_class["Overlapping"]==0 && val_class["Select"]==0){
+                if(val_class["Department"].includes("英文中高級")){
+                    got_classes.push([val_class,index]);
+                }
+            } 
+        });
+        if(got_classes.length!=0){
+            random_class(got_classes).then();
+        }
+        break;
+
+    case '英文高級':
+        all_classes.forEach((val_class,index) => {
+            if(val_class["Overlapping"]==0 && val_class["Select"]==0){
+                if(val_class["Department"].includes("英文高級")){
+                    got_classes.push([val_class,index]);
+                }
+            } 
+        });
+        if(got_classes.length!=0){
+            random_class(got_classes).then();
+        }
+        break;
+
+
+
+        }        
+    }
+};
+    
+function confirmPending(){
+    all_classes.forEach(val => {
+        val["Pending"]=0;
+    });
+
+    [].slice.call(document.getElementsByClassName("addedclass pending")).forEach(val => {
+        val.className="addedclass";
+    })
+}
+
+
+function cancelPending(){
+    all_classes.forEach((val,index) => {
+        if(val["Pending"]){
+            val["Pending"]=0;
+            handleChange("auto0",index)
+        }
+    });
+}
 
 
 
@@ -1320,8 +1588,7 @@ function delet_all_select(){
         val["Overlapping"]=0;
         if(val["Select"]==1){
             handleChange("delet",index);
-            localStorage.clear();
+            //localStorage.clear();
         }
     });
 }
-
