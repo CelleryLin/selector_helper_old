@@ -822,6 +822,8 @@ function filter_update_list(e){
     }
     var toSearch=search_bar.value
     toSearch=toSearch.replace('年級','');
+    toSearch=toSearch.replace('選修','選');
+    toSearch=toSearch.replace('必修','必');
     toSearch=toSearch.replace('班','');
     toSearch=toSearch.replace('下午','5%6%7%8');
     toSearch=toSearch.replace('上午','早上');
