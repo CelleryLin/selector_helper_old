@@ -165,6 +165,7 @@ li {
     justify-content: center;
     border-radius: var(--td-round);
     padding: 8px;
+    top: 0px;
     transition: 0.1s;
 }
 
@@ -181,7 +182,9 @@ li {
     border-radius: var(--td-round);
     padding: 8px;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    transition: 0.1s;
+    top: -1px;
+    transition: 0.2s;
+    
 }
 
 .addedclass.pending {

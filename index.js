@@ -139,7 +139,13 @@ function addanRow(tableRow, class_info, id_selector, i){
     else if(id_selector=="selected"){
         row.id=class_info["ClassID"]+"_selected";
         row.setAttribute('onmouseover',`selectedHover("${class_info['ClassID']}");`);
-        row.setAttribute('onmouseout',`selectedLeave("${class_info['ClassID']}");`);
+        if(class_info["Pending"]){
+            row.setAttribute('onmouseout',`selectedLeave("${class_info['ClassID']}","pending");`);
+        }
+        else{
+            row.setAttribute('onmouseout',`selectedLeave("${class_info['ClassID']}","norm");`);
+        }
+        
     }
     else if(id_selector=="comp"){
         row.id=class_info["ClassID"]+"_comp";
@@ -438,15 +444,17 @@ function insertClass(class_info, isSelected, isAuto="norm"){
                 var addedClass = document.createElement('div');
                 addedClass.id = class_info['ClassID']+"_table";
                 addedClass.setAttribute('onmouseover',`selectedHover("${class_info['ClassID']}");`);
-                addedClass.setAttribute('onmouseout',`selectedLeave("${class_info['ClassID']}");`);
+                
                 addedClass.setAttribute('onclick',`gotoSelected("${class_info['ClassID']}");`);
                 addedClass.setAttribute('type','button');
                 addedClass.innerHTML =`<span style="display: table-cell; vertical-align: middle;">${class_info["Name"]}<br>${class_info["ClassID"]}</span>`;
                 if(isAuto=="auto"){
                     addedClass.className="addedclass pending";
+                    addedClass.setAttribute('onmouseout',`selectedLeave("${class_info['ClassID']}","pending");`);
                 }
                 else{
                     addedClass.className="addedclass";
+                    addedClass.setAttribute('onmouseout',`selectedLeave("${class_info['ClassID']}","norm");`);
                 }
                 cell_index.appendChild(addedClass);
                 
@@ -1632,12 +1640,20 @@ function selectedHover(classID){
     classOnhover_list.className = "classes_row onhover"
 }
 
-function selectedLeave(classID){
+function selectedLeave(classID,isPending){
     const classOnhover=document.querySelectorAll(`[id='${classID}_table']`);
     const classOnhover_list = document.getElementById(`${classID}_selected`);
-    classOnhover.forEach((val) => {
-        val.className="addedclass"
-    })
+    if(isPending=="pending"){
+        classOnhover.forEach((val) => {
+            val.className="addedclass pending"
+        })
+    }
+    else{
+        classOnhover.forEach((val) => {
+            val.className="addedclass"
+        })
+    }
+    
     classOnhover_list.className = "classes_row"
 }
 
