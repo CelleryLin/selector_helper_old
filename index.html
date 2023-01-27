@@ -25,7 +25,7 @@
     ></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href='https://fonts.googleapis.com/css?family=Noto Sans' rel='stylesheet'>
     <link rel="stylesheet" href="./index.css">
@@ -242,23 +242,22 @@
                                     aria-labelledby="compulsory_area">
                                     <div class="accordion-body" style="padding: 0;">
                                         <div class="comp_container" id="comp_container">
-                                            <div class="Filter_lable">
+                                            <div class="Title_lable">
                                                 請選擇系所和班級(目前只適用學士班)
                                             </div>
-                                            <div id="comp_sel_container" style="padding-bottom: 5px; padding-left: 28px"></div>
+                                            <div id="comp_sel_container" style="padding: 5px 0px 5px 28px;"></div>
                                             <div id="comp_content" style="display: block; width: 100%; text-align: center; max-height: 350px; overflow: auto;">
                                                 <div id="list_head" class="list_lead_container">
                                                     <div class="list_head" style="width:5%;">選擇</div>
                                                     <div class="list_head" style="width:22%;">課程名稱</div>
                                                     <div class="list_head" style="width:6%;">時間</div>
                                                     <div class="list_head" style="width:5%;">班級</div>
-                                                    <div class="list_head" style="width:10%;">上課系所</div>
-                                                    <div class="list_head" style="width:3%;">必選修</div>
-                                                    <div class="list_head" style="width:3%;">學分數</div>
+                                                    <div class="list_head" style="width:15%;">上課系所</div>
+                                                    <div class="list_head" style="width:4%;">必選</div>
+                                                    <div class="list_head" style="width:4%;">學分</div>
                                                     <div class="list_head" style="width:13%;">授課教師</div>
                                                     <div class="list_head" style="width:18%;">所屬學程</div>
-                                                    <div class="list_head" style="width:5%;">英文授課</div>
-                                                    <div class="list_head" style="width:10%;">教室</div>
+                                                    <div class="list_head" style="width:8%;">英文授課</div>
                                                 </div>                                                   
                                             </div>
                                             
@@ -278,52 +277,71 @@
                                     aria-labelledby="manual_area" style="margin: 0px;">
                                     <div class="accordion-body" style="padding: 0; position: relative;">
                                         <div class="search_container">
-                                            <div style="text-align: center;">
-                                                <div class="form-outline" style="display: inline-block; padding: 10px; width: 80%;">
-                                                    <input type="search" id="search_bar" class="form-control" style="display: inline-block; border-radius: 100px; width: 100%" placeholder="&nbsp;&nbsp;綜合搜尋...&nbsp;(例如：星期三 早上 博雅)" aria-label="Search" />
+                                            <div style="text-align: center; margin: 10px 28px 10px 28px;">
+                                                <div class="form-outline" style="display: inline-block; width: 90%;">
+                                                    <input type="search" id="search_bar" class="form-control" style="display: inline-block; border-radius: 100px; width: 100%; padding-left: 20px;" placeholder="綜合搜尋...&nbsp;(例如：星期三 早上 博雅)" aria-label="Search">
+                                                    
                                                 </div>
                                             </div>
                                             <div style="display: block; text-align: right;">
-                                                <div style="display: table-row; font-size: 13px; right: 10px;">
-                                                    <div class="form-check form-switch" style="display: table-cell; vertical-align: middle;">
-                                                        <input class="form-check-input" type="checkbox" role="switch" id="overlapping_show_switch" style="margin-left: 5px; vertical-align: middle; display: table-cell;" checked>
-                                                        <label style="padding-left: 7px; margin: 3px; vertical-align: middle; display: table-cell;">衝堂顯示</label>
-                                                        
+                                                <div style="display: flex; font-size: 13px; right: 10px; align-items: center; justify-content: space-around;">
+                                                    <div class="form-check form-switch" style="display: flex; align-items: center;">
+                                                        <input class="form-check-input" type="checkbox" role="switch" id="overlapping_show_switch" style="margin: 0px;" checked>
+                                                        <label style="margin: 5px;">衝堂顯示</label>
                                                     </div>
-                                                    <label style="padding-left: 7px; margin: 3px; padding-left: 100px; vertical-align: middle; display: table-cell;">篩選器&nbsp</label>
-                                                    <button id="filter_collapser" style="background-color: rgba(212, 212, 212, 0.5); text-align: center; border-radius: 10px; vertical-align: middle; display: table-cell;">
-                                                        <i style="font-size:24px; color: #727272; padding: 3px;" class="fa">&#xf0d7;</i>
-                                                    </button>
+                                                    <div style="display: flex; align-items: center;">
+                                                        <label style="margin: 5px;">進階選項</label>
+                                                        <button id="filter_collapser" style="background-color: rgba(212, 212, 212, 0.5); text-align: center; border-radius: 10px;">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                                                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                                                              </svg>
+                                                        </button>
+                                                    </div>
+                                                    
                                                     
                                                 </div>
                                             </div>
                                             
-                                            <div style="text-align: center;">
-                                                <div id="filter_content" class="filter_content">
-                                                    <div style="position: absolute; left: 10px; top: 3px; padding: 5px; font-size: 18px; display: block; z-index: 3; font-weight: normal;">
-                                                        <span>使用篩選器：</span>
+                                            <div style="text-align: center; margin: 10px 28px 10px 28px;">
+                                                <div id="filter_content" class="function_window_content" style="display: none;">
+                                                    <div style="position: relative; width: 100%; padding: 0px 15px 0px 15px; font-size: 18px; display: block; z-index: 3; font-weight: normal; display: flex; justify-content: space-between;">
+                                                        <div style="display: flex; align-items: center;">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filter-circle" viewBox="0 0 16 16">
+                                                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                                                <path d="M7 11.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5z"/>
+                                                            </svg>
+                                                            <span style="margin: 5px;">使用篩選器：</span>
             
-                                                        <div class="form-check form-switch" style="display: inline-block;">
-                                                            <input class="form-check-input" type="checkbox" role="switch" id="filter_switch" style="margin-left: 5px;">
-                                                            <label style="padding-left: 7px; margin: 3px;" id="filter_switch_status">啟用</label>
+                                                            <div class="form-check form-switch" style="display: flex; align-items: center;">
+                                                                <input class="form-check-input" type="checkbox" role="switch" id="filter_switch" style="margin: 0px;">
+                                                                <label style="padding-left: 7px; margin: 3px;" id="filter_switch_status">啟用</label>
+                                                            </div>
                                                         </div>
-                                                    
+                                                        <div style="display: flex; align-items: center;">
+                                                            <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content='
+                                                                點選下方+號新增想要篩選的欄位，可以使用半形的逗號將想要尋找的多個參數依並包含進入。（例如：想要找教授A或教授B開的課，就新增一個開課教師的篩選器，並填寫"A,B"）'>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                                                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                                                    <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                                                                </svg>
+                                                            </span>
+                                                        </div>  
                                                     </div>
-                                                    <div style="position: relative; top: 3px; padding: 17px; margin-bottom: 15px;"></div>
                                                     
                                                     <div style="position: relative; display: block; padding: 5px; z-index: 3;">
-                                                        <button class="add_filter_btn" onclick="Filter_window();"><i style="font-size:20px" class="fa-solid">&#x2b;</i></button>
+                                                        <button class="add_filter_btn" id="add_filter_btn"><i style="font-size:20px" class="fa-solid">&#x2b;</i></button>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div id="select_filter_content" class="select_filter_content" style="display: none; z-index: 3;">
+                                            <div id="select_filter_content" class="dropdown_content">
+                                                
                                                 <div style="color: #727272;">選擇篩選器...</div>
                                                 <hr style="color: #727272; width: 50%; height: 10px; padding: 0px; margin: 0px;">
                                             </div>
                                             <div style="margin: 10px;">
                                             </div>
                                         </div>
-                                        <div class="list_container" style="max-height: 700px; min-height: 200px; overflow: auto;">
+                                        <div class="list_container" style="width: 100%; max-height: 700px; min-height: 200px; overflow: auto;">
                                             
                                             <div id="list_content" style="display: block; width: 100%; text-align: center;">
                                                 <div id="list_head" class="list_lead_container">
@@ -331,13 +349,12 @@
                                                     <div class="list_head" style="width:22%;">課程名稱</div>
                                                     <div class="list_head" style="width:6%;">時間</div>
                                                     <div class="list_head" style="width:5%;">班級</div>
-                                                    <div class="list_head" style="width:10%;">上課系所</div>
-                                                    <div class="list_head" style="width:3%;">必選修</div>
-                                                    <div class="list_head" style="width:3%;">學分數</div>
+                                                    <div class="list_head" style="width:15%;">上課系所</div>
+                                                    <div class="list_head" style="width:4%;">必選</div>
+                                                    <div class="list_head" style="width:4%;">學分</div>
                                                     <div class="list_head" style="width:13%;">授課教師</div>
                                                     <div class="list_head" style="width:18%;">所屬學程</div>
-                                                    <div class="list_head" style="width:5%;">英文授課</div>
-                                                    <div class="list_head" style="width:10%;">教室</div>
+                                                    <div class="list_head" style="width:8%;">英文授課</div>
                                                 </div>                                                   
                                             </div>
                                         
@@ -359,15 +376,33 @@
                                     aria-labelledby="auto_area">
                                     <div class="accordion-body" style="padding: 0; position: relative;">
                                         <div class="sortable_container">
-                                            <div class="Filter_lable">
+                                            <div class="Title_lable">
                                                 請新增並排序您想填選的課程種類：
                                             </div>
-                                            <div style="display: block; text-align: center; margin: 10px;">
-                                                <div style="display: inline-block; background-color: #e0e8f0; width: 90%; border-radius: 20px; padding-top: 10px;">
+                                            <div style="display: block; text-align: center; margin: 10px 28px 10px 28px;">
+                                                <div class="function_window_content">
+                                                    <div style="position: relative; width: 100%; padding: 0px 15px 0px 15px; font-size: 18px; display: block; z-index: 3; font-weight: normal; display: flex; justify-content: space-between;">
+                                                        <div style="display: flex; align-items: center;">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
+                                                                <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
+                                                            </svg>
+                                                            <span style="margin: 5px;">排列志願：</span>
+                                                        </div>
+                                                        <div style="display: flex; align-items: center;">
+                                                            <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content='
+                                                                此功能可以將您的空堂填滿。點選下方+號新增想要填入的課程類別，可以拖曳排列課程填入的優先順序。一行代表一堂課程，若欲新增兩個相同類型的課程，則可以新增兩個相同的方塊。排列完成後點選執行，系統會自動產生課程(藍色辦透明狀)，若對於產生的不滿意可以再次點選執行，系統會重新填課。完成後按確認才會固定於您的課表中(淡黃色狀)。'>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                                                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                                                    <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                                                                </svg>
+                                                            </span>
+                                                        </div>
+                                                        
+                                                    </div>
                                                     <ul id="sortable" class="connectedSortable">
                                                     </ul>
                                                     <div style="position: relative; display: block; padding: 5px; z-index: 3; text-align: center;">
-                                                        <button class="add_filter_btn" onclick="Sortable_window();"><i style="font-size:20px" class="fa-solid">&#x2b;</i></button>
+                                                        <button class="add_filter_btn" id="add_sortable_btn"><i style="font-size:20px" class="fa-solid">&#x2b;</i></button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -384,7 +419,7 @@
                                             </div>
                                             
                                             <div style="display: block; text-align: center; font-size: 18px; font-weight: normal;">
-                                                <div id="select_sortable_content" class="select_sortable_content" style="">
+                                                <div id="select_sortable_content" class="dropdown_content">
                                                     <div style="font-weight: bold; padding-left: 8px;">選擇課程種類...</div>
                                                     <hr style="color: #727272; width: 50%; height: 10px; padding: 0px; margin: 0px;">
                                                 </div>
@@ -404,7 +439,7 @@
                                 <div id="panelsStayOpen-selected_area" class="accordion-collapse collapse"
                                     aria-labelledby="selected_area">
                                     <div class="accordion-body" style="padding: 0;">
-                                        <div style="display: block; padding-bottom: 5px; padding-left: 28px; margin: 15px; margin-left: 0;">
+                                        <div style="display: block; padding: 10px 0px 5px 28px;">
                                             <div style="display: inline-block; font-weight: normal; font-size: 16px;">已選學分：<span id="all_credits" style="font-weight: bold; background-color: #e0e8f0; padding: 5px; border-radius: 3px;">32</span></div>
                                             <div style="display: inline-block; font-weight: normal; font-size: 16px; padding-left: 5px;">總時數：<span id="tt_time" style="font-weight: bold; background-color: #e0e8f0; padding: 5px; border-radius: 3px;">32</span></div>
                                             <div style="display: block; padding-top: 10px;">
@@ -415,16 +450,17 @@
                                             <div id="list_content_selected" style="display: block; width: 100%; text-align: center;">
                                                 <div id="list_head" class="list_lead_container">
                                                     <div class="list_head" style="width:5%;">選擇</div>
-                                                    <div class="list_head" style="width:22%;">課程名稱</div>
+                                                    <div class="list_head" style="width:17%;">課程名稱</div>
                                                     <div class="list_head" style="width:6%;">時間</div>
                                                     <div class="list_head" style="width:5%;">班級</div>
                                                     <div class="list_head" style="width:10%;">上課系所</div>
-                                                    <div class="list_head" style="width:3%;">必選修</div>
-                                                    <div class="list_head" style="width:3%;">學分數</div>
+                                                    <div class="list_head" style="width:3%;">必選</div>
+                                                    <div class="list_head" style="width:3%;">學分</div>
                                                     <div class="list_head" style="width:13%;">授課教師</div>
-                                                    <div class="list_head" style="width:18%;">所屬學程</div>
+                                                    <div class="list_head" style="width:13%;">所屬學程</div>
                                                     <div class="list_head" style="width:5%;">英文授課</div>
                                                     <div class="list_head" style="width:10%;">教室</div>
+                                                    <div class="list_head" style="width:10%;">課號</div>
                                                 </div>                                                   
                                             </div>
                                         </div>

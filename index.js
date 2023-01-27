@@ -11,6 +11,7 @@ var filter_Programs=[];
 var filter_EMI=[];
 var filter_Room=[];
 var isFinity=1;
+
 const filter_category=['課程名稱', '節次', '星期', '年級', '班別', '上課系所', '必選修', '學分數', '授課教師', '所屬學程', '英文授課'];
 const list=['博雅課程','運動與健康(體適能或游泳)','運動與健康(其他)','跨院選修','隨機課程','中文思辨與表達','英文初級','英文中級','英文中高級','英文高級']
 const filter_category_index=['Class', 'Time', 'Day', 'Grade', 'ClassCat', 'Dep', 'Comp', 'Credit', 'Teacher', 'Prog', 'EMI'];
@@ -85,7 +86,7 @@ function filter_Init(all_classes){
     filter_category.map((val, index) => {
         const newdiv = document.createElement('div');
         newdiv.innerHTML=`
-            <div class="filter_select_btn" onclick="appendFilter('${index}')">
+            <div type="button" class="filter_select_btn" onclick="appendFilter('${index}')">
                 <span style="padding: 8px;" >${val}</span>
             </div>
         `;
@@ -101,6 +102,7 @@ function sortable_Init(){
     list.forEach(val => {
         const newdiv = document.createElement('div');
         newdiv.className="sortable_select_btn";
+        newdiv.setAttribute("type","button");
         newdiv.innerHTML=`
         <div>${val}</div>
         `;
@@ -125,16 +127,13 @@ function updateCheckbox(class_info){
 
 function addanRow(tableRow, class_info, id_selector, i){
     var row = document.createElement('div');
-
-    if(class_info["Overlapping"]){
-        row.className = 'classes_row overlapping';
-    }
-    else{
-        row.className = 'classes_row';
-    }
+    row.className = 'classes_row';
     
     
     if(id_selector=="list"){
+        if(class_info["Overlapping"]){
+            row.className = 'classes_row overlapping';
+        }
         row.id=class_info["ClassID"];
     }
     else if(id_selector=="selected"){
@@ -237,15 +236,20 @@ function addanRow(tableRow, class_info, id_selector, i){
     cell9.innerHTML ="<div style=\"text-align: center; \" >" + class_info["EMI"] + "</div>"
     cell9.className="classes_cell";
     row.appendChild(cell9);
-
-    //教室
-    var cell10 = document.createElement('div')
-    cell10.innerHTML =class_info["Room"];
-    cell10.className="classes_cell";
-    row.appendChild(cell10);
-
     
-
+    if(row.parentNode.childNodes[1].children.length==12){
+        //教室
+        var cell10 = document.createElement('div')
+        cell10.innerHTML =class_info["Room"];
+        cell10.className="classes_cell";
+        row.appendChild(cell10);
+        
+        //課號
+        var cell11 = document.createElement('div')
+        cell11.innerHTML = class_info["ClassID"];
+        cell11.className="classes_cell";
+        row.appendChild(cell11);
+    }
 }
 
 function show_more(filter){
@@ -264,7 +268,7 @@ function addClassRow(all_classes, filter){
                 show_more.innerHTML="顯示全部... (注意：可能會造成些微卡頓)";
                 show_more.className="classes_row";
                 show_more.style.textAlign="Center";
-                show_more.style.display="block";
+                show_more.style.display="table-row-group";
                 show_more.setAttribute('onclick', `show_more(${filter});`)
                 tableRow.appendChild(show_more);
                 break;
@@ -376,12 +380,15 @@ function main(csv_data){
     calc_stat();
 
     $('.selectpicker').selectpicker();
-
     $(document).ready( function() {
         $( "#sortable" ).sortable({
           items: "li:not(.ui-state-disabled)"
         }).disableSelection();
     });
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+    return new bootstrap.Popover(popoverTriggerEl)
+    })
 }
 
 
@@ -440,7 +447,10 @@ function insertClass(class_info, isSelected, isAuto="norm"){
             }
             else{
                 var deletClass = document.getElementById(class_info['ClassID']+"_table");
-                deletClass.parentNode.removeChild(deletClass);
+                if(deletClass != null){
+                    deletClass.parentNode.removeChild(deletClass);
+                }
+                
             }
             ClassLayout(cell_index);
             
@@ -469,7 +479,9 @@ function handleChange(checkbox,i) {
         all_classes[i]['Select']=0;
         insertClass(all_classes[i],0);
         var deletClass = document.getElementById(all_classes[i]['ClassID']+"_selected");
-        deletClass.parentNode.removeChild(deletClass);
+        if(deletClass != null){
+            deletClass.parentNode.removeChild(deletClass);
+        }
     }
     else if(checkbox=='auto1'){
         all_classes[i]['Pending']=1;
@@ -483,44 +495,44 @@ function handleChange(checkbox,i) {
         all_classes[i]['Select']=0;
         insertClass(all_classes[i],0,"auto");
         var deletClass = document.getElementById(all_classes[i]['ClassID']+"_selected");
-        deletClass.parentNode.removeChild(deletClass);
+        if(deletClass != null){
+            deletClass.parentNode.removeChild(deletClass);
+        }
+        
     }
     else{
         all_classes[i]['Select']=0;
         insertClass(all_classes[i],0);
         var deletClass = document.getElementById(all_classes[i]['ClassID']+"_selected");
-        deletClass.parentNode.removeChild(deletClass);
+        if(deletClass != null){
+            deletClass.parentNode.removeChild(deletClass);
+        }
+        
     }
     classOverlapping();
     updateCheckbox(all_classes[i]);
     calc_stat();
 }
 
-var dir_trigger=-1;
 const filter_collapser=document.getElementById("filter_collapser");
 filter_collapser.addEventListener("click", (e) =>{
-    dir_trigger*=-1;
     var fil_content = document.getElementById("filter_content");
-    if (fil_content.style.display === "inline-block") {
+    if (fil_content.style.display == "inline-block") {
         fil_content.style.display = "none";
-        fil_content.style.zIndex = 0;
+        e.target.parentNode.innerHTML=`
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+            </svg>
+        `
     }
     else {
         fil_content.style.display = "inline-block";
-        fil_content.style.zIndex = 3;
-    }
-
-    if(dir_trigger<0){
         e.target.parentNode.innerHTML=`
-            <i style="font-size:24px; color: #727272; padding: 3px;" class="fa">&#xf0d7;</i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
+                <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+            </svg>
         `
     }
-    else{
-        e.target.parentNode.innerHTML=`
-            <i style="font-size:24px; color: #727272; padding: 3px;" class="fa">&#xf0d8;</i>
-        `
-    }
-
 });
 
 function list_delet_all_classes(tableRow){
@@ -918,8 +930,12 @@ $('.selectpicker').on('change', function(){
     filter_update_list(this);
  });
 
-function Filter_window(){
+const add_filter_btn = document.getElementById("add_filter_btn");
+add_filter_btn.addEventListener("click",(e) => {
+    p(e.pageX)
     const filter_sel_menu = document.getElementById("select_filter_content");
+    filter_sel_menu.style.top=e.pageY+"px";
+    filter_sel_menu.style.left=e.pageX+"px";
     if(filter_sel_menu.style.display=="inline-block"){
         filter_sel_menu.style.display="none";
     }
@@ -928,9 +944,7 @@ function Filter_window(){
             filter_sel_menu.style.display="inline-block";
         }, 10);
     }
-    //教室//EMI//學程//老師//學分//必選修//上課系所//年級班級//時間//課程名稱//選擇
-    
-}
+});
 
 
 function create_comp_fourm(){
@@ -955,27 +969,27 @@ function create_comp_fourm(){
     });
     
     content.innerHTML=`
-    <div style="display: inline-block; padding-right: 5px; width: 150px">
-        <select data-style="btn-white" class="selectpicker" data-live-search="true" data-width="100%" data-container="body" data-style="">
-            ${options_dep}
-        </select>
-    </div>
-    <div style="display: inline-block; padding-right: 5px; width: 80px">
-        <select data-style="btn-white" class="selectpicker" data-width="100%" data-container="body">
-            ${options_grade}
-        </select>
-    </div>
-    <div style="display: inline-block; padding-right: 5px; width: 80px">
-        <select data-style="btn-white" class="selectpicker comp-class" data-width="100%" data-container="body">
-            ${options_class}
-        </select>
-    </div>
-    <div style="display: inline-block;">
-        <button type="button" class="btn btn-light" onclick="comp_insert(0);">全部填入</button>
-    </div>
-    <div style="display: inline-block;">
-        <button type="button" class="btn btn-light" onclick="comp_insert(1);">全部取消</button>
-    </div>
+        <div style="display: inline-block; padding-right: 5px; width: 150px">
+            <select data-style="btn-white" class="selectpicker" data-live-search="true" data-width="100%" data-container="body" data-style="">
+                ${options_dep}
+            </select>
+        </div>
+        <div style="display: inline-block; padding-right: 5px; width: 80px">
+            <select data-style="btn-white" class="selectpicker" data-width="100%" data-container="body">
+                ${options_grade}
+            </select>
+        </div>
+        <div style="display: inline-block; padding-right: 5px; width: 80px">
+            <select data-style="btn-white" class="selectpicker comp-class" data-width="100%" data-container="body">
+                ${options_class}
+            </select>
+        </div>
+        <div style="display: inline-block;">
+            <button type="button" class="btn btn-light" onclick="comp_insert(0);">全部填入</button>
+        </div>
+        <div style="display: inline-block;">
+            <button type="button" class="btn btn-light" onclick="comp_insert(1);">全部取消</button>
+        </div>
     `;
 
     content.style.display="inline-block";
@@ -990,19 +1004,21 @@ function appendFilter(append_i){
     switch (filter_category_index[append_i]){
         case "Class":
             append_html=`
-                <div id="Filter_Class" style="display: inline-block; vertical-align: middle;" class="Filter_lable">
+                <div style="display: flex; align-items: center;">
+                    <div id="Filter_Class" style="display: inline-block;" class="Filter_lable">
                     ${toAppend}
+                    </div>
+                    <div class="Filter_logic">
+                        <select data-style="btn-white" class="selectpicker" data-width="100%" data-container="body">
+                            <option value="contains" selected>包含</option>
+                            <option value="ncontains">不包含</option>
+                        </select>
+                    </div>
+                    <div class="input-group" style="display: inline-block; padding-right: 15px; width: 250px;">
+                        <input id="class_input" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" style="width: 100%;">
+                    </div>
                 </div>
-                <div class="Filter_logic">
-                    <select data-style="btn-white" class="selectpicker" data-width="100%" data-container="body">
-                        <option value="contains" selected>包含</option>
-                        <option value="ncontains">不包含</option>
-                    </select>
-                </div>
-                <div class="input-group" style="width: 100%; top: 2px; display: inline-block; padding-right: 15px; width: 250px;">
-                    <input id="class_input" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" style="width: 100%;">
-                </div>
-                <div style="display: inline-block; padding 5px; right: 0px;">
+                <div class="Filter_del_btn">
                     <button class="add_filter_btn" onclick="delet_Filter(event);"><div style="font-size: 18px;"><i style="font-size:12px" class="fa">&#xf00d;</i></div></button>
                 </div>
             `;
@@ -1015,21 +1031,23 @@ function appendFilter(append_i){
                 options+=`<option value="${val}">${val}</option>`;
             });
             append_html=`
-                <div id="Filter_Time" style="display: inline-block;" class="Filter_lable">
-                    ${toAppend}
-                </div>
-                <div class="Filter_logic">
-                    <select data-style="btn-white" class="selectpicker" data-width="100%" data-container="body">
-                        <option value="contains" selected>包含</option>
-                        <option value="ncontains">不包含</option>
+                <div style="display: flex; align-items: center;">
+                    <div id="Filter_Time" style="display: inline-block;" class="Filter_lable">
+                        ${toAppend}
+                    </div>
+                    <div class="Filter_logic">
+                        <select data-style="btn-white" class="selectpicker" data-width="100%" data-container="body">
+                            <option value="contains" selected>包含</option>
+                            <option value="ncontains">不包含</option>
+                            </select>
+                    </div>
+                    <div style="display: inline-block; padding-right: 15px; width: 250px">
+                        <select data-style="btn-white" class="selectpicker" multiple data-actions-box="true" data-width="100%" data-container="body">
+                            ${options}
                         </select>
+                    </div>
                 </div>
-                <div style="display: inline-block; padding-right: 15px; width: 250px">
-                    <select data-style="btn-white" class="selectpicker" multiple data-actions-box="true" data-width="100%" data-container="body">
-                        ${options}
-                    </select>
-                </div>
-                <div style="display: inline-block; padding 5px; right: 0px;">
+                <div class="Filter_del_btn">
                     <button class="add_filter_btn" onclick="delet_Filter(event);"><div style="font-size: 18px;"><i style="font-size:12px" class="fa">&#xf00d;</i></div></button>
                 </div>
             `;
@@ -1043,21 +1061,23 @@ function appendFilter(append_i){
                 options+=`<option value="${index}">${val}</option>`;
             });
             append_html=`
-                <div id="Filter_Day" style="display: inline-block;" class="Filter_lable">
-                    ${toAppend}
-                </div>
-                <div class="Filter_logic">
-                    <select data-style="btn-white" class="selectpicker" data-width="100%" data-container="body">
-                        <option value="contains" selected>包含</option>
-                        <option value="ncontains">不包含</option>
+                <div style="display: flex; align-items: center;">
+                    <div id="Filter_Day" style="display: inline-block;" class="Filter_lable">
+                        ${toAppend}
+                    </div>
+                    <div class="Filter_logic">
+                        <select data-style="btn-white" class="selectpicker" data-width="100%" data-container="body">
+                            <option value="contains" selected>包含</option>
+                            <option value="ncontains">不包含</option>
+                            </select>
+                    </div>
+                    <div style="display: inline-block; padding-right: 15px; width: 250px">
+                        <select data-style="btn-white" class="selectpicker" multiple data-actions-box="true" data-width="100%" data-container="body">
+                            ${options}
                         </select>
+                    </div>
                 </div>
-                <div style="display: inline-block; padding-right: 15px; width: 250px">
-                    <select data-style="btn-white" class="selectpicker" multiple data-actions-box="true" data-width="100%" data-container="body">
-                        ${options}
-                    </select>
-                </div>
-                <div style="display: inline-block; padding 5px; right: 0px;">
+                <div class="Filter_del_btn">
                     <button class="add_filter_btn" onclick="delet_Filter(event);"><div style="font-size: 18px;"><i style="font-size:12px" class="fa">&#xf00d;</i></div></button>
                 </div>
             `;
@@ -1071,21 +1091,23 @@ function appendFilter(append_i){
                 options+=`<option value="${index}">${val}</option>`;
             });
             append_html=`
-                <div id="Filter_Grade" style="display: inline-block;" class="Filter_lable">
-                    ${toAppend}
-                </div>
-                <div class="Filter_logic">
-                    <select data-style="btn-white" class="selectpicker" data-width="100%" data-container="body">
-                        <option value="contains" selected>包含</option>
-                        <option value="ncontains">不包含</option>
+                <div style="display: flex; align-items: center;">
+                    <div id="Filter_Grade" style="display: inline-block;" class="Filter_lable">
+                        ${toAppend}
+                    </div>
+                    <div class="Filter_logic">
+                        <select data-style="btn-white" class="selectpicker" data-width="100%" data-container="body">
+                            <option value="contains" selected>包含</option>
+                            <option value="ncontains">不包含</option>
+                            </select>
+                    </div>
+                    <div style="display: inline-block; padding-right: 15px; width: 250px">
+                        <select data-style="btn-white" class="selectpicker" multiple data-actions-box="true" data-width="100%" data-container="body">
+                            ${options}
                         </select>
+                    </div>
                 </div>
-                <div style="display: inline-block; padding-right: 15px; width: 250px">
-                    <select data-style="btn-white" class="selectpicker" multiple data-actions-box="true" data-width="100%" data-container="body">
-                        ${options}
-                    </select>
-                </div>
-                <div style="display: inline-block; padding 5px; right: 0px;">
+                <div class="Filter_del_btn">
                     <button class="add_filter_btn" onclick="delet_Filter(event);"><div style="font-size: 18px;"><i style="font-size:12px" class="fa">&#xf00d;</i></div></button>
                 </div>
             `;
@@ -1099,6 +1121,7 @@ function appendFilter(append_i){
                 options+=`<option value="${index}">${val}</option>`;
             });
             append_html=`
+            <div style="display: flex; align-items: center;">
                 <div id="Filter_ClassCat" style="display: inline-block;" class="Filter_lable">
                     ${toAppend}
                 </div>
@@ -1113,9 +1136,10 @@ function appendFilter(append_i){
                         ${options}
                     </select>
                 </div>
-                <div style="display: inline-block; padding 5px; right: 0px;">
-                    <button class="add_filter_btn" onclick="delet_Filter(event);"><div style="font-size: 18px;"><i style="font-size:12px" class="fa">&#xf00d;</i></div></button>
-                </div>
+            </div>
+            <div class="Filter_del_btn">
+                <button class="add_filter_btn" onclick="delet_Filter(event);"><div style="font-size: 18px;"><i style="font-size:12px" class="fa">&#xf00d;</i></div></button>
+            </div>
             `;
             newrow.className="Filter_row";
             newrow.innerHTML=append_html;
@@ -1126,21 +1150,23 @@ function appendFilter(append_i){
                 options+=`<option value="${val}">${val}</option>`;
             });
             append_html=`
-                <div id="Filter_Dep" style="display: inline-block;" class="Filter_lable">
-                    ${toAppend}
-                </div>
-                <div class="Filter_logic">
-                    <select data-style="btn-white" class="selectpicker" data-width="100%" data-container="body">
-                        <option value="contains" selected>包含</option>
-                        <option value="ncontains">不包含</option>
+                <div style="display: flex; align-items: center;">
+                    <div id="Filter_Dep" style="display: inline-block;" class="Filter_lable">
+                        ${toAppend}
+                    </div>
+                    <div class="Filter_logic">
+                        <select data-style="btn-white" class="selectpicker" data-width="100%" data-container="body">
+                            <option value="contains" selected>包含</option>
+                            <option value="ncontains">不包含</option>
+                            </select>
+                    </div>
+                    <div style="display: inline-block; padding-right: 15px; width: 250px">
+                        <select data-style="btn-white" class="selectpicker" multiple data-actions-box="true" data-live-search="true" data-width="100%" data-container="body">
+                            ${options}
                         </select>
+                    </div>
                 </div>
-                <div style="display: inline-block; padding-right: 15px; width: 250px">
-                    <select data-style="btn-white" class="selectpicker" multiple data-actions-box="true" data-live-search="true" data-width="100%" data-container="body">
-                        ${options}
-                    </select>
-                </div>
-                <div style="display: inline-block; padding 5px; right: 0px;">
+                <div class="Filter_del_btn">
                     <button class="add_filter_btn" onclick="delet_Filter(event);"><div style="font-size: 18px;"><i style="font-size:12px" class="fa">&#xf00d;</i></div></button>
                 </div>
             `;
@@ -1153,21 +1179,23 @@ function appendFilter(append_i){
                 options+=`<option value="${index}">${val}</option>`;
             });
             append_html=`
-                <div id="Filter_Comp" style="display: inline-block;" class="Filter_lable">
-                    ${toAppend}
-                </div>
-                <div class="Filter_logic">
-                    <select data-style="btn-white" class="selectpicker" data-width="100%" data-container="body">
-                        <option value="equ" selected>等於</option>
-                        <option value="nequ">不等於</option>
+                <div style="display: flex; align-items: center;">
+                    <div id="Filter_Comp" style="display: inline-block;" class="Filter_lable">
+                        ${toAppend}
+                    </div>
+                    <div class="Filter_logic">
+                        <select data-style="btn-white" class="selectpicker" data-width="100%" data-container="body">
+                            <option value="equ" selected>等於</option>
+                            <option value="nequ">不等於</option>
+                            </select>
+                    </div>
+                    <div style="display: inline-block; padding-right: 15px; width: 250px">
+                        <select data-style="btn-white" class="selectpicker" multiple data-actions-box="true" data-width="100%" data-container="body">
+                            ${options}
                         </select>
+                    </div>
                 </div>
-                <div style="display: inline-block; padding-right: 15px; width: 250px">
-                    <select data-style="btn-white" class="selectpicker" multiple data-actions-box="true" data-width="100%" data-container="body">
-                        ${options}
-                    </select>
-                </div>
-                <div style="display: inline-block; padding 5px; right: 0px;">
+                <div class="Filter_del_btn">
                     <button class="add_filter_btn" onclick="delet_Filter(event);"><div style="font-size: 18px;"><i style="font-size:12px" class="fa">&#xf00d;</i></div></button>
                 </div>
             `;
@@ -1180,21 +1208,23 @@ function appendFilter(append_i){
                 options+=`<option value="${index}">${val}</option>`;
             });
             append_html=`
-                <div id="Filter_Credit" style="display: inline-block;" class="Filter_lable">
-                    ${toAppend}
-                </div>
-                <div class="Filter_logic">
-                    <select data-style="btn-white" class="selectpicker" data-width="100%" data-container="body">
-                        <option value="equ" selected>等於</option>
-                        <option value="nequ">不等於</option>
+                <div style="display: flex; align-items: center;">
+                    <div id="Filter_Credit" style="display: inline-block;" class="Filter_lable">
+                        ${toAppend}
+                    </div>
+                    <div class="Filter_logic">
+                        <select data-style="btn-white" class="selectpicker" data-width="100%" data-container="body">
+                            <option value="equ" selected>等於</option>
+                            <option value="nequ">不等於</option>
+                            </select>
+                    </div>
+                    <div style="display: inline-block; padding-right: 15px; width: 250px">
+                        <select data-style="btn-white" class="selectpicker" multiple data-actions-box="true" data-width="100%" data-container="body">
+                            ${options}
                         </select>
+                    </div>
                 </div>
-                <div style="display: inline-block; padding-right: 15px; width: 250px">
-                    <select data-style="btn-white" class="selectpicker" multiple data-actions-box="true" data-width="100%" data-container="body">
-                        ${options}
-                    </select>
-                </div>
-                <div style="display: inline-block; padding 5px; right: 0px;">
+                <div class="Filter_del_btn">
                     <button class="add_filter_btn" onclick="delet_Filter(event);"><div style="font-size: 18px;"><i style="font-size:12px" class="fa">&#xf00d;</i></div></button>
                 </div>
             `;
@@ -1203,19 +1233,21 @@ function appendFilter(append_i){
             break;
         case "Teacher":
             append_html=`
-                <div id="Filter_Teacher" style="display: inline-block; vertical-align: middle;" class="Filter_lable">
-                    ${toAppend}
+                <div style="display: flex; align-items: center;">
+                    <div id="Filter_Teacher" style="display: inline-block; vertical-align: middle;" class="Filter_lable">
+                        ${toAppend}
+                    </div>
+                    <div class="Filter_logic">
+                        <select data-style="btn-white" class="selectpicker" data-width="100%" data-container="body">
+                            <option value="contains" selected>包含</option>
+                            <option value="ncontains">不包含</option>
+                        </select>
+                    </div>
+                    <div class="input-group" style="display: inline-block; padding-right: 15px; width: 250px;">
+                        <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" style="width: 100%;">
+                    </div>
                 </div>
-                <div class="Filter_logic">
-                    <select data-style="btn-white" class="selectpicker" data-width="100%" data-container="body">
-                        <option value="contains" selected>包含</option>
-                        <option value="ncontains">不包含</option>
-                    </select>
-                </div>
-                <div class="input-group" style="width: 100%; top: 2px; display: inline-block; padding-right: 15px; width: 250px;">
-                    <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" style="width: 100%;">
-                </div>
-                <div style="display: inline-block; padding 5px; right: 0px;">
+                <div class="Filter_del_btn">
                     <button class="add_filter_btn" onclick="delet_Filter(event);"><div style="font-size: 18px;"><i style="font-size:12px" class="fa">&#xf00d;</i></div></button>
                 </div>
             `;
@@ -1224,19 +1256,21 @@ function appendFilter(append_i){
             break;
         case "Prog":
             append_html=`
-                <div id="Filter_Prog" style="display: inline-block; vertical-align: middle;" class="Filter_lable">
-                    ${toAppend}
+                <div style="display: flex; align-items: center;">
+                    <div id="Filter_Prog" style="display: inline-block; vertical-align: middle;" class="Filter_lable">
+                        ${toAppend}
+                    </div>
+                    <div class="Filter_logic">
+                        <select data-style="btn-white" class="selectpicker" data-width="100%" data-container="body">
+                            <option value="contains" selected>包含</option>
+                            <option value="ncontains">不包含</option>
+                        </select>
+                    </div>
+                    <div class="input-group" style="display: inline-block; padding-right: 15px; width: 250px;">
+                        <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" style="width: 100%;">
+                    </div>
                 </div>
-                <div class="Filter_logic">
-                    <select data-style="btn-white" class="selectpicker" data-width="100%" data-container="body">
-                        <option value="contains" selected>包含</option>
-                        <option value="ncontains">不包含</option>
-                    </select>
-                </div>
-                <div class="input-group" style="width: 100%; top: 2px; display: inline-block; padding-right: 15px; width: 250px;">
-                    <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" style="width: 100%;">
-                </div>
-                <div style="display: inline-block; padding 5px; right: 0px;">
+                <div class="Filter_del_btn">
                     <button class="add_filter_btn" onclick="delet_Filter(event);"><div style="font-size: 18px;"><i style="font-size:12px" class="fa">&#xf00d;</i></div></button>
                 </div>
             `;
@@ -1250,21 +1284,23 @@ function appendFilter(append_i){
             });
             
             append_html=`
-                <div id="Filter_EMI" style="display: inline-block;" class="Filter_lable">
-                    ${toAppend}
-                </div>
-                <div class="Filter_logic">
-                    <select data-style="btn-white" class="selectpicker" data-width="100%" data-container="body">
-                        <option value="equ" selected>等於</option>
-                        <option value="nequ">不等於</option>
+                <div style="display: flex; align-items: center;">
+                    <div id="Filter_EMI" style="display: inline-block;" class="Filter_lable">
+                        ${toAppend}
+                    </div>
+                    <div class="Filter_logic">
+                        <select data-style="btn-white" class="selectpicker" data-width="100%" data-container="body">
+                            <option value="equ" selected>等於</option>
+                            <option value="nequ">不等於</option>
+                            </select>
+                    </div>
+                    <div style="display: inline-block; padding-right: 15px; width: 250px">
+                        <select data-style="btn-white" class="selectpicker" multiple data-actions-box="true" data-width="100%" data-container="body">
+                            ${options}
                         </select>
+                    </div>
                 </div>
-                <div style="display: inline-block; padding-right: 15px; width: 250px">
-                    <select data-style="btn-white" class="selectpicker" multiple data-actions-box="true" data-width="100%" data-container="body">
-                        ${options}
-                    </select>
-                </div>
-                <div style="display: inline-block; padding 5px; right: 0px;">
+                <div class="Filter_del_btn">
                     <button class="add_filter_btn" onclick="delet_Filter(event);"><div style="font-size: 18px;"><i style="font-size:12px" class="fa">&#xf00d;</i></div></button>
                 </div>
             `;
@@ -1389,9 +1425,12 @@ function appendSortable(a){
     table.appendChild(newdiv)
 }
 
-
-function Sortable_window(){
+const add_sortable_btn = document.getElementById("add_sortable_btn");
+add_sortable_btn.addEventListener("click", (e) => {
     const filter_sel_menu = document.getElementById("select_sortable_content");
+    filter_sel_menu.style.top=e.pageY+"px";
+    filter_sel_menu.style.left=e.pageX+"px";
+    
     if(filter_sel_menu.style.display=="inline-block"){
         filter_sel_menu.style.display="none";
     }
@@ -1400,7 +1439,7 @@ function Sortable_window(){
             filter_sel_menu.style.display="inline-block";
         }, 10);
     }
-}
+});
 
 function random_class(got_classes){
     return new Promise(resolve => {

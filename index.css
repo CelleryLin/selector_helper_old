@@ -28,6 +28,10 @@ ul {
     font-weight: bold;
 }
 
+li {
+    cursor: grab;
+}
+
 .class_url{
     color: #000;
     text-decoration: none;
@@ -83,6 +87,7 @@ ul {
     z-index: 2;
     padding-top: 10px;
     font-weight: bold;
+    width: 100%;
 }
 
 .classes_row.overlapping{
@@ -121,7 +126,6 @@ ul {
     text-align: center;
     font-weight: bold;
     vertical-align: middle;
-
 }
 .classes_cell{
     display: table-cell;
@@ -185,6 +189,27 @@ ul {
     overflow-x: hidden;
 
 }
+
+.function_window_content{
+    display: inline-block;
+    position: relative;
+    top: 5px;
+    padding-top: 10px;
+    margin-bottom: 10px;
+    height: auto;
+    max-height: 800%;
+    width: 100%;
+    border-radius: 10px;
+    background-color: #e0e8f0;
+    backdrop-filter: blur(5px);
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    text-align: center;
+    overflow-y: auto;
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+
+
 .filter_content.button{
     text-align: center;
 }
@@ -222,27 +247,37 @@ ul {
 
 .Filter_row{
     position: relative;
-    display: block;
-    left: 10px;
-    padding: 5px;
-    text-align: left;
+    display: flex;
+    padding: 5px 10px 5px 15px;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .filter_select_btn{
     background-color: #ffffff00;
     border-radius: 5px;
 }
+
+.Filter_del_btn{
+    display: flex;
+    padding: 0px;
+    right: 0px;
+}
+
 .filter_select_btn:hover{
     background-color: #d4d4d49f;
 }
 
 .Filter_lable{
     font-size: 16px;
-    padding-right: 15px;
+    padding: 5px 15px 5px 0px;
+    display: inline-block;
+}
+
+.Title_lable{
+    font-size: 16px;
+    padding: 10px 0px 5px 28px;
     display: block;
-    padding-bottom: 5px;
-    padding-left: 28px;
-    margin-top: 10px;
 }
 
 .chart_container{
@@ -276,6 +311,10 @@ ul {
     --bs-btn-disabled-border-color: #f8f9fa;
 }
 
+.btn-transparent{
+    --bs-btn-bg: #ffffff00;
+    --bs-btn-active-border-color: #ffffff00;
+}
 
 .accordion {
     --bs-accordion-bg: #fff;
@@ -352,15 +391,14 @@ ul {
 
 }
 
-.select_sortable_content{
+.dropdown_content{
     display: none;
     z-index: 3;
-    position: absolute;
+    position: fixed;
     height: 200px;
     width: 150px;
     background-color: #fafafafa;
     backdrop-filter: blur(5px);
-    margin: 3px;
     padding: 5px;
     border-radius: 10px;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
@@ -368,6 +406,7 @@ ul {
     font-size: 18px;
     overflow: auto;
 }
+
 
 .ui-state-disabled{
     opacity: 80%;
