@@ -138,6 +138,8 @@ function addanRow(tableRow, class_info, id_selector, i){
     }
     else if(id_selector=="selected"){
         row.id=class_info["ClassID"]+"_selected";
+        row.setAttribute('onmouseover',`selectedHover("${class_info['ClassID']}");`);
+        row.setAttribute('onmouseout',`selectedLeave("${class_info['ClassID']}");`);
     }
     else if(id_selector=="comp"){
         row.id=class_info["ClassID"]+"_comp";
@@ -306,7 +308,6 @@ function main(csv_data){
     const day_index=['一 ', '二 ', '三 ', '四 ', '五 ', '六 ', '日 '];
     const grade_index=['','一', '二','三', '四'];
     all_class_raw=csv_data.data
-    p(all_class_raw)
     all_classes=[]
     for(i=1;i<=all_class_raw.length-2;i++){
     //for(i=1;i<200;i++){
@@ -436,6 +437,10 @@ function insertClass(class_info, isSelected, isAuto="norm"){
             if (isSelected){
                 var addedClass = document.createElement('div');
                 addedClass.id = class_info['ClassID']+"_table";
+                addedClass.setAttribute('onmouseover',`selectedHover("${class_info['ClassID']}");`);
+                addedClass.setAttribute('onmouseout',`selectedLeave("${class_info['ClassID']}");`);
+                addedClass.setAttribute('onclick',`gotoSelected("${class_info['ClassID']}");`);
+                addedClass.setAttribute('type','button');
                 addedClass.innerHTML =`<span style="display: table-cell; vertical-align: middle;">${class_info["Name"]}<br>${class_info["ClassID"]}</span>`;
                 if(isAuto=="auto"){
                     addedClass.className="addedclass pending";
@@ -1617,8 +1622,55 @@ function cancelPending(){
     });
 }
 
+function selectedHover(classID){
+    const classOnhover = document.querySelectorAll(`[id='${classID}_table']`);
+    const classOnhover_list = document.getElementById(`${classID}_selected`);
 
+    classOnhover.forEach((val) => {
+        val.className="addedclass onhover"
+    })
+    classOnhover_list.className = "classes_row onhover"
+}
 
+function selectedLeave(classID){
+    const classOnhover=document.querySelectorAll(`[id='${classID}_table']`);
+    const classOnhover_list = document.getElementById(`${classID}_selected`);
+    classOnhover.forEach((val) => {
+        val.className="addedclass"
+    })
+    classOnhover_list.className = "classes_row"
+}
+
+function gotoSelected(classID){
+    var ele_loc = document.getElementById(`${classID}_selected`).getBoundingClientRect();
+    if(ele_loc.x==0){
+        document.getElementById("selected_area").childNodes[1].className="accordion-button"
+        document.getElementById("selected_area").childNodes[1].setAttribute('aria-expanded','true')
+        document.getElementById("panelsStayOpen-selected_area").className="accordion-collapse collapse show"
+    }
+
+    document.getElementById("selected_area").scrollIntoView();
+  
+    ele_loc = document.getElementById(`${classID}_selected`).getBoundingClientRect();
+    var ele_par = document.getElementById("list_container_selected").getBoundingClientRect();
+
+    var isViewable = (ele_loc.top >= (ele_par.top+100)) && (ele_loc.bottom <= ele_par.bottom)
+
+    if (!isViewable) {
+        // Should we scroll using top or bottom? Find the smaller ABS adjustment
+        const scrollTop = ele_loc.top - ele_par.top - 100;
+        const scrollBot = ele_loc.bottom - ele_par.bottom + 100;
+        if (Math.abs(scrollTop) < Math.abs(scrollBot)) {
+            // we're near the top of the list
+            document.getElementById("list_container_selected").scrollTop += scrollTop;
+        }
+        else{
+            // we're near the bottom of the list
+            document.getElementById("list_container_selected").scrollTop += scrollBot;
+        }
+    }
+
+}
 
 function save_course(){
     

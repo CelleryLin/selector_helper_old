@@ -1,6 +1,7 @@
 :root {
     --td-round: 8px;
     --over_lap: table-row;
+    --onhover-accent: #dfdf9f;
 }
 
 * {
@@ -84,17 +85,27 @@ li {
 .classes_row {
     background-color: #efefef;
     display: table-row;
-    z-index: 2;
+    z-index: 1;
     padding-top: 10px;
     font-weight: bold;
     width: 100%;
+}
+
+.classes_row.onhover {
+    background-color: var(--onhover-accent);
+    display: table-row;
+    z-index: 3;
+    padding-top: 10px;
+    font-weight: bold;
+    width: 100%;
+    transition: 0.1s;
 }
 
 .classes_row.overlapping{
     background-color: #f7f7f7;
     opacity: 60%;
     display: var(--over_lap);
-    z-index: 2;
+    z-index: 1;
 }
 
 .comp_container{
@@ -154,6 +165,23 @@ li {
     justify-content: center;
     border-radius: var(--td-round);
     padding: 8px;
+    transition: 0.1s;
+}
+
+.addedclass.onhover {
+    background-color: var(--onhover-accent);
+    height: 100%;
+    font-size: 13px;
+    text-align: center;
+    position: relative;
+    vertical-align: top;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--td-round);
+    padding: 8px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    transition: 0.1s;
 }
 
 .addedclass.pending {
