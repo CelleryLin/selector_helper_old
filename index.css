@@ -48,12 +48,12 @@ li {
 
 .schedule_tr {
     background-color: #e2e2e2;
-    border: 2px solid white;
+    border: 2px solid #fefefe;
     height: 25px;
 }
 
 .schedule_th{
-    border: 2px solid rgb(250, 250, 250);
+    border: 2px solid #fefefe;
     text-align: center;
 }
 
