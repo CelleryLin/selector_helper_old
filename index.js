@@ -268,7 +268,8 @@ function addClassRow(all_classes, filter){
                 show_more.innerHTML="顯示全部... (注意：可能會造成些微卡頓)";
                 show_more.className="classes_row";
                 show_more.style.textAlign="Center";
-                show_more.style.display="table-row-group";
+                show_more.style.display="block";
+                show_more.setAttribute('type','button');
                 show_more.setAttribute('onclick', `show_more(${filter});`)
                 tableRow.appendChild(show_more);
                 break;
