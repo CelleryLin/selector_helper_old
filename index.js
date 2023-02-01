@@ -825,9 +825,10 @@ function filter_update_list(e){
         var all_filter=[].slice.call($('#filter_content').children(".Filter_row"))
         if(all_filter.length!=0){
             all_filter.forEach(val => {
-                filter_cat=(val.children[0].id)
-                filter_logic=(val.children[1].children[0].children[0].value)
-                tag_finder=val.children[2]
+                filter_cat=(val.children[0].children[0].id)
+                p(filter_cat)
+                filter_logic=(val.children[0].children[1].children[0].children[0].value)
+                tag_finder=val.children[0].children[2]
                 while(tag_finder.tagName != "INPUT" && tag_finder.tagName !="SELECT"){
                     tag_finder=tag_finder.children[0];
                 }
@@ -969,7 +970,7 @@ function create_comp_fourm(){
     const content=document.getElementById("comp_sel_container");
 
     filter_Dep.forEach((val,index)=>{
-        if(val.includes('系') || val.includes('人科')){
+        if(val.includes('系') || val.includes('學程') || val.includes('碩') || val.includes('博') && !val.includes('博雅')){
             options_dep+=`<option value="${val}">${val}</option>`;
         }
     });
