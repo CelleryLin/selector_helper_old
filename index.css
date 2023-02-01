@@ -180,9 +180,10 @@ li {
     align-items: center;
     justify-content: center;
     border-radius: var(--td-round);
+    border-color: #fff;
     padding: 8px;
+    transform: scale(1.005);
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    top: -1px;
     transition: 0.2s;
     
 }
