@@ -12,7 +12,7 @@ var filter_EMI=[];
 var filter_Room=[];
 var isFinity=1;
 
-const filter_category=['課程名稱', '節次', '星期', '年級', '班別', '上課系所', '必選修', '學分數', '授課教師', '所屬學程', '英文授課'];
+const filter_category=['課程名稱', '節次', '星期', '年級', '班別', '上課系所(含通適、博雅)', '必選修', '學分數', '授課教師', '所屬學程', '英文授課'];
 const list=['博雅課程','運動與健康(體適能或游泳)','運動與健康(其他)','跨院選修','隨機課程','中文思辨與表達','英文初級','英文中級','英文中高級','英文高級']
 const filter_category_index=['Class', 'Time', 'Day', 'Grade', 'ClassCat', 'Dep', 'Comp', 'Credit', 'Teacher', 'Prog', 'EMI'];
 function p(a){
@@ -733,8 +733,12 @@ function Filter(filter_cat, filter_logic, filter_content){
                     final_res*=Filter_logic_excute(val, "Grade", filter_logic, filter_content_Trans, "str");
                     break;
                 case "Filter_Dep":
+
                     var filter_content_Trans=""
                     filter_content.forEach( (val_tmp,index) => {
+                        if(val_tmp=="博雅向度全"){
+                            val_tmp="博雅向度";
+                        }
                         if (index==0){
                             filter_content_Trans += val_tmp;
                         }
@@ -935,7 +939,7 @@ document.addEventListener("change",(val) => {
         }
     }
 
-    if(val.target.parentNode.parentNode.parentNode.className=="Filter_row"){
+    if(val.target.parentNode.parentNode.parentNode.parentNode.className=="Filter_row"){
         filter_update_list(val);
     }
     
@@ -1167,7 +1171,7 @@ function appendFilter(append_i){
             append_html=`
                 <div style="display: flex; align-items: center;">
                     <div id="Filter_Dep" style="display: inline-block;" class="Filter_lable">
-                        ${toAppend}
+                        上課系所
                     </div>
                     <div class="Filter_logic">
                         <select data-style="btn-white" class="selectpicker" data-width="100%" data-container="body">
