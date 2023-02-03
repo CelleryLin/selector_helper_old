@@ -309,7 +309,6 @@ function time_sort(class_info_tmp){
     return tmp;
 }
 
-
 function main(csv_data){
     const day_index=['一 ', '二 ', '三 ', '四 ', '五 ', '六 ', '日 '];
     const grade_index=['','一', '二','三', '四'];
@@ -326,6 +325,7 @@ function main(csv_data){
             }
         }
         class_info = {
+            //Bookmark
             "Grade": (grade_index[all_class_raw[i][5]]+all_class_raw[i][6].split('班')[0]),
             "Department": all_class_raw[i][3],
             "Compulsory": all_class_raw[i][11],
@@ -436,7 +436,7 @@ function insertClass(class_info, isSelected, isAuto="norm"){
                 case "六": day_tmp=6; break;
                 case "日": day_tmp=7; break;
             }
-            const cell_index = document.getElementById(day_tmp.toString() + timedata[j+2].toString())
+            const cell_index = document.getElementById(day_tmp.toString() + timedata[j+2].toString()).children[0]
             //var cell = row.cells[day_tmp];
             //console.log(cell)
             
@@ -447,7 +447,7 @@ function insertClass(class_info, isSelected, isAuto="norm"){
                 
                 addedClass.setAttribute('onclick',`gotoSelected("${class_info['ClassID']}");`);
                 addedClass.setAttribute('type','button');
-                addedClass.innerHTML =`<span style="display: table-cell; vertical-align: middle;">${class_info["Name"]}<br>${class_info["ClassID"]}</span>`;
+                addedClass.innerHTML =`<span style="margin:auto;">${class_info["Name"]}<br>${class_info["ClassID"]}</span>`;
                 if(isAuto=="auto"){
                     addedClass.className="addedclass pending";
                     addedClass.setAttribute('onmouseout',`selectedLeave("${class_info['ClassID']}","pending");`);
@@ -466,7 +466,7 @@ function insertClass(class_info, isSelected, isAuto="norm"){
                 }
                 
             }
-            ClassLayout(cell_index);
+            //ClassLayout(cell_index);
             
         }
         
@@ -1617,12 +1617,16 @@ function pendingClasses(){
     
 function confirmPending(){
     all_classes.forEach(val => {
-        val["Pending"]=0;
+        if(val["Pending"]){
+            val["Pending"]=0;
+        }
     });
-
+    save_course();
+    
     [].slice.call(document.getElementsByClassName("addedclass pending")).forEach(val => {
+        val.setAttribute('onmouseout',`selectedLeave("${val.id.split("_")[0]}","norm");`);
         val.className="addedclass";
-    })
+    });
 }
 
 
@@ -1699,11 +1703,15 @@ function save_course(){
 }
 
 function delet_all_select(){
-    all_classes.forEach((val,index) => {
-        val["Overlapping"]=0;
-        if(val["Select"]==1){
-            handleChange("delet",index);
-            //localStorage.clear();
-        }
-    });
+    document.getElementById("loadingPage").style.display = "block";
+    setTimeout(() => {
+        all_classes.forEach((val,index) => {
+            val["Overlapping"]=0;
+            if(val["Select"]==1){
+                handleChange("delet",index);
+                //localStorage.clear();
+            }
+        });
+        document.getElementById("loadingPage").style.display = "none";
+    }, 1000);
 }

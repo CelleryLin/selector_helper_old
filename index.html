@@ -44,18 +44,37 @@
                 <div class="modal-body">
                     <span style="font-size: 20px; font-weight: bold;">
                         確定要刪除所選課程嗎？
+                        
                     </span>
                     
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary" style="background-color: #9c4b4b;" onclick="delet_all_select();" data-dismiss="modal">全部刪除</button>
+                    <button type="button" class="btn btn-primary" style="background-color: #9c4b4b;" onclick="delet_all_select();" data-dismiss="modal">
+                        <span>全部刪除</span>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
-
     <div class="App_container" id="App_container" style="max-height: 100%; width: 100%; overflow: hidden;">
+
+        <div class="loadingPage_container" id="loadingPage">
+            <div class="loadingPage">
+                <div class="loadingPage_content">
+                    <div class="loadingPage_content_title">
+                        <h2>中山大學選課小助手</h2>
+                    </div>
+                    <div class="loadingPage_content_text">
+                        <span>刪除中...</span>
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <table id="resizable_table" style=" display: table; width: 100%; height: 100vh;">
             <thead>
                 <th class="resizable">
@@ -74,153 +93,153 @@
                                 </tr>
                                 <tr class="schedule_tr">
                                     <td class="schedule_th">A<br>7:00-7:50</th>
-                                    <td id="1A" class="schedule_th"></td>
-                                    <td id="2A" class="schedule_th"></td>
-                                    <td id="3A" class="schedule_th"></td>
-                                    <td id="4A" class="schedule_th"></td>
-                                    <td id="5A" class="schedule_th"></td>
-                                    <td id="6A" class="schedule_th"></td>
-                                    <td id="7A" class="schedule_th"></td>
+                                    <td id="1A" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="2A" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="3A" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="4A" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="5A" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="6A" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="7A" class="schedule_th"><div class="schedule_div"></div></td>
                                 </tr>
                                 <tr class="schedule_tr">
                                     <td class="schedule_th">1<br>8:10-9:00</th>
-                                    <td id="11" class="schedule_th"></td>
-                                    <td id="21" class="schedule_th"></td>
-                                    <td id="31" class="schedule_th"></td>
-                                    <td id="41" class="schedule_th"></td>
-                                    <td id="51" class="schedule_th"></td>
-                                    <td id="61" class="schedule_th"></td>
-                                    <td id="71" class="schedule_th"></td>
+                                    <td id="11" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="21" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="31" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="41" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="51" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="61" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="71" class="schedule_th"><div class="schedule_div"></div></td>
                                 </tr>
                                 <tr class="schedule_tr">
                                     <td class="schedule_th">2<br>9:10-10:00</th>
-                                    <td id="12" class="schedule_th"></td>
-                                    <td id="22" class="schedule_th"></td>
-                                    <td id="32" class="schedule_th"></td>
-                                    <td id="42" class="schedule_th"></td>
-                                    <td id="52" class="schedule_th"></td>
-                                    <td id="62" class="schedule_th"></td>
-                                    <td id="72" class="schedule_th"></td>
+                                    <td id="12" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="22" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="32" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="42" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="52" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="62" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="72" class="schedule_th"><div class="schedule_div"></div></td>
                                 </tr>
                                 <tr class="schedule_tr">
                                     <td class="schedule_th">3<br>10:10-11:00</th>
-                                    <td id="13" class="schedule_th"></td>
-                                    <td id="23" class="schedule_th"></td>
-                                    <td id="33" class="schedule_th"></td>
-                                    <td id="43" class="schedule_th"></td>
-                                    <td id="53" class="schedule_th"></td>
-                                    <td id="63" class="schedule_th"></td>
-                                    <td id="73" class="schedule_th"></td>
+                                    <td id="13" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="23" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="33" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="43" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="53" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="63" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="73" class="schedule_th"><div class="schedule_div"></div></td>
                                 </tr>
                                 <tr class="schedule_tr">
                                     <td class="schedule_th">4<br>11:10-12:00</th>
-                                    <td id="14" class="schedule_th"></td>
-                                    <td id="24" class="schedule_th"></td>
-                                    <td id="34" class="schedule_th"></td>
-                                    <td id="44" class="schedule_th"></td>
-                                    <td id="54" class="schedule_th"></td>
-                                    <td id="64" class="schedule_th"></td>
-                                    <td id="74" class="schedule_th"></td>
+                                    <td id="14" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="24" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="34" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="44" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="54" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="64" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="74" class="schedule_th"><div class="schedule_div"></div></td>
                                 </tr>
                                 <tr class="schedule_tr">
                                     <td class="schedule_th">B<br>12:10-13:00</th>
-                                    <td id="1B" class="schedule_th"></td>
-                                    <td id="2B" class="schedule_th"></td>
-                                    <td id="3B" class="schedule_th"></td>
-                                    <td id="4B" class="schedule_th"></td>
-                                    <td id="5B" class="schedule_th"></td>
-                                    <td id="6B" class="schedule_th"></td>
-                                    <td id="7B" class="schedule_th"></td>
+                                    <td id="1B" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="2B" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="3B" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="4B" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="5B" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="6B" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="7B" class="schedule_th"><div class="schedule_div"></div></td>
                                 </tr>
                                 <tr class="schedule_tr">
                                     <td class="schedule_th">5<br>13:10-14:00</th>
-                                    <td id="15" class="schedule_th"></td>
-                                    <td id="25" class="schedule_th"></td>
-                                    <td id="35" class="schedule_th"></td>
-                                    <td id="45" class="schedule_th"></td>
-                                    <td id="55" class="schedule_th"></td>
-                                    <td id="65" class="schedule_th"></td>
-                                    <td id="75" class="schedule_th"></td>
+                                    <td id="15" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="25" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="35" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="45" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="55" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="65" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="75" class="schedule_th"><div class="schedule_div"></div></td>
                                 </tr>
                                 <tr class="schedule_tr">
                                     <td class="schedule_th">6<br>14:10-15:00</th>
-                                    <td id="16" class="schedule_th"></td>
-                                    <td id="26" class="schedule_th"></td>
-                                    <td id="36" class="schedule_th"></td>
-                                    <td id="46" class="schedule_th"></td>
-                                    <td id="56" class="schedule_th"></td>
-                                    <td id="66" class="schedule_th"></td>
-                                    <td id="76" class="schedule_th"></td>
+                                    <td id="16" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="26" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="36" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="46" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="56" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="66" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="76" class="schedule_th"><div class="schedule_div"></div></td>
                                 </tr>
                                 <tr class="schedule_tr">
                                     <td class="schedule_th">7<br>15:10-16:00</th>
-                                    <td id="17" class="schedule_th"></td>
-                                    <td id="27" class="schedule_th"></td>
-                                    <td id="37" class="schedule_th"></td>
-                                    <td id="47" class="schedule_th"></td>
-                                    <td id="57" class="schedule_th"></td>
-                                    <td id="67" class="schedule_th"></td>
-                                    <td id="77" class="schedule_th"></td>
+                                    <td id="17" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="27" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="37" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="47" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="57" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="67" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="77" class="schedule_th"><div class="schedule_div"></div></td>
                                 </tr>
                                 <tr class="schedule_tr">
                                     <td class="schedule_th">8<br>16:10-17:00</th>
-                                    <td id="18" class="schedule_th"></td>
-                                    <td id="28" class="schedule_th"></td>
-                                    <td id="38" class="schedule_th"></td>
-                                    <td id="48" class="schedule_th"></td>
-                                    <td id="58" class="schedule_th"></td>
-                                    <td id="68" class="schedule_th"></td>
-                                    <td id="78" class="schedule_th"></td>
+                                    <td id="18" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="28" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="38" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="48" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="58" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="68" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="78" class="schedule_th"><div class="schedule_div"></div></td>
                                 </tr>
                                 <tr class="schedule_tr">
                                     <td class="schedule_th">9<br>17:10-18:00</th>
-                                    <td id="19" class="schedule_th"></td>
-                                    <td id="29" class="schedule_th"></td>
-                                    <td id="39" class="schedule_th"></td>
-                                    <td id="49" class="schedule_th"></td>
-                                    <td id="59" class="schedule_th"></td>
-                                    <td id="69" class="schedule_th"></td>
-                                    <td id="79" class="schedule_th"></td>
+                                    <td id="19" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="29" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="39" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="49" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="59" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="69" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="79" class="schedule_th"><div class="schedule_div"></div></td>
                                 </tr>
                                 <tr class="schedule_tr">
                                     <td class="schedule_th">C<br>18:20-19:10</th>
-                                    <td id="1C" class="schedule_th"></td>
-                                    <td id="2C" class="schedule_th"></td>
-                                    <td id="3C" class="schedule_th"></td>
-                                    <td id="4C" class="schedule_th"></td>
-                                    <td id="5C" class="schedule_th"></td>
-                                    <td id="6C" class="schedule_th"></td>
-                                    <td id="7C" class="schedule_th"></td>
+                                    <td id="1C" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="2C" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="3C" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="4C" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="5C" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="6C" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="7C" class="schedule_th"><div class="schedule_div"></div></td>
                                 </tr>
                                 <tr class="schedule_tr">
                                     <td class="schedule_th">D<br>19:15-20:05</th>
-                                    <td id="1D" class="schedule_th"></td>
-                                    <td id="2D" class="schedule_th"></td>
-                                    <td id="3D" class="schedule_th"></td>
-                                    <td id="4D" class="schedule_th"></td>
-                                    <td id="5D" class="schedule_th"></td>
-                                    <td id="6D" class="schedule_th"></td>
-                                    <td id="7D" class="schedule_th"></td>
+                                    <td id="1D" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="2D" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="3D" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="4D" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="5D" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="6D" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="7D" class="schedule_th"><div class="schedule_div"></div></td>
                                 </tr>
                                 <tr class="schedule_tr">
                                     <td class="schedule_th">E<br>20:10-21:00</th>
-                                    <td id="1E" class="schedule_th"></td>
-                                    <td id="2E" class="schedule_th"></td>
-                                    <td id="3E" class="schedule_th"></td>
-                                    <td id="4E" class="schedule_th"></td>
-                                    <td id="5E" class="schedule_th"></td>
-                                    <td id="6E" class="schedule_th"></td>
-                                    <td id="7E" class="schedule_th"></td>
+                                    <td id="1E" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="2E" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="3E" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="4E" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="5E" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="6E" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="7E" class="schedule_th"><div class="schedule_div"></div></td>
                                 </tr>
                                 <tr class="schedule_tr">
                                     <td class="schedule_th">F<br>21:05-21:55</th>
-                                    <td id="1F" class="schedule_th"></td>
-                                    <td id="2F" class="schedule_th"></td>
-                                    <td id="3F" class="schedule_th"></td>
-                                    <td id="4F" class="schedule_th"></td>
-                                    <td id="5F" class="schedule_th"></td>
-                                    <td id="6F" class="schedule_th"></td>
-                                    <td id="7F" class="schedule_th"></td>
+                                    <td id="1F" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="2F" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="3F" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="4F" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="5F" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="6F" class="schedule_th"><div class="schedule_div"></div></td>
+                                    <td id="7F" class="schedule_th"><div class="schedule_div"></div></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -235,7 +254,14 @@
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#panelsStayOpen-compulsory_area" aria-expanded="true"
                                         aria-controls="panelsStayOpen-compulsory_area">
-                                        🤒 本學期必修
+                                        <div style="display: flex; align-items:center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-exclamation-diamond-fill" viewBox="0 0 16 16">
+                                                <path d="M9.05.435c-.58-.58-1.52-.58-2.1 0L.436 6.95c-.58.58-.58 1.519 0 2.098l6.516 6.516c.58.58 1.519.58 2.098 0l6.516-6.516c.58-.58.58-1.519 0-2.098L9.05.435zM8 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                            
+                                            </svg>
+                                            &nbsp; <b>本學期必修</b>
+                                        </div>
+                                        
                                     </button>
                                 </h2>
                                 <div id="panelsStayOpen-compulsory_area" class="accordion-collapse collapse"
@@ -270,7 +296,13 @@
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#panelsStayOpen-manual_area" aria-expanded="false"
                                         aria-controls="panelsStayOpen-manual_area">
-                                        🥵 手動填課
+                                        <div style="display: flex; align-items: center;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-file-earmark-plus-fill" viewBox="0 0 16 16">
+                                                <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM8.5 7v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 1 0z"/>
+                                            </svg>
+                                            &nbsp; <b>所有課程</b>
+                                        </div>
+                                        
                                     </button>
                                 </h2>
                                 <div id="panelsStayOpen-manual_area" class="accordion-collapse collapse"
@@ -365,7 +397,13 @@
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#panelsStayOpen-auto_area" aria-expanded="false"
                                         aria-controls="panelsStayOpen-auto_area">
-                                        🎰 自動填課（測試中）
+                                        <div style="display: flex; align-items: center;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-dice-6-fill" viewBox="0 0 16 16">
+                                                <path d="M3 0a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V3a3 3 0 0 0-3-3H3zm1 5.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm8 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm1.5 6.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zM12 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zM5.5 12a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zM4 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                                            </svg>
+                                            &nbsp; <b>自動填課</b>（測試中）
+                                        </div>
+                                        
                                     </button>
                                 </h2>
                                 <div id="panelsStayOpen-auto_area" class="accordion-collapse collapse"
@@ -429,7 +467,13 @@
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#panelsStayOpen-selected_area" aria-expanded="false"
                                         aria-controls="panelsStayOpen-selected_area">
-                                        😴 已選課程
+                                        <div style="display: flex; align-items: center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-bookmark-check-fill" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm8.854-9.646a.5.5 0 0 0-.708-.708L7.5 7.793 6.354 6.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/>
+                                            </svg>
+                                            &nbsp; <b>已選課程</b>
+                                        </div>
+                                        
                                     </button>
                                 </h2>
                                 <div id="panelsStayOpen-selected_area" class="accordion-collapse collapse"
@@ -468,7 +512,13 @@
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#panelsStayOpen-bulletin_area" aria-expanded="true"
                                         aria-controls="panelsStayOpen-bulletin_area">
-                                        🎉 公告
+                                        <div style="display: flex; align-items: center;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-megaphone-fill" viewBox="0 0 16 16">
+                                                <path d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-11zm-1 .724c-2.067.95-4.539 1.481-7 1.656v6.237a25.222 25.222 0 0 1 1.088.085c2.053.204 4.038.668 5.912 1.56V3.224zm-8 7.841V4.934c-.68.027-1.399.043-2.008.053A2.02 2.02 0 0 0 0 7v2c0 1.106.896 1.996 1.994 2.009a68.14 68.14 0 0 1 .496.008 64 64 0 0 1 1.51.048zm1.39 1.081c.285.021.569.047.85.078l.253 1.69a1 1 0 0 1-.983 1.187h-.548a1 1 0 0 1-.916-.599l-1.314-2.48a65.81 65.81 0 0 1 1.692.064c.327.017.65.037.966.06z"/>
+                                            </svg>
+                                            &nbsp; <b>公告</b>
+                                        </div>
+                                        
                                     </button>
                                 </h2>
                                 <div id="panelsStayOpen-bulletin_area" class="accordion-collapse collapse show"
