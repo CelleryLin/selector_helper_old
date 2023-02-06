@@ -1669,12 +1669,21 @@ function selectedLeave(classID,isPending){
 function gotoSelected(classID){
     var ele_loc = document.getElementById(`${classID}_selected`).getBoundingClientRect();
     if(ele_loc.x==0){
-        document.getElementById("selected_area").childNodes[1].className="accordion-button"
-        document.getElementById("selected_area").childNodes[1].setAttribute('aria-expanded','true')
-        document.getElementById("panelsStayOpen-selected_area").className="accordion-collapse collapse show"
+        document.getElementById("nav-comp-tab").className="nnav-item nav-link"
+        document.getElementById("nav-comp").className="tab-pane fade"
+        document.getElementById("nav-all_classes-tab").className="nav-item nav-link"
+        document.getElementById("nav-all_classes").className="tab-pane fade"
+        document.getElementById("nav-auto-tab").className="nav-item nav-link"
+        document.getElementById("nav-auto").className="tab-pane fade"
+        document.getElementById("nav-announced-tab").className="nav-item nav-link"
+        document.getElementById("nav-announced").className="tab-pane fade"
+
+
+
+        document.getElementById("nav-selected-tab").className="nav-item nav-link active show"
+        document.getElementById("nav-selected").className="tab-pane fade active show"
     }
 
-    document.getElementById("selected_area").scrollIntoView();
   
     ele_loc = document.getElementById(`${classID}_selected`).getBoundingClientRect();
     var ele_par = document.getElementById("list_container_selected").getBoundingClientRect();

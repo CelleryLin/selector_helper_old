@@ -248,321 +248,279 @@
                 </th>
                 <th class="resizable" style="height: 100vh; display: block; vertical-align: top;">
                     <div class="function_container" style="height: 100%; overflow:auto;">
-                        <div class="accordion">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="compulsory_area">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#panelsStayOpen-compulsory_area" aria-expanded="true"
-                                        aria-controls="panelsStayOpen-compulsory_area">
-                                        <div style="display: flex; align-items:center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-exclamation-diamond-fill" viewBox="0 0 16 16">
-                                                <path d="M9.05.435c-.58-.58-1.52-.58-2.1 0L.436 6.95c-.58.58-.58 1.519 0 2.098l6.516 6.516c.58.58 1.519.58 2.098 0l6.516-6.516c.58-.58.58-1.519 0-2.098L9.05.435zM8 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-                            
-                                            </svg>
-                                            &nbsp; <b>本學期必修</b>
-                                        </div>
-                                        
-                                    </button>
-                                </h2>
-                                <div id="panelsStayOpen-compulsory_area" class="accordion-collapse collapse"
-                                    aria-labelledby="compulsory_area">
-                                    <div class="accordion-body" style="padding: 0;">
-                                        <div class="comp_container" id="comp_container">
-                                            <div class="Title_lable">
-                                                請選擇系所和班級
-                                            </div>
-                                            <div id="comp_sel_container" style="padding: 5px 0px 5px 28px;"></div>
-                                            <div id="comp_content" style="display: table; width: 100%; text-align: center; max-height: 350px; overflow: auto;">
-                                                <div id="list_head" class="list_lead_container">
-                                                    <div class="list_head" style="width:5%;">選擇</div>
-                                                    <div class="list_head" style="width:22%;">課程名稱</div>
-                                                    <div class="list_head" style="width:6%;">時間</div>
-                                                    <div class="list_head" style="width:5%;">班級</div>
-                                                    <div class="list_head" style="width:15%;">上課系所</div>
-                                                    <div class="list_head" style="width:4%;">必選</div>
-                                                    <div class="list_head" style="width:4%;">學分</div>
-                                                    <div class="list_head" style="width:13%;">授課教師</div>
-                                                    <div class="list_head" style="width:18%;">所屬學程</div>
-                                                    <div class="list_head" style="width:8%;">英文授課</div>
-                                                </div>                                                   
-                                            </div>
+                        <nav class="nav" style="margin: 5px 0px 5px 0px;">
+                            <div class="nav nav-tabs" id="nav-tab" role="tablist" style="width: 100%;">
+                                <a class="nav-item nav-link" id="nav-comp-tab" data-toggle="tab" href="#nav-comp" role="tab"
+                                    aria-controls="nav-comp" aria-selected="true">
+                                    <div style="display: flex; align-items:center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-exclamation-diamond-fill" viewBox="0 0 16 16">
+                                            <path d="M9.05.435c-.58-.58-1.52-.58-2.1 0L.436 6.95c-.58.58-.58 1.519 0 2.098l6.516 6.516c.58.58 1.519.58 2.098 0l6.516-6.516c.58-.58.58-1.519 0-2.098L9.05.435zM8 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                        
+                                        </svg>
+                                        &nbsp; <b>本學期必修</b>
+                                    </div>
+                                </a>
+                                <a class="nav-item nav-link" id="nav-all_classes-tab" data-toggle="tab" href="#nav-all_classes" role="tab"
+                                    aria-controls="nav-all_classes" aria-selected="false">
+                                    <div style="display: flex; align-items: center;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-file-earmark-plus-fill" viewBox="0 0 16 16">
+                                            <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM8.5 7v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 1 0z"/>
+                                        </svg>
+                                        &nbsp; <b>所有課程</b>
+                                    </div>
+                                </a>
+                                <a class="nav-item nav-link" id="nav-auto-tab" data-toggle="tab" href="#nav-auto" role="tab"
+                                    aria-controls="nav-auto" aria-selected="false">
+                                    <div style="display: flex; align-items: center;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-dice-6-fill" viewBox="0 0 16 16">
+                                            <path d="M3 0a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V3a3 3 0 0 0-3-3H3zm1 5.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm8 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm1.5 6.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zM12 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zM5.5 12a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zM4 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                                        </svg>
+                                        &nbsp; <b>自動填課</b>（測試中）
+                                    </div>
+                                </a>
+                                <a class="nav-item nav-link" id="nav-selected-tab" data-toggle="tab" href="#nav-selected" role="tab" aria-controls="nav-selected" aria-selected="false">
+                                    <div style="display: flex; align-items: center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-bookmark-check-fill" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm8.854-9.646a.5.5 0 0 0-.708-.708L7.5 7.793 6.354 6.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/>
+                                        </svg>
+                                        &nbsp; <b>已選課程</b>
+                                    </div>
+                                </a>
+                                <a class="nav-item nav-link active" id="nav-announced-tab" data-toggle="tab" href="#nav-announced" role="tab" aria-controls="nav-announced" aria-selected="false">
+                                    <div style="display: flex; align-items: center;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-megaphone-fill" viewBox="0 0 16 16">
+                                            <path d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-11zm-1 .724c-2.067.95-4.539 1.481-7 1.656v6.237a25.222 25.222 0 0 1 1.088.085c2.053.204 4.038.668 5.912 1.56V3.224zm-8 7.841V4.934c-.68.027-1.399.043-2.008.053A2.02 2.02 0 0 0 0 7v2c0 1.106.896 1.996 1.994 2.009a68.14 68.14 0 0 1 .496.008 64 64 0 0 1 1.51.048zm1.39 1.081c.285.021.569.047.85.078l.253 1.69a1 1 0 0 1-.983 1.187h-.548a1 1 0 0 1-.916-.599l-1.314-2.48a65.81 65.81 0 0 1 1.692.064c.327.017.65.037.966.06z"/>
+                                        </svg>
+                                        &nbsp; <b>公告</b>
+                                    </div>
+
+                                </a>
+                            </div>
+                        </nav>
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade" id="nav-comp" role="tabpanel" aria-labelledby="nav-comp-tab">
+                                <div class="comp_container" id="comp_container">
+                                    <div class="Title_lable">
+                                        請選擇系所和班級
+                                    </div>
+                                    <div id="comp_sel_container" style="padding: 5px 0px 5px 28px;"></div>
+                                    <div id="comp_content" style="display: table; width: 100%; text-align: center; max-height: 350px; overflow: auto;">
+                                        <div id="list_head" class="list_lead_container">
+                                            <div class="list_head" style="width:5%;">選擇</div>
+                                            <div class="list_head" style="width:22%;">課程名稱</div>
+                                            <div class="list_head" style="width:6%;">時間</div>
+                                            <div class="list_head" style="width:5%;">班級</div>
+                                            <div class="list_head" style="width:15%;">上課系所</div>
+                                            <div class="list_head" style="width:4%;">必選</div>
+                                            <div class="list_head" style="width:4%;">學分</div>
+                                            <div class="list_head" style="width:13%;">授課教師</div>
+                                            <div class="list_head" style="width:18%;">所屬學程</div>
+                                            <div class="list_head" style="width:8%;">英文授課</div>
+                                        </div>                                                   
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="tab-pane fade" id="nav-all_classes" role="tabpanel" aria-labelledby="nav-all_classes-tab">
+                                <div class="search_container">
+                                    <div style="text-align: center; margin: 10px 28px 10px 28px;">
+                                        <div class="form-outline" style="display: inline-block; width: 90%;">
+                                            <input type="search" id="search_bar" class="form-control" style="display: inline-block; border-radius: 100px; width: 100%; padding-left: 20px;" placeholder="綜合搜尋...&nbsp;(例如：星期三 早上 博雅)" aria-label="Search">
                                             
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="manual_area">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#panelsStayOpen-manual_area" aria-expanded="false"
-                                        aria-controls="panelsStayOpen-manual_area">
-                                        <div style="display: flex; align-items: center;">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-file-earmark-plus-fill" viewBox="0 0 16 16">
-                                                <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM8.5 7v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 1 0z"/>
-                                            </svg>
-                                            &nbsp; <b>所有課程</b>
-                                        </div>
-                                        
-                                    </button>
-                                </h2>
-                                <div id="panelsStayOpen-manual_area" class="accordion-collapse collapse"
-                                    aria-labelledby="manual_area" style="margin: 0px;">
-                                    <div class="accordion-body" style="padding: 0; position: relative;">
-                                        <div class="search_container">
-                                            <div style="text-align: center; margin: 10px 28px 10px 28px;">
-                                                <div class="form-outline" style="display: inline-block; width: 90%;">
-                                                    <input type="search" id="search_bar" class="form-control" style="display: inline-block; border-radius: 100px; width: 100%; padding-left: 20px;" placeholder="綜合搜尋...&nbsp;(例如：星期三 早上 博雅)" aria-label="Search">
-                                                    
-                                                </div>
+                                    <div style="display: block; text-align: right;">
+                                        <div style="display: flex; font-size: 13px; right: 10px; align-items: center; justify-content: space-around;">
+                                            <div class="form-check form-switch" style="display: flex; align-items: center;">
+                                                <input class="form-check-input" type="checkbox" role="switch" id="overlapping_show_switch" style="margin: 0px;" checked>
+                                                <label style="margin: 5px;">衝堂顯示</label>
                                             </div>
-                                            <div style="display: block; text-align: right;">
-                                                <div style="display: flex; font-size: 13px; right: 10px; align-items: center; justify-content: space-around;">
+                                            <div style="display: flex; align-items: center;">
+                                                <label style="margin: 5px;">進階選項</label>
+                                                <button id="filter_collapser" style="background-color: rgba(212, 212, 212, 0.5); text-align: center; border-radius: 10px;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                                        <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                                                      </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div style="text-align: center; margin: 10px 28px 10px 28px;">
+                                        <div id="filter_content" class="function_window_content" style="display: none;">
+                                            <div style="position: relative; width: 100%; padding: 0px 15px 0px 15px; font-size: 18px; display: block; z-index: 3; font-weight: normal; display: flex; justify-content: space-between;">
+                                                <div style="display: flex; align-items: center;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filter-circle" viewBox="0 0 16 16">
+                                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                                        <path d="M7 11.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5z"/>
+                                                    </svg>
+                                                    <span style="margin: 5px;">使用篩選器：</span>
+    
                                                     <div class="form-check form-switch" style="display: flex; align-items: center;">
-                                                        <input class="form-check-input" type="checkbox" role="switch" id="overlapping_show_switch" style="margin: 0px;" checked>
-                                                        <label style="margin: 5px;">衝堂顯示</label>
+                                                        <input class="form-check-input" type="checkbox" role="switch" id="filter_switch" style="margin: 0px;">
+                                                        <label style="padding-left: 7px; margin: 3px;" id="filter_switch_status">啟用</label>
                                                     </div>
-                                                    <div style="display: flex; align-items: center;">
-                                                        <label style="margin: 5px;">進階選項</label>
-                                                        <button id="filter_collapser" style="background-color: rgba(212, 212, 212, 0.5); text-align: center; border-radius: 10px;">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                                                                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                                                              </svg>
-                                                        </button>
-                                                    </div>
-                                                    
-                                                    
                                                 </div>
+                                                <div style="display: flex; align-items: center;">
+                                                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content='
+                                                        點選下方+號新增想要篩選的欄位，可以使用半形的逗號將想要尋找的多個參數依並包含進入。（例如：想要找教授A或教授B開的課，就新增一個開課教師的篩選器，並填寫"A,B"）'>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                                            <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                                                        </svg>
+                                                    </span>
+                                                </div>  
                                             </div>
                                             
-                                            <div style="text-align: center; margin: 10px 28px 10px 28px;">
-                                                <div id="filter_content" class="function_window_content" style="display: none;">
-                                                    <div style="position: relative; width: 100%; padding: 0px 15px 0px 15px; font-size: 18px; display: block; z-index: 3; font-weight: normal; display: flex; justify-content: space-between;">
-                                                        <div style="display: flex; align-items: center;">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filter-circle" viewBox="0 0 16 16">
-                                                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                                                <path d="M7 11.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5z"/>
-                                                            </svg>
-                                                            <span style="margin: 5px;">使用篩選器：</span>
-            
-                                                            <div class="form-check form-switch" style="display: flex; align-items: center;">
-                                                                <input class="form-check-input" type="checkbox" role="switch" id="filter_switch" style="margin: 0px;">
-                                                                <label style="padding-left: 7px; margin: 3px;" id="filter_switch_status">啟用</label>
-                                                            </div>
-                                                        </div>
-                                                        <div style="display: flex; align-items: center;">
-                                                            <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content='
-                                                                點選下方+號新增想要篩選的欄位，可以使用半形的逗號將想要尋找的多個參數依並包含進入。（例如：想要找教授A或教授B開的課，就新增一個開課教師的篩選器，並填寫"A,B"）'>
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
-                                                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                                                    <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
-                                                                </svg>
-                                                            </span>
-                                                        </div>  
-                                                    </div>
-                                                    
-                                                    <div style="position: relative; display: block; padding: 5px; z-index: 3;">
-                                                        <button class="add_filter_btn" id="add_filter_btn"><i style="font-size:20px" class="fa-solid">&#x2b;</i></button>
-                                                    </div>
-                                                </div>
+                                            <div style="position: relative; display: block; padding: 5px; z-index: 3;">
+                                                <button class="add_filter_btn" id="add_filter_btn"><i style="font-size:20px" class="fa-solid">&#x2b;</i></button>
                                             </div>
-                                            <div id="select_filter_content" class="dropdown_content">
+                                        </div>
+                                    </div>
+                                    <div id="select_filter_content" class="dropdown_content">
+                                        <div style="color: #727272;">選擇篩選器...</div>
+                                        <hr style="color: #727272; width: 50%; height: 10px; padding: 0px; margin: 0px;">
+                                    </div>
+                                    <div style="margin: 10px;">
+                                    </div>
+                                </div>
+                                <div class="list_container" style="width: 100%; height: 100%; min-height: 200px;">
+                                    <div id="list_content" style="display: block; width: 100%; text-align: center;">
+                                        <div id="list_head" class="list_lead_container">
+                                            <div class="list_head" style="width:5%;">選擇</div>
+                                            <div class="list_head" style="width:22%;">課程名稱</div>
+                                            <div class="list_head" style="width:6%;">時間</div>
+                                            <div class="list_head" style="width:5%;">班級</div>
+                                            <div class="list_head" style="width:15%;">上課系所</div>
+                                            <div class="list_head" style="width:4%;">必選</div>
+                                            <div class="list_head" style="width:4%;">學分</div>
+                                            <div class="list_head" style="width:13%;">授課教師</div>
+                                            <div class="list_head" style="width:18%;">所屬學程</div>
+                                            <div class="list_head" style="width:8%;">英文授課</div>
+                                        </div>                                                   
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="tab-pane fade" id="nav-auto" role="tabpanel" aria-labelledby="nav-auto-tab">
+                                <div class="sortable_container">
+                                    <div class="Title_lable">
+                                        請新增並排序您想填選的課程種類：
+                                    </div>
+                                    <div style="display: block; text-align: center; margin: 10px 28px 10px 28px;">
+                                        <div class="function_window_content">
+                                            <div style="position: relative; width: 100%; padding: 0px 15px 0px 15px; font-size: 18px; display: block; z-index: 3; font-weight: normal; display: flex; justify-content: space-between;">
+                                                <div style="display: flex; align-items: center;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
+                                                        <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
+                                                    </svg>
+                                                    <span style="margin: 5px;">排列志願：</span>
+                                                </div>
+                                                <div style="display: flex; align-items: center;">
+                                                    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content='
+                                                        此功能可以將您的空堂填滿。點選下方+號新增想要填入的課程類別，可以拖曳排列課程填入的優先順序。一行代表一堂課程，若欲新增兩個相同類型的課程，則可以新增兩個相同的方塊。排列完成後點選執行，系統會自動產生課程(呈藍色半透明)，若對於產生的不滿意可以再次點選執行，系統會重新填課。完成後按確認才會固定於您的課表中(呈淡黃色)。'>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                                            <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                                                        </svg>
+                                                    </span>
+                                                </div>
                                                 
-                                                <div style="color: #727272;">選擇篩選器...</div>
-                                                <hr style="color: #727272; width: 50%; height: 10px; padding: 0px; margin: 0px;">
                                             </div>
-                                            <div style="margin: 10px;">
-                                            </div>
-                                        </div>
-                                        <div class="list_container" style="width: 100%; max-height: 700px; min-height: 200px; overflow: auto;">
-                                            <div id="list_content" style="display: block; width: 100%; text-align: center;">
-                                                <div id="list_head" class="list_lead_container">
-                                                    <div class="list_head" style="width:5%;">選擇</div>
-                                                    <div class="list_head" style="width:22%;">課程名稱</div>
-                                                    <div class="list_head" style="width:6%;">時間</div>
-                                                    <div class="list_head" style="width:5%;">班級</div>
-                                                    <div class="list_head" style="width:15%;">上課系所</div>
-                                                    <div class="list_head" style="width:4%;">必選</div>
-                                                    <div class="list_head" style="width:4%;">學分</div>
-                                                    <div class="list_head" style="width:13%;">授課教師</div>
-                                                    <div class="list_head" style="width:18%;">所屬學程</div>
-                                                    <div class="list_head" style="width:8%;">英文授課</div>
-                                                </div>                                                   
+                                            <ul id="sortable" class="connectedSortable">
+                                            </ul>
+                                            <div style="position: relative; display: block; padding: 5px; z-index: 3; text-align: center;">
+                                                <button class="add_filter_btn" id="add_sortable_btn"><i style="font-size:20px" class="fa-solid">&#x2b;</i></button>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="auto_area">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#panelsStayOpen-auto_area" aria-expanded="false"
-                                        aria-controls="panelsStayOpen-auto_area">
-                                        <div style="display: flex; align-items: center;">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-dice-6-fill" viewBox="0 0 16 16">
-                                                <path d="M3 0a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V3a3 3 0 0 0-3-3H3zm1 5.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm8 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm1.5 6.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zM12 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zM5.5 12a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zM4 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
-                                            </svg>
-                                            &nbsp; <b>自動填課</b>（測試中）
+                                    <div style="padding-bottom: 5px; padding-left: 28px; display: inline-block;">
+                                        <div style="display: inline-block;">
+                                            <button type="button" class="btn btn-light" onclick="pendingClasses();">執行</button>
                                         </div>
-                                        
-                                    </button>
-                                </h2>
-                                <div id="panelsStayOpen-auto_area" class="accordion-collapse collapse"
-                                    aria-labelledby="auto_area">
-                                    <div class="accordion-body" style="padding: 0; position: relative;">
-                                        <div class="sortable_container">
-                                            <div class="Title_lable">
-                                                請新增並排序您想填選的課程種類：
-                                            </div>
-                                            <div style="display: block; text-align: center; margin: 10px 28px 10px 28px;">
-                                                <div class="function_window_content">
-                                                    <div style="position: relative; width: 100%; padding: 0px 15px 0px 15px; font-size: 18px; display: block; z-index: 3; font-weight: normal; display: flex; justify-content: space-between;">
-                                                        <div style="display: flex; align-items: center;">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
-                                                                <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
-                                                            </svg>
-                                                            <span style="margin: 5px;">排列志願：</span>
-                                                        </div>
-                                                        <div style="display: flex; align-items: center;">
-                                                            <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content='
-                                                                此功能可以將您的空堂填滿。點選下方+號新增想要填入的課程類別，可以拖曳排列課程填入的優先順序。一行代表一堂課程，若欲新增兩個相同類型的課程，則可以新增兩個相同的方塊。排列完成後點選執行，系統會自動產生課程(呈藍色半透明)，若對於產生的不滿意可以再次點選執行，系統會重新填課。完成後按確認才會固定於您的課表中(呈淡黃色)。'>
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
-                                                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                                                    <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
-                                                                </svg>
-                                                            </span>
-                                                        </div>
-                                                        
-                                                    </div>
-                                                    <ul id="sortable" class="connectedSortable">
-                                                    </ul>
-                                                    <div style="position: relative; display: block; padding: 5px; z-index: 3; text-align: center;">
-                                                        <button class="add_filter_btn" id="add_sortable_btn"><i style="font-size:20px" class="fa-solid">&#x2b;</i></button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div style="padding-bottom: 5px; padding-left: 28px; display: inline-block;">
-                                                <div style="display: inline-block;">
-                                                    <button type="button" class="btn btn-light" onclick="pendingClasses();">執行</button>
-                                                </div>
-                                                <div style="display: inline-block;">
-                                                    <button type="button" class="btn btn-light" onclick="confirmPending();">全部確認</button>
-                                                </div>
-                                                <div style="display: inline-block;">
-                                                    <button type="button" class="btn btn-light" onclick="cancelPending();">取消</button>
-                                                </div>
-                                            </div>
-                                            
-                                            <div style="display: block; text-align: center; font-size: 18px; font-weight: normal;">
-                                                <div id="select_sortable_content" class="dropdown_content">
-                                                    <div style="font-weight: bold; padding-left: 8px;">選擇課程種類...</div>
-                                                    <hr style="color: #727272; width: 50%; height: 10px; padding: 0px; margin: 0px;">
-                                                </div>
-                                            </div>
-                                        </div> 
+                                        <div style="display: inline-block;">
+                                            <button type="button" class="btn btn-light" onclick="confirmPending();">全部確認</button>
+                                        </div>
+                                        <div style="display: inline-block;">
+                                            <button type="button" class="btn btn-light" onclick="cancelPending();">取消</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div style="display: block; text-align: center; font-size: 18px; font-weight: normal;">
+                                        <div id="select_sortable_content" class="dropdown_content">
+                                            <div style="font-weight: bold; padding-left: 8px;">選擇課程種類...</div>
+                                            <hr style="color: #727272; width: 50%; height: 10px; padding: 0px; margin: 0px;">
+                                        </div>
+                                    </div>
+                                </div> 
+                            </div>
+                            <div class="tab-pane fade" id="nav-selected" role="tabpanel" aria-labelledby="nav-selected-tab">
+                                <div style="display: block; padding: 10px 0px 5px 28px;">
+                                    <div style="display: inline-block; font-weight: normal; font-size: 16px;">已選學分：<span id="all_credits" style="font-weight: bold; background-color: #e0e8f0; padding: 5px; border-radius: 3px;">32</span></div>
+                                    <div style="display: inline-block; font-weight: normal; font-size: 16px; padding-left: 5px;">總時數：<span id="tt_time" style="font-weight: bold; background-color: #e0e8f0; padding: 5px; border-radius: 3px;">32</span></div>
+                                    <div style="display: block; padding-top: 10px;">
+                                        <button style="background-color: #9c4b4b; font-weight: bold;" type="button" class="btn btn-light" onclick="" data-toggle="modal" data-target="#exampleModalCenter"><span style="color: #fff">全部刪除</span></button>
+                                    </div>
+                                </div>
+                                <div class="list_container" id="list_container_selected" style="max-height: 700px; overflow: auto;">
+                                    <div id="list_content_selected" style="display: table; width: 100%; text-align: center;">
+                                        <div id="list_head" class="list_lead_container">
+                                            <div class="list_head" style="width:5%;">選擇</div>
+                                            <div class="list_head" style="width:17%;">課程名稱</div>
+                                            <div class="list_head" style="width:6%;">時間</div>
+                                            <div class="list_head" style="width:5%;">班級</div>
+                                            <div class="list_head" style="width:10%;">上課系所</div>
+                                            <div class="list_head" style="width:3%;">必選</div>
+                                            <div class="list_head" style="width:3%;">學分</div>
+                                            <div class="list_head" style="width:13%;">授課教師</div>
+                                            <div class="list_head" style="width:13%;">所屬學程</div>
+                                            <div class="list_head" style="width:5%;">英文授課</div>
+                                            <div class="list_head" style="width:10%;">教室</div>
+                                            <div class="list_head" style="width:10%;">課號</div>
+                                        </div>                                                   
                                     </div>
                                 </div>
                             </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="selected_area">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#panelsStayOpen-selected_area" aria-expanded="false"
-                                        aria-controls="panelsStayOpen-selected_area">
-                                        <div style="display: flex; align-items: center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-bookmark-check-fill" viewBox="0 0 16 16">
-                                                <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm8.854-9.646a.5.5 0 0 0-.708-.708L7.5 7.793 6.354 6.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/>
-                                            </svg>
-                                            &nbsp; <b>已選課程</b>
-                                        </div>
-                                        
-                                    </button>
-                                </h2>
-                                <div id="panelsStayOpen-selected_area" class="accordion-collapse collapse"
-                                    aria-labelledby="selected_area">
-                                    <div class="accordion-body" style="padding: 0;">
-                                        <div style="display: block; padding: 10px 0px 5px 28px;">
-                                            <div style="display: inline-block; font-weight: normal; font-size: 16px;">已選學分：<span id="all_credits" style="font-weight: bold; background-color: #e0e8f0; padding: 5px; border-radius: 3px;">32</span></div>
-                                            <div style="display: inline-block; font-weight: normal; font-size: 16px; padding-left: 5px;">總時數：<span id="tt_time" style="font-weight: bold; background-color: #e0e8f0; padding: 5px; border-radius: 3px;">32</span></div>
-                                            <div style="display: block; padding-top: 10px;">
-                                                <button style="background-color: #9c4b4b; font-weight: bold;" type="button" class="btn btn-light" onclick="" data-toggle="modal" data-target="#exampleModalCenter"><span style="color: #fff">全部刪除</span></button>
-                                            </div>
-                                        </div>
-                                        <div class="list_container" id="list_container_selected" style="max-height: 700px; overflow: auto;">
-                                            <div id="list_content_selected" style="display: table; width: 100%; text-align: center;">
-                                                <div id="list_head" class="list_lead_container">
-                                                    <div class="list_head" style="width:5%;">選擇</div>
-                                                    <div class="list_head" style="width:17%;">課程名稱</div>
-                                                    <div class="list_head" style="width:6%;">時間</div>
-                                                    <div class="list_head" style="width:5%;">班級</div>
-                                                    <div class="list_head" style="width:10%;">上課系所</div>
-                                                    <div class="list_head" style="width:3%;">必選</div>
-                                                    <div class="list_head" style="width:3%;">學分</div>
-                                                    <div class="list_head" style="width:13%;">授課教師</div>
-                                                    <div class="list_head" style="width:13%;">所屬學程</div>
-                                                    <div class="list_head" style="width:5%;">英文授課</div>
-                                                    <div class="list_head" style="width:10%;">教室</div>
-                                                    <div class="list_head" style="width:10%;">課號</div>
-                                                </div>                                                   
-                                            </div>
-                                        </div>
+                            <div class="tab-pane fade show active" id="nav-announced" role="tabpanel" aria-labelledby="nav-announced-tab">
+                                <div class="comp_container" id="comp_container" style="font-size: 14px;">
+                                    <div class="ann_container">
+                                        <h3 style="font-size: 18px; padding-top: 10px;"><b>🙈這裡是中山大學選課小助手 v2.1 (Beta) </b></h3>
+                                    <h3 style="font-size: 18px; padding-top: 10px;"><b>學期課程資料：1112 更新日期：2023/02/01</b></h3>
+                                    <div style="padding-top: 5px;"><b>🎉說明：</b></div>
+                                    <div>目前尚未加入響應式視窗設計，建議<span style="color: rgb(189, 46, 46);"><b>使用電腦瀏覽</b></span>(手機介面幾乎沒辦法使用)。此網站係本人不務正業之作品，程式寫得非常亂，還請多多包含。<br>
+                                    這是輔助大家選課的系統，<span style="color: rgb(189, 46, 46);"><b>僅供參考</b></span>。課程資料是爬蟲下來的靜態資料，若有校方有異動，本人尚未更新的話請聯絡我，感謝。</div>
+                                    <div style="padding-top: 5px;"><b><br>🎉v2.1更新內容：</b></div>
+                                    <div style="padding-top: 5px;">
+                                        - 強化使用者體驗</div>
+                                    <div style="padding-top: 5px;"><b><br>🎉主要功能：</b></div>
+                                    <div style="padding-top: 5px;">- 更新1112課表<br>
+                                    - 課表動態更新<br>
+                                    - 一鍵加入必修課<br>
+                                    - 更強大的篩選器以及智慧搜尋<br>
+                                    - 本學期學程搜尋<br>
+                                    - 顯示衝堂<br>
+                                    - 自動填課目前已經上線測試中！<br>
+                                    - Local Storage 關閉瀏覽器自動儲存選課資料</div>
+                                    <div style="padding-top: 5px;"><b><br>🎉已知問題：</b></div>
+                                    <div style="padding-top: 5px;">
+                                    - 校方資料有課號相同但課程卻不同的狀況，可能會造成顯示上的Bug，重新整理並且任意點選一堂課程再取消即可恢復正常。<br>
+                                    - 介面有待優化<br>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="bulletin_area">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#panelsStayOpen-bulletin_area" aria-expanded="true"
-                                        aria-controls="panelsStayOpen-bulletin_area">
-                                        <div style="display: flex; align-items: center;">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-megaphone-fill" viewBox="0 0 16 16">
-                                                <path d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-11zm-1 .724c-2.067.95-4.539 1.481-7 1.656v6.237a25.222 25.222 0 0 1 1.088.085c2.053.204 4.038.668 5.912 1.56V3.224zm-8 7.841V4.934c-.68.027-1.399.043-2.008.053A2.02 2.02 0 0 0 0 7v2c0 1.106.896 1.996 1.994 2.009a68.14 68.14 0 0 1 .496.008 64 64 0 0 1 1.51.048zm1.39 1.081c.285.021.569.047.85.078l.253 1.69a1 1 0 0 1-.983 1.187h-.548a1 1 0 0 1-.916-.599l-1.314-2.48a65.81 65.81 0 0 1 1.692.064c.327.017.65.037.966.06z"/>
-                                            </svg>
-                                            &nbsp; <b>公告</b>
-                                        </div>
-                                        
-                                    </button>
-                                </h2>
-                                <div id="panelsStayOpen-bulletin_area" class="accordion-collapse collapse show"
-                                    aria-labelledby="bulletin_area">
-                                    <div class="accordion-body">
-                                        <div class="comp_container" id="comp_container" style="font-size: 14px;">
-                                            <h3 style="font-size: 18px; padding-top: 10px;"><b>🙈這裡是中山大學選課小助手 v2.0.1 (Beta) </b></h3>
-                                            <h3 style="font-size: 18px; padding-top: 10px;"><b>學期課程資料：1112 更新日期：2023/02/01</b></h3>
-                                            <div style="padding-top: 5px;"><b>🎉說明：</b></div>
-                                            <div>目前尚未加入響應式視窗設計，建議<span style="color: rgb(189, 46, 46);"><b>使用電腦瀏覽</b></span>(手機介面幾乎沒辦法使用)。此網站係本人不務正業之作品，程式寫得非常亂，還請多多包含。<br>
-                                            這是輔助大家選課的系統，<span style="color: rgb(189, 46, 46);"><b>僅供參考</b></span>。課程資料是爬蟲下來的靜態資料，若有校方有異動，本人尚未更新的話請聯絡我，感謝。</div>
-                                            <div style="padding-top: 5px;"><b><br>🎉最新功能：</b></div>
-                                            <div style="padding-top: 5px;">- 更新1112課表<br>
-                                            - 課表動態更新<br>
-                                            - 一鍵加入必修課<br>
-                                            - 更強大的篩選器以及智慧搜尋<br>
-                                            - 本學期學程搜尋<br>
-                                            - 顯示衝堂<br>
-                                            - 自動填課目前已經上線測試中！<br>
-                                            - Local Storage 關閉瀏覽器自動儲存選課資料</div>
-                                            <div style="padding-top: 5px;"><b><br>🎉已知問題：</b></div>
-                                            <div style="padding-top: 5px;">
-                                            - 校方資料有課號相同但課程卻不同的狀況，可能會造成顯示上的Bug，重新整理並且任意點選一堂課程再取消即可恢復正常。<br>
-                                            - 介面有待優化<br>
-                                            </div>
-                                            <div style="padding-top: 5px;"><b><br>🎉原始碼及說明：</b></div>
-                                            <a style="padding-top: 5px;" href="https://github.com/CelleryLin/selector_helper">我的 Github</a>
-                                            <div style="padding-top: 5px;"><b><br>🎉錯誤回報&聯絡我：</b></div>
-                                            <div style="padding-top: 5px;">Gmail: 
-                                            <a href="mailto:yochen0123@gmail.com">yochen0123@gmail.com</a>
-                                            </div>
-                                            <br><br>
-                                            <div style="font-size: 14px; text-align: center;">by Cellery Lin. MEME113 </div>
-                                            <div style="text-align: center;"><span> Copyright © 2023 Cellery Lin. All rights reserved. </span></div> 
-                                            
-                                        </div>
+                                    <div style="padding-top: 5px;"><b><br>🎉原始碼及說明：</b></div>
+                                    <a style="padding-top: 5px;" href="https://github.com/CelleryLin/selector_helper">我的 Github</a>
+                                    <div style="padding-top: 5px;"><b><br>🎉錯誤回報&聯絡我：</b></div>
+                                    <div style="padding-top: 5px;">Gmail: 
+                                    <a href="mailto:yochen0123@gmail.com">yochen0123@gmail.com</a>
+                                    </div>
+                                    <br><br>
+                                    <div style="font-size: 14px; text-align: center;">by Cellery Lin. MEME113 </div>
+                                    <div style="text-align: center;"><span> Copyright © 2023 Cellery Lin. All rights reserved. </span></div> 
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
                 </th>
-            
             </thead>
         </table>
         <input type="button" name="test" onclick="functionaddRow();">
