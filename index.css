@@ -542,3 +542,74 @@ li {
     background-color: #e0e8f0;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
+
+.more_info_container{
+    display: flex;
+    flex-direction: row;
+}
+
+.more_info_row{
+    display: flex;
+    flex-direction: column;
+    background-color: #e6e6e6;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 2px;
+    max-width: 200px;
+
+}
+
+.more_info_cat {
+    display: flex;
+}
+
+.more_info_cat_content {
+    display: flex;
+}
+
+
+.popover_moreinfo{
+    --bs-popover-zindex: 1070;
+    --bs-popover-max-width: 100%;
+    --bs-popover-font-size: 0.875rem;
+    --bs-popover-bg: #fff;
+    --bs-popover-border-width: 1px;
+    --bs-popover-border-color: var(--bs-border-color-translucent);
+    --bs-popover-border-radius: 0.5rem;
+    --bs-popover-inner-border-radius: calc(0.5rem - 1px);
+    --bs-popover-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    --bs-popover-header-padding-x: 1rem;
+    --bs-popover-header-padding-y: 0.5rem;
+    --bs-popover-header-font-size: 1rem;
+    --bs-popover-header-color: ;
+    --bs-popover-header-bg: #f0f0f0;
+    --bs-popover-body-padding-x: 1rem;
+    --bs-popover-body-padding-y: 1rem;
+    --bs-popover-body-color: #212529;
+    --bs-popover-arrow-width: 1rem;
+    --bs-popover-arrow-height: 0.5rem;
+    --bs-popover-arrow-border: var(--bs-popover-border-color);
+    z-index: var(--bs-popover-zindex);
+    display: block;
+    max-width: var(--bs-popover-max-width);
+    font-family: var(--bs-font-sans-serif);
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: left;
+    text-align: start;
+    text-decoration: none;
+    text-shadow: none;
+    text-transform: none;
+    letter-spacing: normal;
+    word-break: normal;
+    white-space: normal;
+    word-spacing: normal;
+    line-break: auto;
+    font-size: var(--bs-popover-font-size);
+    word-wrap: break-word;
+    background-color: var(--bs-popover-bg);
+    background-clip: padding-box;
+    border: var(--bs-popover-border-width) solid var(--bs-popover-border-color);
+    border-radius: var(--bs-popover-border-radius);
+}

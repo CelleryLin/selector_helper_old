@@ -258,10 +258,65 @@ function addanRow(tableRow, class_info, id_selector, i){
         cell11.className="classes_cell";
         row.appendChild(cell11);
     }
+
+    /*
+    more_info = `
+    <div class="more_info_container">
+        <div class="more_info_row">
+            <div class="more_info_cat" style="width: 80px;">課程名稱</div>
+            <div class="more_info_cont"><b>${class_info["Name"]}</b></div>
+        </div>
+        <div class="more_info_row">
+            <div class="more_info_cat">限修</div>
+            <div class="more_info_cont"><b>${class_info["Num_limit"]}</b></div>
+        </div>
+        <div class="more_info_row">
+            <div class="more_info_cat">點選</div>
+            <div class="more_info_cont"><b>${class_info["Num_viewed"]}</b></div>
+        </div>
+        <div class="more_info_row">
+            <div class="more_info_cat">選上</div>
+            <div class="more_info_cont"><b>${class_info["Num_selected"]}</b></div>
+        </div>
+        <div class="more_info_row">
+            <div class="more_info_cat">餘額</div>
+            <div class="more_info_cont"><b>${class_info["Num_available"]}</b></div>
+        </div>
+        <div class="more_info_row">
+            <div class="more_info_cat">備註</div>
+            <div class="more_info_cont"><b>${class_info["note"]}</div>
+        </div>
+    </div>
+    `
+    var cellLast = document.createElement('div')
+    cell9.innerHTML =`
+        <span class="d-inline-block"
+            tabindex="0"
+            data-bs-toggle="popover"
+            data-bs-placement="bottom"
+            data-bs-trigger="focus hover"
+            data-bs-template='<div class="popover_moreinfo" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>'
+            data-bs-html="true" data-bs-content='${more_info}'>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"></path>
+            </svg>
+        </span>
+    `
+    cellLast.className="classes_cell";
+    row.appendChild(cellLast);
+    */
+
 }
 
 function show_more(filter){
     isFinity=0;
+    setTimeout(function(){
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+            return new bootstrap.Popover(popoverTriggerEl)
+        })
+    }, 0);
     addClassRow(all_classes, filter);
 }
 
@@ -340,6 +395,11 @@ function main(csv_data){
             "Name": all_class_raw[i][7],
             "URL": all_class_raw[i][8],
             "ClassID": all_class_raw[i][4],
+            "Num_limit": all_class_raw[i][12],
+            "Num_viewed": all_class_raw[i][13],
+            "Num_selected": all_class_raw[i][14],
+            "Num_available": all_class_raw[i][15],
+            "note": all_class_raw[i][25],
             "Visibility": 1,
             "Overlapping": 0,
             "MyComp": 0,
@@ -395,7 +455,7 @@ function main(csv_data){
     });
     var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
     var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-    return new bootstrap.Popover(popoverTriggerEl)
+        return new bootstrap.Popover(popoverTriggerEl)
     })
 }
 
