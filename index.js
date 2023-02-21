@@ -156,10 +156,14 @@ function addanRow(tableRow, class_info, id_selector, i){
     //選擇
     var cell0 = document.createElement('div')
     if(class_info["Select"]){
-        cell0.innerHTML=`<div style="text-align: center"> <input type="checkbox" style=" align: center" onchange='handleChange(this,${i});' checked> </div>`;
+        cell0.innerHTML=`<div style="text-align: center" onmouseenter="more_info_disp(1,${i})" onmouseleave="more_info_disp(0,${i})">
+            <input type="checkbox" style=" align: center" onchange='handleChange(this,${i});' checked>
+        </div>`;
     }
     else{
-        cell0.innerHTML =`<div style="text-align: center"> <input type="checkbox" style=" align: center" onchange='handleChange(this,${i});'> </div>`;
+        cell0.innerHTML =`<div style="text-align: center" onmouseenter="more_info_disp(1,${i})" onmouseleave="more_info_disp(0,${i})">
+            <input type="checkbox" style=" align: center" onchange='handleChange(this,${i});'>
+        </div>`;
     } 
     cell0.className="classes_cell";
     row.appendChild(cell0);
@@ -259,9 +263,27 @@ function addanRow(tableRow, class_info, id_selector, i){
         row.appendChild(cell11);
     }
 
-    /*
+    //var cellLast = document.createElement('div')
+    //cell9.innerHTML =`
+    //    <span id="more_info_btn_${i}" onmouseenter="more_info_disp(1,${i})" onmouseleave="more_info_disp(0,${i})">
+    //        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+    //            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+    //            <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"></path>
+    //        </svg>
+    //    </span>
+    //`
+    //cellLast.className="classes_cell";
+    //row.appendChild(cellLast);
+
+}
+
+function more_info_disp(isShown, i){
+
+    class_info=all_classes[i];
+
     more_info = `
     <div class="more_info_container">
+        <div style="display: flex; width: 100%; font-size: 14px; padding-left: 5px"><b>更多資訊：</b></div>
         <div class="more_info_row">
             <div class="more_info_cat" style="width: 80px;">課程名稱</div>
             <div class="more_info_cont"><b>${class_info["Name"]}</b></div>
@@ -278,7 +300,7 @@ function addanRow(tableRow, class_info, id_selector, i){
             <div class="more_info_cat">選上</div>
             <div class="more_info_cont"><b>${class_info["Num_selected"]}</b></div>
         </div>
-        <div class="more_info_row">
+        <div class="more_info_row" style="background-color: ${class_info["Num_available"]==0?'#e19361':''}">
             <div class="more_info_cat">餘額</div>
             <div class="more_info_cont"><b>${class_info["Num_available"]}</b></div>
         </div>
@@ -288,25 +310,22 @@ function addanRow(tableRow, class_info, id_selector, i){
         </div>
     </div>
     `
-    var cellLast = document.createElement('div')
-    cell9.innerHTML =`
-        <span class="d-inline-block"
-            tabindex="0"
-            data-bs-toggle="popover"
-            data-bs-placement="bottom"
-            data-bs-trigger="focus hover"
-            data-bs-template='<div class="popover_moreinfo" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>'
-            data-bs-html="true" data-bs-content='${more_info}'>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
-                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
-                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"></path>
-            </svg>
-        </span>
-    `
-    cellLast.className="classes_cell";
-    row.appendChild(cellLast);
-    */
 
+
+    if(isShown){
+        var newdiv = document.createElement('div');
+        newdiv.id = "more_info_window_"+i;
+        newdiv.innerHTML = more_info;
+        newdiv.className = "more_info_window";
+        document.body.appendChild(newdiv);
+        boxwidth = newdiv.offsetWidth;
+        p(boxwidth);
+        newdiv.style.top=(this.event.pageY+15)+"px";
+        newdiv.style.left=(this.event.pageX)+"px";
+    }
+    else{
+        document.getElementById("more_info_window_"+i).remove();
+    }
 }
 
 function show_more(filter){
@@ -1011,7 +1030,7 @@ $('.selectpicker').on('change', function(){
 
 const add_filter_btn = document.getElementById("add_filter_btn");
 add_filter_btn.addEventListener("click",(e) => {
-    p(e.pageX)
+    //p(e.pageX)
     const filter_sel_menu = document.getElementById("select_filter_content");
     filter_sel_menu.style.top=e.pageY+"px";
     filter_sel_menu.style.left=e.pageX+"px";
