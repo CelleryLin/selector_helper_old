@@ -517,7 +517,7 @@ function class_set_decode(filename, getele){
     }
 }
 
-fetch("./list.txt")
+fetch("https://raw.githubusercontent.com/CelleryLin/selector_helper/master/list.txt")
     .then((res) => res.text())
     .then((text) => {
         const lines = text.split('\n');
