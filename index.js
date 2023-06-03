@@ -385,13 +385,12 @@ function time_sort(class_info_tmp){
     return tmp;
 }
 
-function main(csv_data){
+function main(csv_data, now_sel){
     const day_index=['一 ', '二 ', '三 ', '四 ', '五 ', '六 ', '日 '];
     const grade_index=['','一', '二','三', '四'];
     all_class_raw=csv_data.data
     all_classes=[]
-    // <b id="version_ann">學期課程資料：1113 更新日期：2023/06/03</b>
-    document.getElementById("version_ann").innerHTML = class_set_decode(params.Year, "UI_ANN");
+    document.getElementById("version_ann").innerHTML = class_set_decode(now_sel, "UI_ANN");
     for(i=1;i<=all_class_raw.length-2;i++){
     //for(i=1;i<200;i++){
         //time_sort(all_class_raw[i]);
@@ -404,7 +403,7 @@ function main(csv_data){
         }
         class_info = {
             //Bookmark
-            "Year": (params.Year).split('_')[0],
+            "Year": (now_sel).split('_')[0],
             "Grade": (grade_index[all_class_raw[i][5]]+all_class_raw[i][6].split('班')[0]),
             "Department": all_class_raw[i][3],
             "Compulsory": all_class_raw[i][11],
@@ -434,7 +433,7 @@ function main(csv_data){
 
     var all_classes_read = JSON.parse(localStorage.getItem('NSYSU_Courses_Selector_Helper_Saved'));
     
-    if (all_classes_read!=null && all_classes_read[0]["Year"]!=params.Year.split('_')[0]){
+    if (all_classes_read!=null && all_classes_read[0]["Year"]!=now_sel.split('_')[0]){
         all_classes_read=null;
         localStorage.removeItem('NSYSU_Courses_Selector_Helper_Saved');
     }
@@ -561,7 +560,7 @@ fetch("https://raw.githubusercontent.com/CelleryLin/selector_helper/master/list.
             newest = lines.slice(-1);
             now_sel = newest[0];
         }
-        document.getElementById("class_set_now_sel").innerHTML = class_set_decode(params.Year, "UI_NAME");
+        document.getElementById("class_set_now_sel").innerHTML = class_set_decode(now_sel, "UI_NAME");
         return now_sel;
     }).then((now_sel) => {
         p(now_sel);
@@ -569,7 +568,7 @@ fetch("https://raw.githubusercontent.com/CelleryLin/selector_helper/master/list.
         Papa.parse("./all_classes/all_classes_"+now_sel+".csv", {
             download: true,
             complete: function(csv_data) {
-                main(csv_data);
+                main(csv_data, now_sel);
             }
         });
     })
