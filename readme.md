@@ -1,7 +1,7 @@
 # 中山大學選課小助手
 
 
-### [**中山選課小助手**](https://cellerylin.github.io/selector_helper/)
+### [**點此前往中山選課小助手**](https://cellerylin.github.io/selector_helper/)
 
 此助手解決了中山選課系統的不便性，而且不需要驗證碼。
 
