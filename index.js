@@ -11,6 +11,10 @@ var filter_Programs=[];
 var filter_EMI=[];
 var filter_Room=[];
 var isFinity=1;
+var sel_history=[];
+const params = new Proxy(new URLSearchParams(window.location.search), {
+    get: (searchParams, prop) => searchParams.get(prop),
+});
 
 const filter_category=['課程名稱', '節次', '星期', '年級', '班別', '上課系所(含通適、博雅)', '必選修', '學分數', '授課教師', '所屬學程', '英文授課'];
 const list=['博雅課程','運動與健康(體適能或游泳)','運動與健康(其他)','跨院選修','隨機課程','中文思辨與表達','英文初級','英文中級','英文中高級','英文高級']
@@ -283,11 +287,7 @@ function more_info_disp(isShown, i){
 
     more_info = `
     <div class="more_info_container">
-        <div style="display: flex; width: 100%; font-size: 14px; padding-left: 5px"><b>更多資訊：</b></div>
-        <div class="more_info_row">
-            <div class="more_info_cat" style="width: 80px;">課程名稱</div>
-            <div class="more_info_cont"><b>${class_info["Name"]}</b></div>
-        </div>
+        <div style="display: flex; width: 100%; font-size: 14px; padding-left: 5px"><b>${class_info["Name"]}</b></div>
         <div class="more_info_row">
             <div class="more_info_cat">限修</div>
             <div class="more_info_cont"><b>${class_info["Num_limit"]}</b></div>
@@ -324,7 +324,9 @@ function more_info_disp(isShown, i){
         newdiv.style.left=(this.event.pageX)+"px";
     }
     else{
-        document.getElementById("more_info_window_"+i).remove();
+        if(document.getElementById("more_info_window_"+i)!=null){
+            document.getElementById("more_info_window_"+i).remove();
+        }
     }
 }
 
@@ -388,6 +390,8 @@ function main(csv_data){
     const grade_index=['','一', '二','三', '四'];
     all_class_raw=csv_data.data
     all_classes=[]
+    // <b id="version_ann">學期課程資料：1113 更新日期：2023/06/03</b>
+    document.getElementById("version_ann").innerHTML = class_set_decode(params.Year, "UI_ANN");
     for(i=1;i<=all_class_raw.length-2;i++){
     //for(i=1;i<200;i++){
         //time_sort(all_class_raw[i]);
@@ -400,6 +404,7 @@ function main(csv_data){
         }
         class_info = {
             //Bookmark
+            "Year": (params.Year).split('_')[0],
             "Grade": (grade_index[all_class_raw[i][5]]+all_class_raw[i][6].split('班')[0]),
             "Department": all_class_raw[i][3],
             "Compulsory": all_class_raw[i][11],
@@ -428,6 +433,12 @@ function main(csv_data){
     }
 
     var all_classes_read = JSON.parse(localStorage.getItem('NSYSU_Courses_Selector_Helper_Saved'));
+    
+    if (all_classes_read!=null && all_classes_read[0]["Year"]!=params.Year.split('_')[0]){
+        all_classes_read=null;
+        localStorage.removeItem('NSYSU_Courses_Selector_Helper_Saved');
+    }
+    //restore the data
     if(all_classes_read!=null){
         all_classes_read.forEach( (val_old,index) => {
             all_classes.forEach( (val_new, index) => {
@@ -476,15 +487,95 @@ function main(csv_data){
     var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
         return new bootstrap.Popover(popoverTriggerEl)
     })
+
+    var forum_popup = JSON.parse(localStorage.getItem('NSYSU_Courses_Selector_Helper_Saved_forum'));
+    if(forum_popup==null){
+        $('#forum').modal('show')
+    }
 }
 
+function class_set_decode(filename, getele){
+    // filename = 1112_20230209
+    year = filename.split('_')[0];
+    update_date = filename.split('_')[1];
 
-Papa.parse("./all_classes.csv", {
-    download: true,
-    complete: function(csv_data) {
-        main(csv_data);
-	}
-});
+    if(year[3]=='1'){
+        semester = "上";
+    }
+    else if(year[3]=='2'){
+        semester = "下";
+    }
+    else if(year[3]=='3'){
+        semester = "暑期";
+    }
+
+    if (getele == "UI_NAME"){
+        return year.slice(0,3) + " " + semester + " " + update_date + " 更新";
+    }
+    else if (getele == "UI_ANN"){
+        return "學期課程資料：" + year.slice(0,3) + " " + semester + " 更新日期：" + update_date.slice(0,4) + "/" + update_date.slice(4,6) + "/" + update_date.slice(6,8);
+    }
+}
+
+fetch("./list.txt")
+    .then((res) => res.text())
+    .then((text) => {
+        const lines = text.split('\n');
+        lines.forEach( (val,index) => {
+            if(val==""){
+                lines.splice(index,1);
+            }
+        });
+
+        latest_class_set = []
+        for(i=0;i<lines.length;i++){
+            if(i!=lines.length-1){
+                if (lines[i].split('_')[0]==lines[i+1].split('_')[0]){
+                    //Do nothing
+                }
+                else{
+                    latest_class_set.push(lines[i]);
+                }
+            }
+            else{
+                latest_class_set.push(lines[i]);
+            }
+
+        }
+
+        p(latest_class_set);
+        // append to id class_set_menu
+        latest_class_set.forEach( (val) => {
+            // <a class="dropdown-item" href="#">Action</a>
+            var option = document.createElement("a");
+            option.className = "dropdown-item";
+            option.href = "?Year="+val;
+            option.innerHTML = class_set_decode(val, "UI_NAME");
+            document.getElementById("class_set_menu").appendChild(option);
+        });
+        
+        if (params.Year!=null){
+            now_sel = params.Year;
+        }
+        else{
+            newest = lines.slice(-1);
+            now_sel = newest[0];
+        }
+        document.getElementById("class_set_now_sel").innerHTML = class_set_decode(params.Year, "UI_NAME");
+        return now_sel;
+    }).then((now_sel) => {
+        p(now_sel);
+        stickytoNav();
+        Papa.parse("./all_classes/all_classes_"+now_sel+".csv", {
+            download: true,
+            complete: function(csv_data) {
+                main(csv_data);
+            }
+        });
+    })
+    .catch((e) => console.error(e));
+
+
 
 function ClassLayout(cell_index){
     if (cell_index.children.length != 0){
@@ -555,18 +646,26 @@ function insertClass(class_info, isSelected, isAuto="norm"){
 
 }
 
-function handleChange(checkbox,i) {
+function handleChange(checkbox, i) {
     if(checkbox.checked){
         all_classes[i]['Select']=1;
         insertClass(all_classes[i],1);
         var tableRow = document.getElementById("list_content_selected");
         addanRow(tableRow, all_classes[i], "selected", i);
+        step_one = {
+            "index": i,
+            "checkbox": true
+        };
     }
     else if(checkbox=='comp1'){
         all_classes[i]['Select']=1;
         insertClass(all_classes[i],1);
         var tableRow = document.getElementById("list_content_selected");
         addanRow(tableRow, all_classes[i], "selected", i);
+        step_one = {
+            "index": i,
+            "checkbox": true
+        };
     }
     else if(checkbox=='comp0'){
         all_classes[i]['Select']=0;
@@ -575,6 +674,10 @@ function handleChange(checkbox,i) {
         if(deletClass != null){
             deletClass.parentNode.removeChild(deletClass);
         }
+        step_one = {
+            "index": i,
+            "checkbox": false
+        };
     }
     else if(checkbox=='auto1'){
         all_classes[i]['Pending']=1;
@@ -582,6 +685,10 @@ function handleChange(checkbox,i) {
         insertClass(all_classes[i],1,"auto");
         var tableRow = document.getElementById("list_content_selected");
         addanRow(tableRow, all_classes[i], "selected", i);
+        step_one = {
+            "index": i,
+            "checkbox": true
+        };
     }
     else if(checkbox=='auto0'){
         all_classes[i]['Pending']=0;
@@ -591,6 +698,10 @@ function handleChange(checkbox,i) {
         if(deletClass != null){
             deletClass.parentNode.removeChild(deletClass);
         }
+        step_one = {
+            "index": i,
+            "checkbox": false
+        };
         
     }
     else{
@@ -598,13 +709,22 @@ function handleChange(checkbox,i) {
         insertClass(all_classes[i],0);
         var deletClass = document.getElementById(all_classes[i]['ClassID']+"_selected");
         if(deletClass != null){
+            p("del")
             deletClass.parentNode.removeChild(deletClass);
+            more_info_disp(0, i)
         }
+        step_one = {
+            "index": i,
+            "checkbox": false
+        };
         
     }
     classOverlapping();
     updateCheckbox(all_classes[i]);
     calc_stat();
+    p(step_one)
+    sel_history.push(step_one)
+    return step_one;
 }
 
 const filter_collapser=document.getElementById("filter_collapser");
@@ -1032,8 +1152,10 @@ const add_filter_btn = document.getElementById("add_filter_btn");
 add_filter_btn.addEventListener("click",(e) => {
     //p(e.pageX)
     const filter_sel_menu = document.getElementById("select_filter_content");
-    filter_sel_menu.style.top=e.pageY+"px";
-    filter_sel_menu.style.left=e.pageX+"px";
+    parent_container = document.getElementById("nav-all_classes");
+    var rect = parent_container.getBoundingClientRect();
+    filter_sel_menu.style.top=e.pageY - rect.top +"px";
+    filter_sel_menu.style.left=e.pageX - rect.left +"px";
     if(filter_sel_menu.style.display=="inline-block"){
         filter_sel_menu.style.display="none";
     }
@@ -1786,7 +1908,6 @@ function gotoSelected(classID){
 }
 
 function save_course(){
-    
     localStorage.setItem('NSYSU_Courses_Selector_Helper_Saved', JSON.stringify(all_classes));
 }
 
@@ -1797,9 +1918,62 @@ function delet_all_select(){
             val["Overlapping"]=0;
             if(val["Select"]==1){
                 handleChange("delet",index);
-                //localStorage.clear();
             }
         });
         document.getElementById("loadingPage").style.display = "none";
     }, 1000);
+}
+
+function stickytoNav(){
+    var nav_height = document.getElementById("nav-tab").offsetHeight;
+    document.getElementsByClassName("search_container")[0].style.top = nav_height + "px";
+    var search_container_height = document.getElementsByClassName("search_container")[0].offsetHeight;
+    var self_height = document.getElementById("list_head").offsetHeight;
+    var height = nav_height + search_container_height + self_height;
+    document.getElementsByClassName("list_lead_container")[1].style.top = height + "px";
+}
+
+document.getElementById("nav-all_classes-tab").addEventListener("click",function(){
+    // wait for the tab to be shown
+    setTimeout(() => {
+        stickytoNav();
+    }, 800);
+});
+
+// event listener for window resize
+window.addEventListener('resize', function(){
+    stickytoNav();
+});
+
+new ResizeObserver(stickytoNav).observe(document.getElementsByClassName("search_container")[0]);
+
+
+// detect ctrl-z and ctrl-y
+document.addEventListener('keydown', function(event) {
+    if(event.ctrlKey && event.key === 'z') {
+        // undo();
+        p("undo is not available now")
+    }
+    else if(event.ctrlKey && event.key === 'y') {
+        // redo();
+        p("redo is not available now")
+    }
+});
+
+function undo(){
+    prev_step = (sel_history[sel_history.length-1]);
+    sel_history.pop();
+
+    handleChange("undo", prev_step)
+}
+
+function forum(isOpen){
+    if(isOpen){
+        window.open("https://forms.gle/gFBZDgkSbj85zukP6", '_blank').focus();
+        localStorage.setItem('NSYSU_Courses_Selector_Helper_Saved_forum', JSON.stringify("tagged"));
+    }
+    else{
+        localStorage.setItem('NSYSU_Courses_Selector_Helper_Saved_forum', JSON.stringify("tagged"));
+    }
+    $('#forum').modal('hide');
 }

@@ -120,6 +120,9 @@ li {
 
 .search_container{
     padding-top: 10px;
+    position: sticky;
+    background-color: #ffffffcf;
+    backdrop-filter: blur(8px);
 }
 
 .list_lead_container{
@@ -127,12 +130,10 @@ li {
     width: 100%;
     position: sticky;
     height: 50px;
-    top: 0;
+    top: 0px;
     z-index: 1;
     background-color: #ffffffcf;
     backdrop-filter: blur(8px);
-    
-    box-shadow: 0px 10px 33px -15px rgba(0,0,0,0.13);
 }
 
 .list_head{
@@ -320,7 +321,25 @@ li {
 }
 
 .function_container{
+    padding: 0px 5px 5px 5px;
+}
+
+.schedule_content{
+    border: 0px solid #ffffff;
+    height: 100vh; width: 100%;
+    background-color: #ffffff00;
+    max-width: 1000px;
+    /* min-width: 500px; */
+}
+
+.col-md{
+    display: flex;
+    margin-right: 8px;
     padding: 5px;
+    height: 100%;
+    overflow: auto;
+    justify-content: center;
+    min-height: 150px;
 }
 
 .Filter_logic{
@@ -523,6 +542,7 @@ li {
     --bs-nav-tabs-link-active-bg: #491b48;
     --bs-nav-tabs-link-active-color: #fff;
     --bs-nav-link-color: #000;
+    --bs-nav-bg: #fff;
 }
 
 .nav-tabs .active{
@@ -583,3 +603,18 @@ li {
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
+.schedule_line{
+    /* display: flex; */
+    height: 40%;
+    padding: 1px;
+    border-radius: 10px;
+    background-color: #ebebeb;
+}
+
+.class_set_sel{
+    border-radius: 20px;
+    background-color: #ffffff;
+    margin-right: 10px;
+    border: 1px solid #ced4da;
+    color: #000;
+}

@@ -1,5 +1,5 @@
-const table = document.getElementById('resizable_table');
-const cols = table.querySelectorAll('th.resizable');
+const table = document.getElementById('resize_table_row');
+const cols = table.querySelectorAll('div.col-lg');
 
 const createResizableColumn = function (col, resizer) {
     // Track the current position of mouse
