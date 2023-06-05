@@ -391,6 +391,9 @@ function main(csv_data, now_sel){
     all_class_raw=csv_data.data
     all_classes=[]
     document.getElementById("version_ann").innerHTML = class_set_decode(now_sel, "UI_ANN");
+    document.getElementById("comp_class_set").innerHTML = class_set_decode(now_sel, "UI_ONLY_SEM");
+    document.getElementById("auto_class_set").innerHTML = class_set_decode(now_sel, "UI_ONLY_SEM");
+    
     for(i=1;i<=all_class_raw.length-2;i++){
     //for(i=1;i<200;i++){
         //time_sort(all_class_raw[i]);
@@ -514,6 +517,10 @@ function class_set_decode(filename, getele){
     else if (getele == "UI_ANN"){
         return "學期課程資料：" + year.slice(0,3) + " " + semester + " 更新日期：" + update_date.slice(0,4) + "/" + update_date.slice(4,6) + "/" + update_date.slice(6,8);
     }
+    else if (getele == "UI_ONLY_SEM"){
+        return year.slice(0,3) + " " + semester;
+    }
+
 }
 
 fetch("https://raw.githubusercontent.com/CelleryLin/selector_helper/master/list.txt")
