@@ -2,9 +2,12 @@ var filter_Name=[];
 var filter_Time=[];
 var filter_Day=[];
 var filter_Grade=[];
+var filter_Grade_trans=[];
 var filter_Class=[];
+var filter_Class_trans=[];
 var filter_Dep=[];
 var filter_Compulsory=[];
+var filter_Compulsory_trans=[];
 var filter_Credit=[];
 var filter_Teacher=[];
 var filter_Programs=[];
@@ -12,6 +15,8 @@ var filter_EMI=[];
 var filter_Room=[];
 var isFinity=1;
 var sel_history=[];
+var all_classes=[];
+var class_info={};
 const params = new Proxy(new URLSearchParams(window.location.search), {
     get: (searchParams, prop) => searchParams.get(prop),
 });
@@ -23,12 +28,10 @@ function p(a){
     console.log(a);
 }
 
-function t(){
-    p("hi");
-}
 function getUnique(a) {
     return [...new Set(a)];
 }
+
 function filter_Init(all_classes){
     //課名
     filter_Name=[]; //pass
@@ -96,7 +99,6 @@ function filter_Init(all_classes){
         `;
         filter_selector.appendChild(newdiv);
     });
-
 }
 
 function sortable_Init(){
@@ -124,8 +126,7 @@ function updateCheckbox(class_info){
         if(thisrow!=null){
             thisrow.children[0].children[0].children[0].checked=class_info["Select"];
         }
-    })
-    
+    });
     save_course();
 }
 
@@ -184,7 +185,7 @@ function addanRow(tableRow, class_info, id_selector, i){
     var cell2 = document.createElement('div')
     var times = class_info["Time"];
     var times_html = "";
-    for(j=0;j<times.length;j++){
+    for(let j=0;j<times.length;j++){
         times_html += ("<div style=\"text-align: center; margin: 1px; padding: 3px; background-color: #D5CAF9; border-radius: 3px \" >" + times[j] + "</div>");
     }
     cell2.innerHTML = times_html;
@@ -219,7 +220,7 @@ function addanRow(tableRow, class_info, id_selector, i){
     var cell7 = document.createElement('div')
     var teachers = class_info["Teacher"];
     var teacher_html = "";
-    for(j=0;j<teachers.length;j++){
+    for(let j=0;j<teachers.length;j++){
         teacher_html += `
             <div style="display: inline-block; text-align: center; margin: 3px; padding: 5px; background-color: #FCFCE0; border-radius: 3px " >
                 <a href="https://www.google.com/search?q=中山+${teachers[j]}+dcard+%7C+ptt" class="class_url" target="_blank">    
@@ -236,7 +237,7 @@ function addanRow(tableRow, class_info, id_selector, i){
     var programs = class_info["Programs"];
     if (programs[0]!=''){
         var programs_html = "";
-        for(j=0;j<programs.length;j++){
+        for(let j=0;j<programs.length;j++){
             programs_html += ("<div style=\"text-align: left; margin: 3px; padding: 3px; background-color: #D5CAF9; border-radius: 3px \" >" + programs[j] + "</div>");
         }
         cell8.innerHTML = programs_html;
@@ -345,7 +346,7 @@ function addClassRow(all_classes, filter){
     list_delet_all_classes(document.getElementById("list_content"));
     var tableRow = document.getElementById("list_content");
     var row_count=0;
-    for(i=0;i<all_classes.length;i++){
+    for(let i=0;i<all_classes.length;i++){
         if(all_classes[i]["Visibility"]==1 || filter){
             if(row_count>=100 && isFinity){
                 const show_more = document.createElement('div');
@@ -388,17 +389,17 @@ function time_sort(class_info_tmp){
 function main(csv_data, now_sel){
     const day_index=['一 ', '二 ', '三 ', '四 ', '五 ', '六 ', '日 '];
     const grade_index=['','一', '二','三', '四'];
-    all_class_raw=csv_data.data
-    all_classes=[]
+    const all_class_raw=csv_data.data;
+
     document.getElementById("version_ann").innerHTML = class_set_decode(now_sel, "UI_ANN");
     document.getElementById("comp_class_set").innerHTML = class_set_decode(now_sel, "UI_ONLY_SEM");
     document.getElementById("auto_class_set").innerHTML = class_set_decode(now_sel, "UI_ONLY_SEM");
     
-    for(i=1;i<=all_class_raw.length-2;i++){
+    for(let i=1;i<=all_class_raw.length-2;i++){
     //for(i=1;i<200;i++){
         //time_sort(all_class_raw[i]);
         var sorted_time=[];
-        for(j=18;j<=24;j++){
+        for(let j=18;j<=24;j++){
             
             if (all_class_raw[i][j]!=""){
                 sorted_time.push(day_index[j-18]+all_class_raw[i][j]);
@@ -498,8 +499,9 @@ function main(csv_data, now_sel){
 
 function class_set_decode(filename, getele){
     // filename = 1112_20230209
-    year = filename.split('_')[0];
-    update_date = filename.split('_')[1];
+    let year = filename.split('_')[0];
+    let update_date = filename.split('_')[1];
+    let semester = "";
 
     if(year[3]=='1'){
         semester = "上";
@@ -522,8 +524,8 @@ function class_set_decode(filename, getele){
     }
 
 }
-
-fetch("https://raw.githubusercontent.com/CelleryLin/selector_helper/master/list.txt")
+fetch("./list.txt")
+//fetch("https://raw.githubusercontent.com/CelleryLin/selector_helper/master/list.txt")
     .then((res) => res.text())
     .then((text) => {
         const lines = text.split('\n');
@@ -533,8 +535,8 @@ fetch("https://raw.githubusercontent.com/CelleryLin/selector_helper/master/list.
             }
         });
 
-        latest_class_set = []
-        for(i=0;i<lines.length;i++){
+        let latest_class_set = []
+        for(let i=0;i<lines.length;i++){
             if(i!=lines.length-1){
                 if (lines[i].split('_')[0]==lines[i+1].split('_')[0]){
                     //Do nothing
@@ -559,13 +561,12 @@ fetch("https://raw.githubusercontent.com/CelleryLin/selector_helper/master/list.
             option.innerHTML = class_set_decode(val, "UI_NAME");
             document.getElementById("class_set_menu").appendChild(option);
         });
-        
+        let now_sel = "";
         if (params.Year!=null){
             now_sel = params.Year;
         }
         else{
-            newest = lines.slice(-1);
-            now_sel = newest[0];
+            now_sel = lines.slice(-1)[0];
         }
         document.getElementById("class_set_now_sel").innerHTML = class_set_decode(now_sel, "UI_NAME");
         return now_sel;
