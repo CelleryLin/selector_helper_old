@@ -2,6 +2,7 @@
 ### This is simple CNN model for validcode cracker.
 
 validcode of NSYSU course selection system:
+
 ![](./validcode_0.jpg)
 
 This cnn model can help cracking the validcode. The accuracy is **82.3%** (95.25% each digits)
