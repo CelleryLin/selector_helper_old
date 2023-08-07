@@ -624,7 +624,13 @@ function insertClass(class_info, isSelected, isAuto="norm"){
                 
                 addedClass.setAttribute('onclick',`gotoSelected("${class_info['ClassID']}");`);
                 addedClass.setAttribute('type','button');
-                addedClass.innerHTML =`<span style="margin:auto;">${class_info["Name"]}<br>${class_info["ClassID"]}</span>`;
+
+                if (class_info["Name"].length > 5){
+                    addedClass.innerHTML =`<span style="margin:auto;">${class_info["Name"].slice(0,2)}...${class_info["Name"].slice(-2,)}<br>${class_info["ClassID"]}</span>`;
+                }
+                else{
+                    addedClass.innerHTML =`<span style="margin:auto;">${class_info["Name"]}<br>${class_info["ClassID"]}</span>`;
+                }
                 if(isAuto=="auto"){
                     addedClass.className="addedclass pending";
                     addedClass.setAttribute('onmouseout',`selectedLeave("${class_info['ClassID']}","pending");`);
@@ -1853,6 +1859,7 @@ function selectedHover(classID){
 
     classOnhover.forEach((val) => {
         val.className="addedclass onhover"
+        
     })
     classOnhover_list.className = "classes_row onhover"
 }
