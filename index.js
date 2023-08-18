@@ -1884,12 +1884,14 @@ function selectedLeave(classID,isPending){
 function gotoSelected(classID){
     var ele_loc = document.getElementById(`${classID}_selected`).getBoundingClientRect();
     if(ele_loc.x==0){
-        document.getElementById("nav-comp-tab").className="nnav-item nav-link"
+        document.getElementById("nav-comp-tab").className="nav-item nav-link"
         document.getElementById("nav-comp").className="tab-pane fade"
         document.getElementById("nav-all_classes-tab").className="nav-item nav-link"
         document.getElementById("nav-all_classes").className="tab-pane fade"
         document.getElementById("nav-auto-tab").className="nav-item nav-link"
         document.getElementById("nav-auto").className="tab-pane fade"
+        document.getElementById("nav-export-tab").className="nav-item nav-link"
+        document.getElementById("nav-export").className="tab-pane fade"
         document.getElementById("nav-announced-tab").className="nav-item nav-link"
         document.getElementById("nav-announced").className="tab-pane fade"
 
