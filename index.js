@@ -1188,8 +1188,11 @@ function create_comp_fourm(){
     const content=document.getElementById("comp_sel_container");
 
     filter_Dep.forEach((val,index)=>{
-        if(val.includes('系') || val.includes('學程') || val.includes('碩') || val.includes('博') && !val.includes('博雅')){
-            options_dep+=`<option value="${val}">${val}</option>`;
+        sel_condition = ['系','學程','碩','博','全英班'];
+        if(sel_condition.some(v=>val.includes(v))){
+            if(!val.includes('博雅')){
+                options_dep+=`<option value="${val}">${val}</option>`;
+            }
         }
     });
 
