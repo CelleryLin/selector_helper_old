@@ -486,8 +486,8 @@ li {
 
 .dropdown_content{
     display: none;
-    z-index: 3;
-    position: fixed;
+    z-index: 100;
+    position: absolute;
     height: 200px;
     width: 150px;
     background-color: #fafafafa;

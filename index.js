@@ -21,8 +21,12 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
     get: (searchParams, prop) => searchParams.get(prop),
 });
 
+// filter dropdown list
 const filter_category=['課程名稱', '節次', '星期', '年級', '班別', '上課系所(含通適、博雅)', '必選修', '學分數', '授課教師', '所屬學程', '英文授課'];
+
+// sortable dropdown list
 const list=['博雅課程','運動與健康(體適能或游泳)','運動與健康(其他)','跨院選修','隨機課程','中文思辨與表達','英文初級','英文中級','英文中高級','英文高級']
+
 const filter_category_index=['Class', 'Time', 'Day', 'Grade', 'ClassCat', 'Dep', 'Comp', 'Credit', 'Teacher', 'Prog', 'EMI'];
 function p(a){
     console.log(a);
@@ -32,7 +36,20 @@ function getUnique(a) {
     return [...new Set(a)];
 }
 
+
 function filter_Init(all_classes){
+
+    filter_html = `
+    <div style="color: #727272;">選擇篩選器...</div>
+    <hr style="color: #727272; width: 50%; height: 10px; padding: 0px; margin: 0px;">
+    `
+    var newdiv = document.createElement('div');
+    newdiv.id = "select_filter_content";
+    newdiv.className = "dropdown_content";
+    newdiv.innerHTML = filter_html;
+    document.body.appendChild(newdiv);
+
+
     //課名
     filter_Name=[]; //pass
 
@@ -103,7 +120,19 @@ function filter_Init(all_classes){
 
 function sortable_Init(){
     //const list=['博雅課程','系上選修','運動與健康(體適能或游泳)','運動與健康(其他)','跨願選修','隨機課程','中文思辨與表達','英文初級','英文中級','英文中高級','英文高級']
+    
+    auto_html = `
+    <div style="font-weight: bold; padding-left: 8px;">選擇課程種類...</div>
+    <hr style="color: #727272; width: 50%; height: 10px; padding: 0px; margin: 0px;">
+    `
+
+    var newdiv = document.createElement('div');
+    newdiv.id = "select_sortable_content";
+    newdiv.className = "dropdown_content";
+    newdiv.innerHTML = auto_html;
+    document.body.appendChild(newdiv);
     const filter_selector=document.getElementById("select_sortable_content");
+
 
     list.forEach(val => {
         const newdiv = document.createElement('div');
@@ -319,10 +348,9 @@ function more_info_disp(isShown, i){
         newdiv.innerHTML = more_info;
         newdiv.className = "more_info_window";
         document.body.appendChild(newdiv);
-        boxwidth = newdiv.offsetWidth;
-        p(boxwidth);
-        newdiv.style.top=(this.event.pageY+15)+"px";
-        newdiv.style.left=(this.event.pageX)+"px";
+
+        // check if the box is out of the screen
+        check_out_of_screen(newdiv, this.event);
     }
     else{
         if(document.getElementById("more_info_window_"+i)!=null){
@@ -1163,21 +1191,37 @@ $('.selectpicker').on('change', function(){
 
 const add_filter_btn = document.getElementById("add_filter_btn");
 add_filter_btn.addEventListener("click",(e) => {
-    //p(e.pageX)
-    const filter_sel_menu = document.getElementById("select_filter_content");
-    parent_container = document.getElementById("nav-all_classes");
-    var rect = parent_container.getBoundingClientRect();
-    filter_sel_menu.style.top=e.pageY - rect.top +"px";
-    filter_sel_menu.style.left=e.pageX - rect.left +"px";
+
+    filter_sel_menu = document.getElementById("select_filter_content");
+    
     if(filter_sel_menu.style.display=="inline-block"){
         filter_sel_menu.style.display="none";
     }
     else{
         setTimeout(function(){
             filter_sel_menu.style.display="inline-block";
+            check_out_of_screen(filter_sel_menu, e);
         }, 10);
     }
 });
+
+function check_out_of_screen(ele, event){
+
+    // check if the box is out of the screen
+    if(event.pageX+ele.offsetWidth>window.innerWidth){
+        ele.style.left = (window.innerWidth-ele.offsetWidth)+"px";
+    }
+    else{
+        ele.style.left=(event.pageX)+"px";
+    }
+    if(event.pageY+ele.offsetHeight+15>window.innerHeight){
+        ele.style.top=(event.pageY-ele.offsetHeight-15)+"px";
+    }
+    else{
+        ele.style.top=(event.pageY+15)+"px";
+    }
+    console.log("window.innerH", window.innerHeight);
+}
 
 
 function create_comp_fourm(){
@@ -1663,16 +1707,15 @@ function appendSortable(a){
 
 const add_sortable_btn = document.getElementById("add_sortable_btn");
 add_sortable_btn.addEventListener("click", (e) => {
-    const filter_sel_menu = document.getElementById("select_sortable_content");
-    filter_sel_menu.style.top=e.pageY+"px";
-    filter_sel_menu.style.left=e.pageX+"px";
+    sortable_menu = document.getElementById("select_sortable_content");
     
-    if(filter_sel_menu.style.display=="inline-block"){
-        filter_sel_menu.style.display="none";
+    if(sortable_menu.style.display=="inline-block"){
+        sortable_menu.style.display="none";
     }
     else{
         setTimeout(function(){
-            filter_sel_menu.style.display="inline-block";
+            sortable_menu.style.display="inline-block";
+            check_out_of_screen(sortable_menu, e);
         }, 10);
     }
 });
