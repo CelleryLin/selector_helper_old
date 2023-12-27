@@ -17,6 +17,13 @@ var isFinity=1;
 var sel_history=[];
 var all_classes=[];
 var class_info={};
+var old_ann_tag = ['NSYSU_Courses_Selector_Helper_Saved_forum']
+var current_tag = 'NSYSU_Courses_Selector_Helper_ann_1122'
+
+old_ann_tag.forEach((tag) => {
+    localStorage.removeItem(tag);
+}) 
+
 const params = new Proxy(new URLSearchParams(window.location.search), {
     get: (searchParams, prop) => searchParams.get(prop),
 });
@@ -519,7 +526,7 @@ function main(csv_data, now_sel){
         return new bootstrap.Popover(popoverTriggerEl)
     })
 
-    var forum_popup = JSON.parse(localStorage.getItem('NSYSU_Courses_Selector_Helper_Saved_forum'));
+    var forum_popup = JSON.parse(localStorage.getItem(current_tag));
     if(forum_popup==null){
         $('#forum').modal('show')
     }
@@ -542,10 +549,19 @@ function class_set_decode(filename, getele){
     }
 
     if (getele == "UI_NAME"){
-        return year.slice(0,3) + " " + semester + " " + update_date + " 更新";
+        text = `
+            <span style="color: #858f99; font-size: 12px">
+                ${update_date + " 更新"}
+            </span>
+        `
+        return year.slice(0,3) + semester + " " + text;
     }
     else if (getele == "UI_ANN"){
-        return "學期課程資料：" + year.slice(0,3) + " " + semester + " 更新日期：" + update_date.slice(0,4) + "/" + update_date.slice(4,6) + "/" + update_date.slice(6,8);
+        text = `
+        <span style="font-weight: bold; background-color: #fffff f; padding: 8px; border-radius: 3px;">
+        ${"學期課程資料：" + year.slice(0,3) + semester + "；更新日期：" + update_date.slice(0,4) + "/" + update_date.slice(4,6) + "/" + update_date.slice(6,8)}
+        `
+        return text
     }
     else if (getele == "UI_ONLY_SEM"){
         return year.slice(0,3) + " " + semester;
@@ -2032,10 +2048,10 @@ function undo(){
 function forum(isOpen){
     if(isOpen){
         window.open("https://forms.gle/gFBZDgkSbj85zukP6", '_blank').focus();
-        localStorage.setItem('NSYSU_Courses_Selector_Helper_Saved_forum', JSON.stringify("tagged"));
+        localStorage.setItem(current_tag, JSON.stringify("tagged"));
     }
     else{
-        localStorage.setItem('NSYSU_Courses_Selector_Helper_Saved_forum', JSON.stringify("tagged"));
+        localStorage.setItem(current_tag, JSON.stringify("tagged"));
     }
     $('#forum').modal('hide');
 }
