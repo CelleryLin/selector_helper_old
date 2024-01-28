@@ -48,12 +48,22 @@ function exportClass(){
     document.getElementById('export_modal_classes_num').innerText = my_classes.length;
 
     //generate js code
-    var gen_code = `my_class = ${JSON.stringify(my_classes)};\n\n
-for (let i = 0; i < my_class.length; i++) {
-    document.querySelectorAll('input')[2*i].value = my_class[i]['id'];
-    document.querySelectorAll('input')[2*i+1].value = my_class[i]['value'];
-    document.querySelectorAll('select')[i].value = my_class[i]['isSel'];
-}`
+    var gen_code =
+`const frame = document.getElementById('main');
+const doc = frame.contentDocument || frame.contentWindow.document;
+const exportClass = ${JSON.stringify(my_classes)};
+try {
+exportClass.forEach((ec, i) => {
+const inputs = doc.querySelectorAll('input');
+inputs[2*i].value = ec['id'];
+inputs[2*i+1].value = ec['value'];
+doc.querySelectorAll('select')[i].value = ec['isSel'];
+});
+console.log('自動填寫: 完成');
+} catch (e) {
+console.error('自動填寫: 失敗: ' + e);
+}
+`;
 
     navigator.clipboard.writeText(gen_code);
     document.querySelector('.export_modal_code_view span').innerText = gen_code;
