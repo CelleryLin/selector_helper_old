@@ -670,10 +670,10 @@ function insertClass(class_info, isSelected, isAuto="norm"){
                 addedClass.setAttribute('type','button');
 
                 if (class_info["Name"].length > 5){
-                    addedClass.innerHTML =`<span style="margin:auto;">${class_info["Name"].slice(0,2)}...${class_info["Name"].slice(-2,)}<br>${class_info["ClassID"]}</span>`;
+                    addedClass.innerHTML =`<span style="margin:auto;">${class_info["Name"].slice(0,2)}...${class_info["Name"].slice(-2,)}<br>${class_info["ClassID"]}<br>${class_info["Room"]}</span>`;
                 }
                 else{
-                    addedClass.innerHTML =`<span style="margin:auto;">${class_info["Name"]}<br>${class_info["ClassID"]}</span>`;
+                    addedClass.innerHTML =`<span style="margin:auto;">${class_info["Name"]}<br>${class_info["ClassID"]}<br>${class_info["Room"]}</span>`;
                 }
                 if(isAuto=="auto"){
                     addedClass.className="addedclass pending";
